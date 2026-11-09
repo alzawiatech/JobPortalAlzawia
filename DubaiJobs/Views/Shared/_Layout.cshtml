@@ -1,48 +1,394 @@
-﻿<!DOCTYPE html>
+﻿
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - DubaiJobs</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" />
-</head>
-<body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">DubaiJobs</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
 
-    <footer class="border-top footer text-muted">
+    <meta name="description" content="DubaiJobs - Find your dream job today." />
+
+    <title>@ViewData["Title"] - DubaiJobs</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Sora:wght@300;400;600;700;800&display=swap"
+          rel="stylesheet" />
+
+    <!-- Template CSS -->
+    <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
+
+    @await RenderSectionAsync("Styles", required: false)
+</head>
+
+<body>
+
+    <!-- ================= HEADER ================= -->
+
+    <header id="header" role="banner">
+
         <div class="container">
-            &copy; 2026 - DubaiJobs - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+
+            <nav class="nav-inner" aria-label="Main navigation">
+
+                <!-- Logo -->
+                <a asp-controller="Home"
+                   asp-action="Index"
+                   class="logo"
+                   aria-label="DubaiJobs Home">
+
+                    <div class="logo-mark" aria-hidden="true">D</div>
+
+                    <span class="logo-name">
+                        Dubai<span>Jobs</span>
+                    </span>
+
+                </a>
+
+                <!-- Desktop Navigation -->
+                <ul class="nav-links" role="list">
+
+                    <li>
+                        <a asp-controller="Home"
+                           asp-action="Index"
+                           asp-fragment="home">
+                            Home
+                        </a>
+                    </li>
+
+                    <li>
+                        <a asp-controller="Jobs"
+                           asp-action="Index">
+                            Jobs
+                        </a>
+                    </li>
+
+                    <li>
+                        <a asp-controller="Home"
+                           asp-action="Index"
+                           asp-fragment="categories">
+                            Categories
+                        </a>
+                    </li>
+
+                    <li>
+                        <a asp-controller="Home"
+                           asp-action="Index"
+                           asp-fragment="companies">
+                            Companies
+                        </a>
+                    </li>
+
+                    <li>
+                        <a asp-controller="Home"
+                           asp-action="Index"
+                           asp-fragment="about">
+                            About
+                        </a>
+                    </li>
+
+                    <li>
+                        <a asp-controller="Home"
+                           asp-action="Index"
+                           asp-fragment="contact">
+                            Contact
+                        </a>
+                    </li>
+
+                </ul>
+
+                <!-- Header Buttons -->
+                <div class="nav-cta">
+
+                    <a asp-controller="Jobs"
+                       asp-action="Index"
+                       class="btn btn-outline">
+                        Browse Jobs
+                    </a>
+
+                    <a asp-controller="Jobs"
+                       asp-action="Create"
+                       class="btn btn-primary">
+                        Post a Job
+                    </a>
+
+                </div>
+
+                <!-- Mobile Hamburger -->
+                <button class="hamburger"
+                        id="hamburger"
+                        type="button"
+                        aria-label="Toggle mobile menu"
+                        aria-expanded="false"
+                        aria-controls="mobile-nav">
+
+                    <span></span>
+                    <span></span>
+                    <span></span>
+
+                </button>
+
+            </nav>
+
         </div>
+
+        <!-- Mobile Navigation -->
+        <nav class="mobile-nav" id="mobile-nav"
+             aria-label="Mobile navigation">
+
+            <a asp-controller="Home" asp-action="Index">Home</a>
+
+            <a asp-controller="Jobs" asp-action="Index">Jobs</a>
+
+            <a asp-controller="Home" asp-action="Index"
+               asp-fragment="categories">Categories</a>
+
+            <a asp-controller="Home" asp-action="Index"
+               asp-fragment="companies">Companies</a>
+
+            <a asp-controller="Home" asp-action="Index"
+               asp-fragment="about">About</a>
+
+            <a asp-controller="Home" asp-action="Index"
+               asp-fragment="contact">Contact</a>
+
+            <a asp-controller="Jobs" asp-action="Create"
+               class="btn btn-primary">
+                Post a Job
+            </a>
+
+        </nav>
+
+    </header>
+
+
+    <!-- ================= PAGE CONTENT ================= -->
+
+    <main role="main">
+
+        @RenderBody()
+
+    </main>
+
+
+    <!-- ================= FOOTER ================= -->
+
+    <footer id="footer" role="contentinfo">
+
+        <div class="container">
+
+            <div class="footer-grid">
+
+                <!-- Brand -->
+                <div>
+
+                    <div class="footer-brand-logo">
+
+                        <div class="logo-mark" aria-hidden="true">D</div>
+
+                        <span class="logo-name">
+                            Dubai<span>Jobs</span>
+                        </span>
+
+                    </div>
+
+                    <p class="footer-desc">
+                        Connecting ambitious professionals with
+                        world-class companies. Your career journey
+                        starts here.
+                    </p>
+
+                    <div class="social-links"
+                         aria-label="Social media links">
+
+                        <a href="#" class="social-link"
+                           aria-label="Twitter">𝕏</a>
+
+                        <a href="#" class="social-link"
+                           aria-label="LinkedIn">in</a>
+
+                        <a href="#" class="social-link"
+                           aria-label="Facebook">f</a>
+
+                        <a href="#" class="social-link"
+                           aria-label="Instagram">◉</a>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Job Seekers -->
+                <div>
+
+                    <h3 class="footer-col-title">For Job Seekers</h3>
+
+                    <ul class="footer-links" role="list">
+
+                        <li>
+                            <a asp-controller="Jobs" asp-action="Index">
+                                Browse Jobs
+                            </a>
+                        </li>
+
+                        <li>
+                            <a asp-controller="Home" asp-action="Index"
+                               asp-fragment="categories">
+                                Job Categories
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="#">Career Advice</a>
+                        </li>
+
+                        <li>
+                            <a href="#">Resume Builder</a>
+                        </li>
+
+                        <li>
+                            <a href="#">Salary Guide</a>
+                        </li>
+
+                    </ul>
+
+                </div>
+
+
+                <!-- Employers -->
+                <div>
+
+                    <h3 class="footer-col-title">For Employers</h3>
+
+                    <ul class="footer-links" role="list">
+
+                        <li>
+                            <a asp-controller="Jobs" asp-action="Create">
+                                Post a Job
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="#">Talent Search</a>
+                        </li>
+
+                        <li>
+                            <a href="#">Pricing Plans</a>
+                        </li>
+
+                        <li>
+                            <a href="#">Employer Branding</a>
+                        </li>
+
+                        <li>
+                            <a href="#">Recruitment API</a>
+                        </li>
+
+                    </ul>
+
+                </div>
+
+
+                <!-- Company -->
+                <div>
+
+                    <h3 class="footer-col-title">Company</h3>
+
+                    <ul class="footer-links" role="list">
+
+                        <li>
+                            <a asp-controller="Home" asp-action="Index"
+                               asp-fragment="about">
+                                About Us
+                            </a>
+                        </li>
+
+                        <li>
+                            <a asp-controller="Account" asp-action="Login">
+                                Login
+                            </a>
+                        </li>
+
+                        <li>
+                            <a asp-controller="Home" asp-action="Privacy">
+                                Privacy
+                            </a>
+                        </li>
+
+                        <li>
+                            <a asp-controller="Home" asp-action="Index"
+                               asp-fragment="contact">
+                                Contact
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="#">Blog</a>
+                        </li>
+
+                    </ul>
+
+                </div>
+
+            </div>
+
+
+            <!-- Footer Bottom -->
+            <div class="footer-bottom">
+
+                <p class="footer-copy">
+                    © @DateTime.Now.Year
+                    <a asp-controller="Home" asp-action="Index">
+                        DubaiJobs
+                    </a>.
+                    All rights reserved.
+                </p>
+
+                <div class="footer-bottom-links">
+
+                    <a asp-controller="Home" asp-action="Privacy">
+                        Privacy Policy
+                    </a>
+
+                    <a href="#">Terms of Service</a>
+
+                    <a href="#">FAQs</a>
+
+                </div>
+
+            </div>
+
+        </div>
+
     </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+
+    <!-- Scroll To Top -->
+    <button id="scroll-top"
+            type="button"
+            aria-label="Scroll back to top"
+            title="Scroll to top">
+
+        <svg width="18" height="18"
+             fill="none"
+             stroke="currentColor"
+             viewBox="0 0 24 24"
+             stroke-width="2.5"
+             aria-hidden="true">
+
+            <polyline points="18 15 12 9 6 15" />
+
+        </svg>
+
+    </button>
+
+
+    <!-- ================= JAVASCRIPT ================= -->
+
     <script src="~/js/site.js" asp-append-version="true"></script>
+
     @await RenderSectionAsync("Scripts", required: false)
+
 </body>
 </html>
