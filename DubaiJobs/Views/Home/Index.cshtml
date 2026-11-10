@@ -2,7 +2,860 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Corehrllllllllllllllllllll</a>.</p>
-</div>
+
+    <section id="home" aria-labelledby="hero-title">
+        <!-- Decorative blobs -->
+        <div class="hero-blob hero-blob-1" aria-hidden="true"></div>
+        <div class="hero-blob hero-blob-2" aria-hidden="true"></div>
+        <div class="dots-grid" aria-hidden="true"></div>
+
+        <div class="container">
+            <div class="hero-content">
+
+                <div class="hero-tag" data-aos="fade-down" data-aos-duration="600">
+                    <span>✦</span> #1 Job Portal Platform in Dubai
+                </div>
+
+                <h1 class="hero-title" id="hero-title" data-aos="fade-up" data-aos-duration="700" data-aos-delay="100">
+                    Find Your <em>Dream Job</em><br />Today
+                </h1>
+
+                <p class="hero-desc" data-aos="fade-up" data-aos-duration="700" data-aos-delay="200">
+                    Discover thousands of opportunities from top companies across every industry. Your next chapter starts here.
+                </p>
+
+                <!-- Search Bar -->
+                <div class="search-box" data-aos="fade-up" data-aos-duration="800" data-aos-delay="300" role="search">
+                    <div class="search-field">
+                        <span class="field-icon" aria-hidden="true">🔍</span>
+                        <input type="text" placeholder="Job title or keyword" aria-label="Job title or keyword" />
+                    </div>
+                    <div class="search-field">
+                        <span class="field-icon" aria-hidden="true">📍</span>
+                        <input type="text" placeholder="City or remote" aria-label="Location" />
+                    </div>
+                    <div class="search-field">
+                        <span class="field-icon" aria-hidden="true">📂</span>
+                        <select aria-label="Job category">
+                            <option value="">All Categories</option>
+                            <option>Technology</option>
+                            <option>Design & Creative</option>
+                            <option>Marketing</option>
+                            <option>Finance</option>
+                            <option>Healthcare</option>
+                            <option>Education</option>
+                            <option>Engineering</option>
+                            <option>Sales</option>
+                        </select>
+                    </div>
+                    <button class="search-btn" type="submit" aria-label="Search jobs">
+                        <span>Search Jobs</span>
+                        <span aria-hidden="true">→</span>
+                    </button>
+                </div>
+
+                <!-- Stats -->
+                <div class="hero-stats" data-aos="fade-up" data-aos-duration="700" data-aos-delay="400">
+                    <div class="stat-item">
+                        <div class="stat-number">48K+</div>
+                        <div class="stat-label">Active Jobs</div>
+                    </div>
+                    <div class="stat-divider" aria-hidden="true"></div>
+                    <div class="stat-item">
+                        <div class="stat-number">12K+</div>
+                        <div class="stat-label">Companies</div>
+                    </div>
+                    <div class="stat-divider" aria-hidden="true"></div>
+                    <div class="stat-item">
+                        <div class="stat-number">2.3M+</div>
+                        <div class="stat-label">Job Seekers</div>
+                    </div>
+                    <div class="stat-divider" aria-hidden="true"></div>
+                    <div class="stat-item">
+                        <div class="stat-number">98%</div>
+                        <div class="stat-label">Success Rate</div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════
+         JOB CATEGORIES
+    ════════════════════════════════════════════ -->
+    <section id="categories" aria-labelledby="categories-title">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-label" data-aos="fade-up">Explore Fields</div>
+                <h2 class="section-title" id="categories-title" data-aos="fade-up" data-aos-delay="50">Browse by Category</h2>
+                <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">
+                    Find the perfect role in your area of
+                    expertise. New jobs added daily.
+                </p>
+            </div>
+
+            <div class="categories-grid">
+
+                <div class="category-card" data-aos="zoom-in" data-aos-delay="0">
+                    <div class="category-icon cat-blue">💻</div>
+                    <div class="category-name">Technology</div>
+                    <div class="category-count">8,420 jobs</div>
+                </div>
+
+                <div class="category-card" data-aos="zoom-in" data-aos-delay="60">
+                    <div class="category-icon cat-purple">🎨</div>
+                    <div class="category-name">Design & Creative</div>
+                    <div class="category-count">3,815 jobs</div>
+                </div>
+
+                <div class="category-card" data-aos="zoom-in" data-aos-delay="120">
+                    <div class="category-icon cat-orange">📊</div>
+                    <div class="category-name">Marketing</div>
+                    <div class="category-count">5,230 jobs</div>
+                </div>
+
+                <div class="category-card" data-aos="zoom-in" data-aos-delay="180">
+                    <div class="category-icon cat-green">💰</div>
+                    <div class="category-name">Finance</div>
+                    <div class="category-count">4,102 jobs</div>
+                </div>
+
+                <div class="category-card" data-aos="zoom-in" data-aos-delay="240">
+                    <div class="category-icon cat-red">⚕️</div>
+                    <div class="category-name">Healthcare</div>
+                    <div class="category-count">6,750 jobs</div>
+                </div>
+
+                <div class="category-card" data-aos="zoom-in" data-aos-delay="300">
+                    <div class="category-icon cat-teal">📚</div>
+                    <div class="category-name">Education</div>
+                    <div class="category-count">2,945 jobs</div>
+                </div>
+
+                <div class="category-card" data-aos="zoom-in" data-aos-delay="360">
+                    <div class="category-icon cat-yellow">⚙️</div>
+                    <div class="category-name">Engineering</div>
+                    <div class="category-count">7,380 jobs</div>
+                </div>
+
+                <div class="category-card" data-aos="zoom-in" data-aos-delay="420">
+                    <div class="category-icon cat-pink">🤝</div>
+                    <div class="category-name">Sales & CRM</div>
+                    <div class="category-count">4,620 jobs</div>
+                </div>
+
+                <div class="category-card" data-aos="zoom-in" data-aos-delay="420">
+                    <div class="category-icon cat-red">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none"
+                             xmlns="http://www.w3.org/2000/svg">
+
+                            <!-- Camera Body -->
+                            <rect x="3" y="7" width="14" height="10" rx="2" stroke="currentColor" stroke-width="1.8" />
+
+                            <!-- Play Button -->
+                            <polygon points="10,10 14,12 10,14" fill="currentColor" />
+
+                            <!-- Camera Lens Side -->
+                            <path d="M17 10L21 8V16L17 14V10Z" stroke="currentColor" stroke-width="1.8" fill="none" />
+
+                        </svg>
+                    </div>
+                    <div class="category-name">Content Creator</div>
+                    <div class="category-count">620 jobs</div>
+                </div>
+
+                <div class="category-card" data-aos="zoom-in" data-aos-delay="420">
+                    <div class="category-icon cat-pink">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none"
+                             xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 3C9 3 7 5 7 8v1a3 3 0 0 0-2 2.83V13a3 3 0 0 0 2 2.83V17c0 3 2 5 5 5s5-2 5-5v-1.17a3 3 0 0 0 2-2.83v-1.17A3 3 0 0 0 17 9V8c0-3-2-5-5-5z"
+                                  stroke="currentColor" stroke-width="1.8" />
+                            <circle cx="9" cy="12" r="1" fill="currentColor" />
+                            <circle cx="15" cy="12" r="1" fill="currentColor" />
+                            <circle cx="12" cy="16" r="1" fill="currentColor" />
+                        </svg>
+                    </div>
+                    <div class="category-name">AI</div>
+                    <div class="category-count">9,620 jobs</div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════
+         FEATURED JOBS
+    ════════════════════════════════════════════ -->
+    <section id="jobs" aria-labelledby="jobs-title">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-label" data-aos="fade-up">Hot Opportunities</div>
+                <h2 class="section-title" id="jobs-title" data-aos="fade-up" data-aos-delay="50">Featured Jobs</h2>
+                <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">
+                    Handpicked roles from leading companies.
+                    Apply today before they're gone.
+                </p>
+            </div>
+
+            <!-- Filter Tabs -->
+            <div class="jobs-tabs" data-aos="fade-up" data-aos-delay="150" role="tablist" aria-label="Job type filter">
+                <button class="tab-btn active" role="tab" aria-selected="true">All Jobs</button>
+                <button class="tab-btn" role="tab" aria-selected="false">Full Time</button>
+                <button class="tab-btn" role="tab" aria-selected="false">Part Time</button>
+                <button class="tab-btn" role="tab" aria-selected="false">Remote</button>
+                <button class="tab-btn" role="tab" aria-selected="false">Internship</button>
+            </div>
+
+            <!-- Jobs Grid -->
+            <div class="jobs-grid" id="jobs-grid">
+
+                <!-- Card 1 -->
+                <article class="job-card" data-aos="fade-up" data-aos-delay="0">
+                    <div class="job-card-header">
+                        <div style="flex:1">
+                            <h3 class="job-title">Senior Frontend Engineer</h3>
+                            <div class="company-name">Stripe Inc.</div>
+                        </div>
+                        <div class="company-logo-wrap" aria-label="Stripe logo">💳</div>
+                    </div>
+                    <div class="job-meta">
+                        <span class="meta-item">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z" />
+                            </svg>
+                            San Francisco, CA
+                        </span>
+                        <span class="meta-item">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                                <circle cx="12" cy="12" r="10" />
+                                <polyline points="12 6 12 12 16 14" />
+                            </svg>
+                            3 days ago
+                        </span>
+                    </div>
+                    <div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1rem;">
+                        <span class="badge badge-green">Full Time</span>
+                        <span class="badge badge-blue">React</span>
+                        <span class="badge badge-blue">TypeScript</span>
+                    </div>
+                    <div class="job-card-footer">
+                        <div class="job-salary">$140K–$180K <span>/ year</span></div>
+                        <a href="apply-job" class="apply-btn">Apply Now</a>
+                    </div>
+                </article>
+
+                <!-- Card 2 -->
+                <article class="job-card" data-aos="fade-up" data-aos-delay="80">
+                    <div class="job-card-header">
+                        <div style="flex:1">
+                            <h3 class="job-title">Product Design Lead</h3>
+                            <div class="company-name">Airbnb</div>
+                        </div>
+                        <div class="company-logo-wrap" aria-label="Airbnb logo">🏠</div>
+                    </div>
+                    <div class="job-meta">
+                        <span class="meta-item">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z" />
+                            </svg>
+                            Remote (Global)
+                        </span>
+                        <span class="meta-item">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                                <circle cx="12" cy="12" r="10" />
+                                <polyline points="12 6 12 12 16 14" />
+                            </svg>
+                            1 day ago
+                        </span>
+                    </div>
+                    <div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1rem;">
+                        <span class="badge badge-purple">Remote</span>
+                        <span class="badge badge-blue">Figma</span>
+                        <span class="badge badge-blue">UX Research</span>
+                    </div>
+                    <div class="job-card-footer">
+                        <div class="job-salary">$120K–$155K <span>/ year</span></div>
+                        <a href="apply-job" class="apply-btn">Apply Now</a>
+                    </div>
+                </article>
+
+                <!-- Card 3 -->
+                <article class="job-card" data-aos="fade-up" data-aos-delay="160">
+                    <div class="job-card-header">
+                        <div style="flex:1">
+                            <h3 class="job-title">Data Science Manager</h3>
+                            <div class="company-name">Netflix</div>
+                        </div>
+                        <div class="company-logo-wrap" aria-label="Netflix logo">🎬</div>
+                    </div>
+                    <div class="job-meta">
+                        <span class="meta-item">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z" />
+                            </svg>
+                            Los Angeles, CA
+                        </span>
+                        <span class="meta-item">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                                <circle cx="12" cy="12" r="10" />
+                                <polyline points="12 6 12 12 16 14" />
+                            </svg>
+                            5 days ago
+                        </span>
+                    </div>
+                    <div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1rem;">
+                        <span class="badge badge-green">Full Time</span>
+                        <span class="badge badge-orange">Python</span>
+                        <span class="badge badge-blue">ML</span>
+                    </div>
+                    <div class="job-card-footer">
+                        <div class="job-salary">$160K–$220K <span>/ year</span></div>
+                        <a href="apply-job" class="apply-btn">Apply Now</a>
+                    </div>
+                </article>
+
+                <!-- Card 4 -->
+                <article class="job-card" data-aos="fade-up" data-aos-delay="0">
+                    <div class="job-card-header">
+                        <div style="flex:1">
+                            <h3 class="job-title">DevOps Engineer</h3>
+                            <div class="company-name">Shopify</div>
+                        </div>
+                        <div class="company-logo-wrap" aria-label="Shopify logo">🛒</div>
+                    </div>
+                    <div class="job-meta">
+                        <span class="meta-item">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z" />
+                            </svg>
+                            Toronto, Canada
+                        </span>
+                        <span class="meta-item">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                                <circle cx="12" cy="12" r="10" />
+                                <polyline points="12 6 12 12 16 14" />
+                            </svg>
+                            2 days ago
+                        </span>
+                    </div>
+                    <div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1rem;">
+                        <span class="badge badge-green">Full Time</span>
+                        <span class="badge badge-blue">Kubernetes</span>
+                        <span class="badge badge-blue">AWS</span>
+                    </div>
+                    <div class="job-card-footer">
+                        <div class="job-salary">$115K–$145K <span>/ year</span></div>
+                        <a href="apply-job" class="apply-btn">Apply Now</a>
+                    </div>
+                </article>
+
+                <!-- Card 5 -->
+                <article class="job-card" data-aos="fade-up" data-aos-delay="80">
+                    <div class="job-card-header">
+                        <div style="flex:1">
+                            <h3 class="job-title">Marketing Strategist</h3>
+                            <div class="company-name">HubSpot</div>
+                        </div>
+                        <div class="company-logo-wrap" aria-label="HubSpot logo">🎯</div>
+                    </div>
+                    <div class="job-meta">
+                        <span class="meta-item">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z" />
+                            </svg>
+                            Boston, MA / Remote
+                        </span>
+                        <span class="meta-item">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                                <circle cx="12" cy="12" r="10" />
+                                <polyline points="12 6 12 12 16 14" />
+                            </svg>
+                            Today
+                        </span>
+                    </div>
+                    <div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1rem;">
+                        <span class="badge badge-purple">Hybrid</span>
+                        <span class="badge badge-blue">SEO</span>
+                        <span class="badge badge-blue">Analytics</span>
+                    </div>
+                    <div class="job-card-footer">
+                        <div class="job-salary">$80K–$105K <span>/ year</span></div>
+                        <a href="apply-job" class="apply-btn">Apply Now</a>
+                    </div>
+                </article>
+
+                <!-- Card 6 -->
+                <article class="job-card" data-aos="fade-up" data-aos-delay="160">
+                    <div class="job-card-header">
+                        <div style="flex:1">
+                            <h3 class="job-title">Backend Engineer (Go)</h3>
+                            <div class="company-name">Notion</div>
+                        </div>
+                        <div class="company-logo-wrap" aria-label="Notion logo">📝</div>
+                    </div>
+                    <div class="job-meta">
+                        <span class="meta-item">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z" />
+                            </svg>
+                            New York, NY
+                        </span>
+                        <span class="meta-item">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                                <circle cx="12" cy="12" r="10" />
+                                <polyline points="12 6 12 12 16 14" />
+                            </svg>
+                            4 days ago
+                        </span>
+                    </div>
+                    <div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1rem;">
+                        <span class="badge badge-green">Full Time</span>
+                        <span class="badge badge-orange">Go</span>
+                        <span class="badge badge-blue">PostgreSQL</span>
+                    </div>
+                    <div class="job-card-footer">
+                        <div class="job-salary">$130K–$170K <span>/ year</span></div>
+                        <a href="apply-job" class="apply-btn">Apply Now</a>
+                    </div>
+                </article>
+
+            </div><!-- /jobs-grid -->
+
+            <div class="jobs-footer" data-aos="fade-up">
+                <a href="browse-jobs" class="btn btn-primary">View All 48,000+ Jobs →</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════
+         TOP COMPANIES
+    ════════════════════════════════════════════ -->
+    <section id="companies" aria-labelledby="companies-title">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-label" data-aos="fade-up">Trusted Partners</div>
+                <h2 class="section-title" id="companies-title" data-aos="fade-up" data-aos-delay="50">
+                    Top Hiring Companies
+                </h2>
+                <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">
+                    Join thousands of professionals working at
+                    world-class organizations.
+                </p>
+            </div>
+
+            <div class="companies-grid">
+                <div class="company-card" data-aos="fade-up" data-aos-delay="0">
+                    <div class="company-logo-icon">🍎</div>
+                    <div class="company-card-name">Apple</div>
+                    <div class="company-card-jobs">320 open roles</div>
+                </div>
+                <div class="company-card" data-aos="fade-up" data-aos-delay="60">
+                    <div class="company-logo-icon">🔍</div>
+                    <div class="company-card-name">Google</div>
+                    <div class="company-card-jobs">580 open roles</div>
+                </div>
+                <div class="company-card" data-aos="fade-up" data-aos-delay="120">
+                    <div class="company-logo-icon">📦</div>
+                    <div class="company-card-name">Amazon</div>
+                    <div class="company-card-jobs">1,200 open roles</div>
+                </div>
+                <div class="company-card" data-aos="fade-up" data-aos-delay="180">
+                    <div class="company-logo-icon">🪟</div>
+                    <div class="company-card-name">Microsoft</div>
+                    <div class="company-card-jobs">870 open roles</div>
+                </div>
+                <div class="company-card" data-aos="fade-up" data-aos-delay="240">
+                    <div class="company-logo-icon">🚗</div>
+                    <div class="company-card-name">Tesla</div>
+                    <div class="company-card-jobs">415 open roles</div>
+                </div>
+                <div class="company-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="company-logo-icon">💼</div>
+                    <div class="company-card-name">LinkedIn</div>
+                    <div class="company-card-jobs">220 open roles</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- ════════════════════════════════════════════
+         HOW IT WORKS
+    ════════════════════════════════════════════ -->
+    <section id="how-it-works" aria-labelledby="how-title">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-label" data-aos="fade-up">Simple Process</div>
+                <h2 class="section-title" id="how-title" data-aos="fade-up" data-aos-delay="50">How TalentHub Works</h2>
+                <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">
+                    Your path from job seeker to hired — in
+                    four simple steps.
+                </p>
+            </div>
+
+            <div class="steps-grid">
+
+                <div class="step-card" data-aos="fade-up" data-aos-delay="0">
+                    <div class="step-number">01</div>
+                    <div class="step-icon">👤</div>
+                    <div class="step-title">Create Your Account</div>
+                    <p class="step-desc">
+                        Sign up in under 2 minutes. Build a professional profile that showcases your skills,
+                        experience, and aspirations.
+                    </p>
+                </div>
+
+                <div class="step-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="step-number">02</div>
+                    <div class="step-icon">🔎</div>
+                    <div class="step-title">Search Jobs</div>
+                    <p class="step-desc">
+                        Use smart filters to find roles that match your skills, location preferences, and
+                        salary expectations.
+                    </p>
+                </div>
+
+                <div class="step-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="step-number">03</div>
+                    <div class="step-icon">📋</div>
+                    <div class="step-title">Apply with Ease</div>
+                    <p class="step-desc">
+                        One-click apply using your saved profile. Track all applications from your personal
+                        dashboard in real time.
+                    </p>
+                </div>
+
+                <div class="step-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="step-number">04</div>
+                    <div class="step-icon">🎉</div>
+                    <div class="step-title">Get Hired</div>
+                    <p class="step-desc">
+                        Receive interview invitations, negotiate offers, and land the job you've always wanted
+                        — faster than ever.
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════
+         ABOUT SECTION
+    ════════════════════════════════════════════ -->
+    <section id="about" aria-labelledby="about-title">
+        <div class="container">
+            <div class="about-grid">
+
+                <!-- Visual -->
+                <div class="about-visual" data-aos="fade-right" data-aos-duration="800">
+                    <div class="about-card-main">
+                        <div class="about-emoji">🚀</div>
+                        <h3 style="font-family:var(--font-display);color:#fff;font-size:1.3rem;margin-bottom:.5rem;">
+                            Connecting
+                            Talent with Opportunity
+                        </h3>
+                        <p style="color:rgba(255,255,255,.6);font-size:.9rem;">
+                            Since 2019, TalentHub has helped millions of
+                            professionals find their perfect role.
+                        </p>
+                        <div class="about-stats-row">
+                            <div class="about-stat">
+                                <div class="about-stat-num">5M+</div>
+                                <div class="about-stat-lbl">Users</div>
+                            </div>
+                            <div class="about-stat">
+                                <div class="about-stat-num">190+</div>
+                                <div class="about-stat-lbl">Countries</div>
+                            </div>
+                            <div class="about-stat">
+                                <div class="about-stat-num">12K+</div>
+                                <div class="about-stat-lbl">Partners</div>
+                            </div>
+                            <div class="about-stat">
+                                <div class="about-stat-num">4.9★</div>
+                                <div class="about-stat-lbl">App Rating</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Content -->
+                <div class="about-content" data-aos="fade-left" data-aos-duration="800">
+                    <div class="section-header">
+                        <div class="section-label">Why TalentHub</div>
+                        <h2 class="section-title" id="about-title">The Smarter Way to Hire & Get Hired</h2>
+                        <p class="section-subtitle">
+                            We combine AI-powered matching, verified company profiles, and a seamless
+                            application experience to eliminate the friction from hiring.
+                        </p>
+                    </div>
+
+                    <div class="about-features">
+                        <div class="about-feature">
+                            <div class="feature-icon">🤖</div>
+                            <div>
+                                <div class="feature-title">AI-Powered Matching</div>
+                                <p class="feature-desc">
+                                    Our algorithm analyzes 50+ data points to surface jobs that genuinely fit your
+                                    profile, not just keyword matches.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="about-feature">
+                            <div class="feature-icon">✅</div>
+                            <div>
+                                <div class="feature-title">Verified Companies Only</div>
+                                <p class="feature-desc">
+                                    Every employer on TalentHub is verified. No ghost listings, no scams — only
+                                    real opportunities from real companies.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="about-feature">
+                            <div class="feature-icon">⚡</div>
+                            <div>
+                                <div class="feature-title">Lightning-Fast Apply</div>
+                                <p class="feature-desc">
+                                    Apply to dozens of jobs in minutes with our one-click apply system powered by
+                                    your saved profile and resume.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="margin-top:2rem;">
+                        <a href="browse-jobs" class="btn btn-primary">Explore Jobs →</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════
+         TESTIMONIALS
+    ════════════════════════════════════════════ -->
+    <section id="testimonials" aria-labelledby="testimonials-title">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-label" data-aos="fade-up">Success Stories</div>
+                <h2 class="section-title" id="testimonials-title" data-aos="fade-up" data-aos-delay="50">
+                    What Our Users Say
+                </h2>
+                <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">
+                    Real people, real results. Here's how
+                    TalentHub changed their careers.
+                </p>
+            </div>
+
+            <div class="testimonials-grid">
+
+                <article class="testimonial-card" data-aos="fade-up" data-aos-delay="0">
+                    <div class="quote-icon" aria-hidden="true">"</div>
+                    <div class="testimonial-stars" aria-label="5 stars">★★★★★</div>
+                    <p class="testimonial-text">
+                        "I'd been searching for months with no luck. TalentHub's AI matching sent me a
+                        role I'd never have found on my own — I started at Stripe two weeks later. Incredible platform."
+                    </p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar av-blue" aria-hidden="true">JM</div>
+                        <div>
+                            <div class="author-name">James Moretti</div>
+                            <div class="author-role">Senior Engineer · Stripe</div>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="testimonial-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="quote-icon" aria-hidden="true">"</div>
+                    <div class="testimonial-stars" aria-label="5 stars">★★★★★</div>
+                    <p class="testimonial-text">
+                        "As a recruiter, TalentHub saves our team hours every week. The quality of
+                        candidates is significantly higher than any other platform we've used. Our time-to-hire dropped by 40%."
+                    </p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar av-green" aria-hidden="true">SL</div>
+                        <div>
+                            <div class="author-name">Sarah Lim</div>
+                            <div class="author-role">Head of Talent · Notion</div>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="testimonial-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="quote-icon" aria-hidden="true">"</div>
+                    <div class="testimonial-stars" aria-label="5 stars">★★★★★</div>
+                    <p class="testimonial-text">
+                        "Switched careers from finance to UX design. TalentHub's filter system helped me
+                        target junior design roles specifically, and their application tracker made the whole process
+                        stress-free."
+                    </p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar av-orange" aria-hidden="true">AP</div>
+                        <div>
+                            <div class="author-name">Aria Patel</div>
+                            <div class="author-role">UX Designer · Figma</div>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="testimonial-card" data-aos="fade-up" data-aos-delay="0">
+                    <div class="quote-icon" aria-hidden="true">"</div>
+                    <div class="testimonial-stars" aria-label="5 stars">★★★★★</div>
+                    <p class="testimonial-text">
+                        "Posted our first job listing expecting a week to fill it. Within 48 hours we
+                        had 60 qualified applicants. The pre-screening is unmatched. TalentHub is now our go-to platform."
+                    </p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar av-purple" aria-hidden="true">DK</div>
+                        <div>
+                            <div class="author-name">David Kim</div>
+                            <div class="author-role">CTO · Series B Startup</div>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="testimonial-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="quote-icon" aria-hidden="true">"</div>
+                    <div class="testimonial-stars" aria-label="5 stars">★★★★★</div>
+                    <p class="testimonial-text">
+                        "The remote job filter is the best I've seen. Granular, accurate, and
+                        up-to-date. Found a fully remote role with a 60% salary bump. Could not recommend this platform more."
+                    </p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar av-teal" aria-hidden="true">MR</div>
+                        <div>
+                            <div class="author-name">Maya Rivera</div>
+                            <div class="author-role">Product Manager · Remote</div>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="testimonial-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="quote-icon" aria-hidden="true">"</div>
+                    <div class="testimonial-stars" aria-label="4 stars">★★★★★</div>
+                    <p class="testimonial-text">
+                        "As a recent grad, I felt intimidated by the job market. TalentHub's entry-level
+                        filter and salary transparency gave me confidence to apply — and land — my first tech role."
+                    </p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar av-blue" aria-hidden="true">TC</div>
+                        <div>
+                            <div class="author-name">Tom Chen</div>
+                            <div class="author-role">Software Engineer · HubSpot</div>
+                        </div>
+                    </div>
+                </article>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════
+         CTA SECTION
+    ════════════════════════════════════════════ -->
+    <section id="cta" aria-labelledby="cta-title">
+        <div class="container">
+            <div class="cta-inner" data-aos="zoom-in" data-aos-duration="700">
+                <div class="cta-content">
+                    <h2 class="cta-title" id="cta-title">Ready to Take the Next Step?</h2>
+                    <p class="cta-subtitle">
+                        Whether you're looking to hire top talent or land your dream role — TalentHub makes
+                        it happen. Join 5 million professionals today.
+                    </p>
+                    <div class="cta-buttons">
+                        <a href="#jobs" class="btn btn-accent">Browse All Jobs</a>
+                        <a href="#contact" class="btn btn-outline-white">Post a Job</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════
+         CONTACT SECTION
+    ════════════════════════════════════════════ -->
+    <section id="contact" aria-labelledby="contact-title">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-label" data-aos="fade-up">Get in Touch</div>
+                <h2 class="section-title" id="contact-title" data-aos="fade-up" data-aos-delay="50">Contact Us</h2>
+                <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">
+                    Have questions or want to post a job? Our
+                    team is here to help you succeed.
+                </p>
+            </div>
+
+            <div class="contact-grid">
+
+                <!-- Info -->
+                <div data-aos="fade-right">
+                    <h3 class="contact-info-title">Let's start a conversation</h3>
+                    <p class="contact-info-text">
+                        Whether you're a job seeker with questions, an employer looking to hire, or a
+                        partner wanting to collaborate — we'd love to hear from you.
+                    </p>
+                    <div class="contact-details">
+                        <div class="contact-detail">
+                            <div class="detail-icon" aria-hidden="true">📧</div>
+                            <div>
+                                <div class="detail-label">Email</div>
+                                <div class="detail-value">hello@talenthub.io</div>
+                            </div>
+                        </div>
+                        <div class="contact-detail">
+                            <div class="detail-icon" aria-hidden="true">📞</div>
+                            <div>
+                                <div class="detail-label">Phone</div>
+                                <div class="detail-value">+1 (800) 555-0198</div>
+                            </div>
+                        </div>
+                        <div class="contact-detail">
+                            <div class="detail-icon" aria-hidden="true">📍</div>
+                            <div>
+                                <div class="detail-label">Office</div>
+                                <div class="detail-value">340 Pine St, San Francisco, CA 94104</div>
+                            </div>
+                        </div>
+                        <div class="contact-detail">
+                            <div class="detail-icon" aria-hidden="true">⏰</div>
+                            <div>
+                                <div class="detail-label">Hours</div>
+                                <div class="detail-value">Mon–Fri, 9AM–6PM PST</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Form -->
+                <div data-aos="fade-left">
+                    <form class="contact-form" novalidate id="contact-form" aria-label="Contact form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="name">Your Name</label>
+                                <input type="text" id="name" name="name" placeholder="John Doe" required autocomplete="name" />
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email Address</label>
+                                <input type="email" id="email" name="email" placeholder="john@example.com" required
+                                       autocomplete="email" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="subject">Subject</label>
+                            <input type="text" id="subject" name="subject" placeholder="How can we help?" />
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" placeholder="Tell us more about your enquiry..."
+                                      required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;padding:1rem;">
+                            Send Message →
+                        </button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
