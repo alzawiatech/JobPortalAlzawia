@@ -1,4 +1,8 @@
-﻿
+﻿@{
+    var isLoggedIn = User.Identity?.IsAuthenticated == true;
+    var currentUser = User.Identity?.Name;
+}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,6 +22,95 @@
 
     <!-- Template CSS -->
     <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
+
+    <!-- Authentication Navigation CSS -->
+    <style>
+            /* Desktop authentication menu item */
+            .nav-auth-item {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            }
+
+                .nav-auth-item a {
+                    white-space: nowrap;
+                }
+
+            .nav-user-name {
+                font-weight: 600;
+                color: inherit;
+                max-width: 140px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+
+            .nav-logout-form {
+                display: inline-flex;
+                margin: 0;
+            }
+
+            .nav-logout-link {
+                border: none;
+                background: none;
+                padding: 0;
+                color: inherit;
+                font: inherit;
+                cursor: pointer;
+                text-decoration: none;
+            }
+
+                .nav-logout-link:hover {
+                    color: #2563eb;
+                }
+
+            /* Mobile authentication links */
+            .mobile-auth-section {
+                display: flex;
+                flex-direction: column;
+                gap: 12px;
+                padding: 12px 20px;
+            }
+
+                .mobile-auth-section a {
+                    display: block;
+                }
+
+            .mobile-user-name {
+                font-weight: 700;
+                overflow-wrap: anywhere;
+            }
+
+            .mobile-logout-form {
+                margin: 0;
+                width: 100%;
+            }
+
+            .mobile-logout-button {
+                width: 100%;
+                cursor: pointer;
+                font: inherit;
+            }
+
+            /* Keep desktop navigation tidy on smaller screens */
+            @@media (max-width: 1100px) and (min-width: 769px) {
+                .nav-user-name {
+                    max-width: 90px;
+                    font-size: 13px;
+                }
+            }
+
+            /* Mobile menu */
+            @@media (max-width: 768px) {
+                .nav-auth-item {
+                    display: none;
+                }
+
+                .mobile-auth-section {
+                    display: flex;
+                }
+            }
+    </style>
 
     @await RenderSectionAsync("Styles", required: false)
 </head>
@@ -83,17 +176,40 @@
                     <li>
                         <a asp-controller="Home"
                            asp-action="Index"
-                           asp-fragment="about">
-                            About
-                        </a>
-                    </li>
-
-                    <li>
-                        <a asp-controller="Home"
-                           asp-action="Index"
                            asp-fragment="contact">
                             Contact
                         </a>
+                    </li>
+
+                    <!-- Login/Register OR Username/Logout -->
+                    <li class="nav-auth-item">
+
+                        @if (isLoggedIn)
+                        {
+                            <span class="nav-user-name" title="@currentUser">
+                                @currentUser
+                            </span>
+
+                            <form asp-area="Identity"
+                                  asp-page="/Account/Logout"
+                                  asp-route-returnUrl="/"
+                                  method="post"
+                                  class="nav-logout-form">
+
+                                <button type="submit" class="nav-logout-link">
+                                    Logout
+                                </button>
+
+                            </form>
+                        }
+                        else
+                        {
+                            <a asp-area="Identity"
+                               asp-page="/Account/Login">
+                                Login / Register
+                            </a>
+                        }
+
                     </li>
 
                 </ul>
@@ -134,29 +250,82 @@
         </div>
 
         <!-- Mobile Navigation -->
-        <nav class="mobile-nav" id="mobile-nav"
+        <nav class="mobile-nav"
+             id="mobile-nav"
              aria-label="Mobile navigation">
 
             <a asp-controller="Home" asp-action="Index">Home</a>
 
             <a asp-controller="Jobs" asp-action="Index">Jobs</a>
 
-            <a asp-controller="Home" asp-action="Index"
-               asp-fragment="categories">Categories</a>
+            <a asp-controller="Home"
+               asp-action="Index"
+               asp-fragment="categories">
+                Categories
+            </a>
 
-            <a asp-controller="Home" asp-action="Index"
-               asp-fragment="companies">Companies</a>
+            <a asp-controller="Home"
+               asp-action="Index"
+               asp-fragment="companies">
+                Companies
+            </a>
 
-            <a asp-controller="Home" asp-action="Index"
-               asp-fragment="about">About</a>
+            <a asp-controller="Home"
+               asp-action="Index"
+               asp-fragment="about">
+                About
+            </a>
 
-            <a asp-controller="Home" asp-action="Index"
-               asp-fragment="contact">Contact</a>
+            <a asp-controller="Home"
+               asp-action="Index"
+               asp-fragment="contact">
+                Contact
+            </a>
 
-            <a asp-controller="Jobs" asp-action="Create"
+            <a asp-controller="Jobs"
+               asp-action="Create"
                class="btn btn-primary">
                 Post a Job
             </a>
+
+            <!-- Mobile Login/Register OR Username/Logout -->
+            <div class="mobile-auth-section">
+
+                @if (isLoggedIn)
+                {
+                    <span class="mobile-user-name">
+                        Welcome, @currentUser
+                    </span>
+
+                    <form asp-area="Identity"
+                          asp-page="/Account/Logout"
+                          asp-route-returnUrl="/"
+                          method="post"
+                          class="mobile-logout-form">
+
+                        <button type="submit"
+                                class="btn btn-outline mobile-logout-button">
+                            Logout
+                        </button>
+
+                    </form>
+                }
+                else
+                {
+                    <a asp-area="Identity"
+                       asp-page="/Account/Login"
+                       class="btn btn-outline">
+                        Login
+                    </a>
+
+                    <a asp-area="Identity"
+                       asp-page="/Account/Register"
+                       class="btn btn-primary">
+                        Register
+                    </a>
+                }
+
+            </div>
 
         </nav>
 
@@ -233,23 +402,18 @@
                         </li>
 
                         <li>
-                            <a asp-controller="Home" asp-action="Index"
+                            <a asp-controller="Home"
+                               asp-action="Index"
                                asp-fragment="categories">
                                 Job Categories
                             </a>
                         </li>
 
-                        <li>
-                            <a href="#">Career Advice</a>
-                        </li>
+                        <li><a href="#">Career Advice</a></li>
 
-                        <li>
-                            <a href="#">Resume Builder</a>
-                        </li>
+                        <li><a href="#">Resume Builder</a></li>
 
-                        <li>
-                            <a href="#">Salary Guide</a>
-                        </li>
+                        <li><a href="#">Salary Guide</a></li>
 
                     </ul>
 
@@ -269,21 +433,13 @@
                             </a>
                         </li>
 
-                        <li>
-                            <a href="#">Talent Search</a>
-                        </li>
+                        <li><a href="#">Talent Search</a></li>
 
-                        <li>
-                            <a href="#">Pricing Plans</a>
-                        </li>
+                        <li><a href="#">Pricing Plans</a></li>
 
-                        <li>
-                            <a href="#">Employer Branding</a>
-                        </li>
+                        <li><a href="#">Employer Branding</a></li>
 
-                        <li>
-                            <a href="#">Recruitment API</a>
-                        </li>
+                        <li><a href="#">Recruitment API</a></li>
 
                     </ul>
 
@@ -298,16 +454,35 @@
                     <ul class="footer-links" role="list">
 
                         <li>
-                            <a asp-controller="Home" asp-action="Index"
+                            <a asp-controller="Home"
+                               asp-action="Index"
                                asp-fragment="about">
                                 About Us
                             </a>
                         </li>
 
                         <li>
-                            <a asp-controller="Account" asp-action="Login">
-                                Login
-                            </a>
+                            @if (isLoggedIn)
+                            {
+                                <form asp-area="Identity"
+                                      asp-page="/Account/Logout"
+                                      asp-route-returnUrl="/"
+                                      method="post">
+
+                                    <button type="submit"
+                                            class="nav-logout-link">
+                                        Logout
+                                    </button>
+
+                                </form>
+                            }
+                            else
+                            {
+                                <a asp-area="Identity"
+                                   asp-page="/Account/Login">
+                                    Login
+                                </a>
+                            }
                         </li>
 
                         <li>
@@ -317,15 +492,14 @@
                         </li>
 
                         <li>
-                            <a asp-controller="Home" asp-action="Index"
+                            <a asp-controller="Home"
+                               asp-action="Index"
                                asp-fragment="contact">
                                 Contact
                             </a>
                         </li>
 
-                        <li>
-                            <a href="#">Blog</a>
-                        </li>
+                        <li><a href="#">Blog</a></li>
 
                     </ul>
 
@@ -338,11 +512,15 @@
             <div class="footer-bottom">
 
                 <p class="footer-copy">
+
                     © @DateTime.Now.Year
+
                     <a asp-controller="Home" asp-action="Index">
                         DubaiJobs
                     </a>.
+
                     All rights reserved.
+
                 </p>
 
                 <div class="footer-bottom-links">
@@ -370,7 +548,8 @@
             aria-label="Scroll back to top"
             title="Scroll to top">
 
-        <svg width="18" height="18"
+        <svg width="18"
+             height="18"
              fill="none"
              stroke="currentColor"
              viewBox="0 0 24 24"
