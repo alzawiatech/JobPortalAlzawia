@@ -5,6 +5,11 @@
     ViewData["Title"] = "Register";
 }
 
+<link rel="stylesheet"
+      href="~/css/RegistraionPage.css"
+      asp-append-version="true" />
+      <script src="~/js/RegistraionPage.js"
+        asp-append-version="true"></script>
 <main>
     <section id="auth-section">
         <div class="container auth-container">
@@ -35,15 +40,73 @@
                             Create an account
                         </h3>
 
+                        <!-- LOGIN URL FOR BOTH POPUPS -->
+                        <input type="hidden"
+                               id="loginRedirectUrl"
+                               value="@Url.Page("./Login", new { returnUrl = Model.ReturnUrl })" />
+
+                        <!-- SUCCESS POPUP -->
+                        @if (TempData["RegisterSuccess"] != null)
+                        {
+                            <div id="registerToast"
+                                 class="register-toast success-toast"
+                                 role="alert">
+
+                                <span class="toast-icon">&#10004;</span>
+
+                                <div class="toast-content">
+                                    <strong>Registration Successful!</strong>
+
+                                    <p>@TempData["RegisterSuccess"]</p>
+                                </div>
+
+                                <button type="button"
+                                        class="toast-close"
+                                        onclick="closeRegisterToast()"
+                                        aria-label="Close">
+                                    &times;
+                                </button>
+
+                            </div>
+                        }
+
+                        <!-- DUPLICATE EMAIL WARNING POPUP -->
+                        @if (TempData["RegisterError"] != null)
+                        {
+                            <div id="registerToast"
+                                 class="register-toast error-toast"
+                                 role="alert">
+
+                                <span class="toast-icon">&#9888;</span>
+
+                                <div class="toast-content">
+                                    <strong>Registration Warning!</strong>
+
+                                    <p>@TempData["RegisterError"]</p>
+                                </div>
+
+                                <button type="button"
+                                        class="toast-close"
+                                        onclick="closeRegisterToast()"
+                                        aria-label="Close">
+                                    &times;
+                                </button>
+
+                            </div>
+                        }
+
+                        <!-- REGISTRATION FORM -->
                         <form id="registerForm"
                               asp-route-returnUrl="@Model.ReturnUrl"
                               method="post">
 
+                            <!-- General validation messages -->
                             <div asp-validation-summary="ModelOnly"
                                  class="text-danger"
                                  role="alert">
                             </div>
 
+                            <!-- EMAIL -->
                             <div class="form-group">
 
                                 <label asp-for="Input.Email">
@@ -57,11 +120,13 @@
                                        required />
 
                                 <span asp-validation-for="Input.Email"
-                                      class="text-danger">
+                                      class="text-danger"
+                                      style="display:block; font-size:13px; margin-top:5px;">
                                 </span>
 
                             </div>
 
+                            <!-- PASSWORD -->
                             <div class="form-group">
 
                                 <label asp-for="Input.Password">
@@ -75,11 +140,13 @@
                                        required />
 
                                 <span asp-validation-for="Input.Password"
-                                      class="text-danger">
+                                      class="text-danger"
+                                      style="display:block; font-size:13px; margin-top:5px;">
                                 </span>
 
                             </div>
 
+                            <!-- CONFIRM PASSWORD -->
                             <div class="form-group">
 
                                 <label asp-for="Input.ConfirmPassword">
@@ -93,11 +160,13 @@
                                        required />
 
                                 <span asp-validation-for="Input.ConfirmPassword"
-                                      class="text-danger">
+                                      class="text-danger"
+                                      style="display:block; font-size:13px; margin-top:5px;">
                                 </span>
 
                             </div>
 
+                            <!-- SUBMIT BUTTON -->
                             <button id="registerSubmit"
                                     type="submit"
                                     class="btn btn-primary"
@@ -111,6 +180,7 @@
                             or sign up with
                         </div>
 
+                        <!-- SOCIAL LOGIN -->
                         @if (Model.ExternalLogins?.Count > 0)
                         {
                             <form asp-page="./ExternalLogin"
@@ -150,6 +220,12 @@
     </section>
 </main>
 
+
+
+
+
 @section Scripts {
+
     <partial name="_ValidationScriptsPartial" />
+
 }

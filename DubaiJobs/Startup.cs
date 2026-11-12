@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using DubaiJobs.Services;
 
 namespace DubaiJobs
 {
@@ -22,6 +24,8 @@ namespace DubaiJobs
 
         public void ConfigureServices(IServiceCollection services)
         {
+
+         
             // Database Connection
             var connectionString =
                 Configuration.GetConnectionString("DefaultConnection");
@@ -52,6 +56,7 @@ namespace DubaiJobs
             // MVC and Razor Pages
             services.AddControllersWithViews();
             services.AddRazorPages();
+            services.AddTransient<IEmailSender, EmailSender>();
         }
 
         public void Configure(
