@@ -35,7 +35,8 @@ namespace DubaiJobs
             // ASP.NET Core Identity Configuration
             services.AddDefaultIdentity<ApplicationUser>(options =>
             {
-                options.SignIn.RequireConfirmedAccount = false;
+                options.SignIn.RequireConfirmedAccount = true;
+                options.User.RequireUniqueEmail = true;
 
                 // Password Settings
                 options.Password.RequiredLength = 8;
