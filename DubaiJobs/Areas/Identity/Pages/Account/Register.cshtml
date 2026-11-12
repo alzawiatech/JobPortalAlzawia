@@ -1,0 +1,155 @@
+﻿@page
+@model RegisterModel
+
+@{
+    ViewData["Title"] = "Register";
+}
+
+<main>
+    <section id="auth-section">
+        <div class="container auth-container">
+
+            <div class="auth-card" data-aos="fade-up">
+
+                <!-- Tabs -->
+                <div class="auth-tabs">
+
+                    <a asp-page="./Login"
+                       asp-route-returnUrl="@Model.ReturnUrl"
+                       class="auth-tab">
+                        Log in
+                    </a>
+
+                    <a asp-page="./Register"
+                       class="auth-tab active">
+                        Sign up
+                    </a>
+
+                </div>
+
+                <div class="auth-forms">
+
+                    <div class="auth-form active" id="signupForm">
+
+                        <h3 style="margin-bottom: var(--sp-6); font-size: 1.2rem;">
+                            Create an account
+                        </h3>
+
+                        <form id="registerForm"
+                              asp-route-returnUrl="@Model.ReturnUrl"
+                              method="post">
+
+                            <div asp-validation-summary="ModelOnly"
+                                 class="text-danger"
+                                 role="alert">
+                            </div>
+
+                            <div class="form-group">
+
+                                <label asp-for="Input.Email">
+                                    Email address *
+                                </label>
+
+                                <input asp-for="Input.Email"
+                                       type="email"
+                                       placeholder="hello@example.com"
+                                       autocomplete="username"
+                                       required />
+
+                                <span asp-validation-for="Input.Email"
+                                      class="text-danger">
+                                </span>
+
+                            </div>
+
+                            <div class="form-group">
+
+                                <label asp-for="Input.Password">
+                                    Password *
+                                </label>
+
+                                <input asp-for="Input.Password"
+                                       type="password"
+                                       placeholder="Create a password"
+                                       autocomplete="new-password"
+                                       required />
+
+                                <span asp-validation-for="Input.Password"
+                                      class="text-danger">
+                                </span>
+
+                            </div>
+
+                            <div class="form-group">
+
+                                <label asp-for="Input.ConfirmPassword">
+                                    Confirm password *
+                                </label>
+
+                                <input asp-for="Input.ConfirmPassword"
+                                       type="password"
+                                       placeholder="Re-enter your password"
+                                       autocomplete="new-password"
+                                       required />
+
+                                <span asp-validation-for="Input.ConfirmPassword"
+                                      class="text-danger">
+                                </span>
+
+                            </div>
+
+                            <button id="registerSubmit"
+                                    type="submit"
+                                    class="btn btn-primary"
+                                    style="width:100%; margin-top: var(--sp-6);">
+                                Sign up
+                            </button>
+
+                        </form>
+
+                        <div class="auth-divider">
+                            or sign up with
+                        </div>
+
+                        @if (Model.ExternalLogins?.Count > 0)
+                        {
+                            <form asp-page="./ExternalLogin"
+                                  asp-route-returnUrl="@Model.ReturnUrl"
+                                  method="post">
+
+                                <div class="social-login">
+
+                                    @foreach (var provider in Model.ExternalLogins)
+                                    {
+                                        <button type="submit"
+                                                class="social-link"
+                                                name="provider"
+                                                value="@provider.Name">
+                                            @provider.DisplayName
+                                        </button>
+                                    }
+
+                                </div>
+
+                            </form>
+                        }
+                        else
+                        {
+                            <p class="text-muted text-center">
+                                Create your account using your email.
+                            </p>
+                        }
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+</main>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
