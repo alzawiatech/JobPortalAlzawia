@@ -1,6 +1,7 @@
 ﻿@{
     var isLoggedIn = User.Identity?.IsAuthenticated == true;
     var currentUser = User.Identity?.Name;
+    var postJobReturnUrl = Url.Action("Privacy", "Home") ?? "/";
 }
 
 <!DOCTYPE html>
@@ -223,11 +224,23 @@
                         Browse Jobs
                     </a>
 
-                    <a asp-controller="Jobs"
-                       asp-action="Create"
-                       class="btn btn-primary">
-                        Post a Job
-                    </a>
+                    @if (isLoggedIn)
+                    {
+                        <a asp-controller="Home"
+                           asp-action="Privacy"
+                           class="btn btn-primary">
+                            Post a Job
+                        </a>
+                    }
+                    else
+                    {
+                        <a asp-area="Identity"
+                           asp-page="/Account/Login"
+                           asp-route-returnUrl="@postJobReturnUrl"
+                           class="btn btn-primary">
+                            Post a Job
+                        </a>
+                    }
 
                 </div>
 
@@ -250,6 +263,7 @@
         </div>
 
         <!-- Mobile Navigation -->
+ 
         <nav class="mobile-nav"
              id="mobile-nav"
              aria-label="Mobile navigation">
@@ -270,22 +284,17 @@
                 Companies
             </a>
 
-            <a asp-controller="Home"
+            @* <a asp-controller="Home"
                asp-action="Index"
                asp-fragment="about">
                 About
-            </a>
+            </a> *@
 
+            <!-- Contact -->
             <a asp-controller="Home"
                asp-action="Index"
                asp-fragment="contact">
                 Contact
-            </a>
-
-            <a asp-controller="Jobs"
-               asp-action="Create"
-               class="btn btn-primary">
-                Post a Job
             </a>
 
             <!-- Mobile Login/Register OR Username/Logout -->
@@ -294,7 +303,7 @@
                 @if (isLoggedIn)
                 {
                     <span class="mobile-user-name">
-                        Welcome, @currentUser
+                        Hello, @currentUser!
                     </span>
 
                     <form asp-area="Identity"
@@ -312,22 +321,21 @@
                 }
                 else
                 {
-                    <a asp-area="Identity"
-                       asp-page="/Account/Login"
-                       class="btn btn-outline">
-                        Login
-                    </a>
+                    <span class="mobile-user-name">
+                        Hello! Welcome to DubaiJobs.
+                    </span>
 
-                    <a asp-area="Identity"
-                       asp-page="/Account/Register"
-                       class="btn btn-primary">
-                        Register
-                    </a>
+                    <button type="button"
+                            class="btn btn-outline mobile-logout-button rounded-0 border"
+                            onclick="window.location.href='@Url.Page("/Account/Login", new { area = "Identity" })'">
+                        Login / Register
+                    </button>
                 }
 
             </div>
 
         </nav>
+
 
     </header>
 
@@ -486,8 +494,8 @@
                         </li>
 
                         <li>
-                            <a asp-controller="Home" asp-action="Privacy">
-                                Privacy
+                            <a asp-controller="Home" asp-action="contact">
+                                Contact
                             </a>
                         </li>
 
