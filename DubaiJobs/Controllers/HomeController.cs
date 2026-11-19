@@ -1,19 +1,27 @@
 ﻿
 using DubaiJobs.Models;
+using DubaiJobs.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace DubaiJobs.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly ApplicationDbContext _context;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(
+            ILogger<HomeController> logger,
+            ApplicationDbContext context)
         {
             _logger = logger;
+            _context = context;
         }
 
         public IActionResult Index()
@@ -32,11 +40,24 @@ namespace DubaiJobs.Controllers
             return View();
         }
 
-        // Browse Jobs page
+        // Browse Jobs - Public access
         [AllowAnonymous]
-        public IActionResult BrowsJobs()
+        public async Task<IActionResult> BrowsJobs()
         {
-            return View();
+            // Retrieve ALL jobs from database
+            var jobs = await _context.PostJobs
+                .AsNoTracking()
+                .OrderByDescending(j => j.PostedAt)
+                .ToListAsync();
+
+            // Debug information
+            _logger.LogInformation(
+                "Browse Jobs: {JobCount} jobs retrieved from database",
+                jobs.Count);
+
+            ViewBag.TotalJobs = jobs.Count;
+
+            return View(jobs);
         }
 
         [ResponseCache(
