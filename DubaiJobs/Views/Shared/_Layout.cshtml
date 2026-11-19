@@ -1,7 +1,7 @@
 ﻿@{
     var isLoggedIn = User.Identity?.IsAuthenticated == true;
     var currentUser = User.Identity?.Name;
-    var postJobReturnUrl = Url.Action("Privacy", "Home") ?? "/";
+    var postJobReturnUrl = Url.Action("dashboard", "Home") ?? "/";
 }
 
 <!DOCTYPE html>
@@ -152,8 +152,7 @@
                     </li>
 
                     <li>
-                        <a asp-controller="Jobs"
-                           asp-action="Index">
+                        <a asp-controller="Home" asp-action="BrowsJobs">
                             Jobs
                         </a>
                     </li>
@@ -221,13 +220,13 @@
                     <a asp-controller="Jobs"
                        asp-action="Index"
                        class="btn btn-outline">
-                        Browse Jobs
+                        Auto Apply
                     </a>
 
                     @if (isLoggedIn)
                     {
                         <a asp-controller="Home"
-                           asp-action="Privacy"
+                           asp-action="dashboard"
                            class="btn btn-primary">
                             Post a Job
                         </a>

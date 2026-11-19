@@ -1,13 +1,11 @@
-﻿using DubaiJobs.Models;
+﻿
+using DubaiJobs.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;namespace DubaiJobs.Controllers
+
+namespace DubaiJobs.Controllers
 {
     public class HomeController : Controller
     {
@@ -22,16 +20,36 @@ using Microsoft.AspNetCore.Authorization;namespace DubaiJobs.Controllers
         {
             return View();
         }
-        [Authorize]
+
         public IActionResult Privacy()
         {
             return View();
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        [Authorize]
+        public IActionResult dashboard()
+        {
+            return View();
+        }
+
+        // Browse Jobs page
+        [AllowAnonymous]
+        public IActionResult BrowsJobs()
+        {
+            return View();
+        }
+
+        [ResponseCache(
+            Duration = 0,
+            Location = ResponseCacheLocation.None,
+            NoStore = true)]
         public IActionResult Error()
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return View(new ErrorViewModel
+            {
+                RequestId = Activity.Current?.Id ??
+                            HttpContext.TraceIdentifier
+            });
         }
     }
 }

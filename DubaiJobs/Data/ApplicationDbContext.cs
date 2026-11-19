@@ -11,6 +11,9 @@ namespace DubaiJobs.Data
             DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
+
         }
+        public DbSet<PostJobs> PostJobs { get; set; }
+
     }
 }

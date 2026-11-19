@@ -1,0 +1,368 @@
+﻿<!-- Simple hero for browse page -->
+<section id="browse-hero">
+    <div class="container">
+        <h1 class="browse-hero-title" data-aos="fade-up">Find your next opportunity</h1>
+        <p class="browse-hero-desc" data-aos="fade-up" data-aos-delay="80">Explore thousands of jobs from top companies. Use filters to narrow down your search.</p>
+
+        <!-- Quick search row -->
+        <div class="quick-search" data-aos="fade-up" data-aos-delay="150">
+            <div class="search-field">
+                <span class="field-icon">🔍</span>
+                <input type="text" placeholder="Job title or keyword" aria-label="Job title" />
+            </div>
+            <div class="search-field">
+                <span class="field-icon">📍</span>
+                <input type="text" placeholder="City or remote" aria-label="Location" />
+            </div>
+            <div class="search-field">
+                <span class="field-icon">📂</span>
+                <select aria-label="Category">
+                    <option>All categories</option>
+                    <option>Technology</option>
+                    <option>Design</option>
+                    <option>Marketing</option>
+                    <option>Finance</option>
+                </select>
+            </div>
+            <button class="btn btn-primary" style="border-radius: var(--radius-md);">Search</button>
+        </div>
+    </div>
+</section>
+
+<!-- Browse jobs section with filter sidebar -->
+<section id="browse-jobs">
+    <div class="container">
+        <div class="browse-layout">
+            <!-- Filter sidebar -->
+            <aside class="filter-sidebar" data-aos="fade-right">
+                <div class="filter-title">
+                    <span>Filter jobs</span>
+                    <span class="filter-clear" id="clearFilters">Clear all</span>
+                </div>
+
+                <!-- Active filters (dynamic, hidden initially) -->
+                <div class="active-filters" id="activeFilters" style="display: none;">
+                    <!-- will be populated by JS -->
+                </div>
+
+                <div class="filter-group">
+                    <h4>🏷️ Job type</h4>
+                    <label class="filter-checkbox"><input type="checkbox" class="filter-check" data-filter="type" value="fulltime"> <span>Full-time</span> <span class="count">(124)</span></label>
+                    <label class="filter-checkbox"><input type="checkbox" class="filter-check" data-filter="type" value="parttime"> <span>Part-time</span> <span class="count">(32)</span></label>
+                    <label class="filter-checkbox"><input type="checkbox" class="filter-check" data-filter="type" value="remote"> <span>Remote</span> <span class="count">(210)</span></label>
+                    <label class="filter-checkbox"><input type="checkbox" class="filter-check" data-filter="type" value="hybrid"> <span>Hybrid</span> <span class="count">(98)</span></label>
+                    <label class="filter-checkbox"><input type="checkbox" class="filter-check" data-filter="type" value="internship"> <span>Internship</span> <span class="count">(15)</span></label>
+                </div>
+
+                <div class="filter-group">
+                    <h4>💼 Experience level</h4>
+                    <label class="filter-checkbox"><input type="checkbox" class="filter-check" data-filter="level" value="entry"> <span>Entry level</span> <span class="count">(78)</span></label>
+                    <label class="filter-checkbox"><input type="checkbox" class="filter-check" data-filter="level" value="mid"> <span>Mid level</span> <span class="count">(146)</span></label>
+                    <label class="filter-checkbox"><input type="checkbox" class="filter-check" data-filter="level" value="senior"> <span>Senior</span> <span class="count">(112)</span></label>
+                    <label class="filter-checkbox"><input type="checkbox" class="filter-check" data-filter="level" value="lead"> <span>Lead / manager</span> <span class="count">(43)</span></label>
+                </div>
+
+                <div class="filter-group salary-range">
+                    <h4>💰 Salary range (yearly)</h4>
+                    <div class="range-inputs">
+                        <select id="salaryMin">
+                            <option value="">Min</option>
+                            <option value="40">$40k</option>
+                            <option value="60">$60k</option>
+                            <option value="80">$80k</option>
+                            <option value="100">$100k</option>
+                            <option value="120">$120k</option>
+                            <option value="150">$150k</option>
+                        </select>
+                        <select id="salaryMax">
+                            <option value="">Max</option>
+                            <option value="80">$80k</option>
+                            <option value="100">$100k</option>
+                            <option value="120">$120k</option>
+                            <option value="150">$150k</option>
+                            <option value="200">$200k</option>
+                            <option value="250">$250k+</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="filter-group">
+                    <h4>📅 Date posted</h4>
+                    <label class="filter-checkbox"><input type="radio" name="date" value="today"> <span>Today</span></label>
+                    <label class="filter-checkbox"><input type="radio" name="date" value="3days"> <span>Last 3 days</span></label>
+                    <label class="filter-checkbox"><input type="radio" name="date" value="week"> <span>This week</span></label>
+                    <label class="filter-checkbox"><input type="radio" name="date" value="month"> <span>This month</span></label>
+                </div>
+
+                <button class="btn btn-primary" style="width:100%;" id="applyFilters">Apply filters</button>
+            </aside>
+
+            <!-- Job listings -->
+            <div class="browse-main" data-aos="fade-left">
+                <!-- Header with result count and sort -->
+                <div class="browse-header">
+                    <div class="job-count"><strong>247</strong> jobs found</div>
+                    <div class="sort-select">
+                        <label for="sort">Sort by:</label>
+                        <select id="sort">
+                            <option>Most recent</option>
+                            <option>Salary: high to low</option>
+                            <option>Salary: low to high</option>
+                            <option>Relevance</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Jobs grid (reusing .jobs-grid and .job-card) -->
+                <div class="jobs-grid">
+                    <!-- card 1 -->
+                    <article class="job-card">
+                        <div class="job-card-header">
+                            <div style="flex:1"><h3 class="job-title">Senior Frontend Engineer</h3><div class="company-name">Stripe</div></div>
+                            <div class="company-logo-wrap">💳</div>
+                        </div>
+                        <div class="job-meta">
+                            <span class="meta-item"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z" /></svg> San Francisco, CA</span>
+                            <span class="meta-item"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></svg> 2d ago</span>
+                        </div>
+                        <div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1rem;">
+                            <span class="badge badge-green">Full Time</span>
+                            <span class="badge badge-blue">React</span>
+                        </div>
+                        <div class="job-card-footer">
+                            <div class="job-salary">$140K–$180K <span>/ year</span></div>
+                            <a href="apply-job" class="apply-btn">Apply</a>
+                        </div>
+                    </article>
+
+                    <!-- card 2 -->
+                    <article class="job-card">
+                        <div class="job-card-header">
+                            <div style="flex:1"><h3 class="job-title">Product Designer</h3><div class="company-name">Airbnb</div></div>
+                            <div class="company-logo-wrap">🏠</div>
+                        </div>
+                        <div class="job-meta">
+                            <span class="meta-item"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z" /></svg> Remote</span>
+                            <span class="meta-item"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></svg> 1d ago</span>
+                        </div>
+                        <div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1rem;">
+                            <span class="badge badge-purple">Remote</span>
+                            <span class="badge badge-blue">Figma</span>
+                        </div>
+                        <div class="job-card-footer">
+                            <div class="job-salary">$120K–$150K <span>/ year</span></div>
+                            <a href="apply-job" class="apply-btn">Apply</a>
+                        </div>
+                    </article>
+
+                    <!-- card 3 -->
+                    <article class="job-card">
+                        <div class="job-card-header">
+                            <div style="flex:1"><h3 class="job-title">Data Scientist</h3><div class="company-name">Netflix</div></div>
+                            <div class="company-logo-wrap">🎬</div>
+                        </div>
+                        <div class="job-meta">
+                            <span class="meta-item"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z" /></svg> Los Angeles, CA</span>
+                            <span class="meta-item"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></svg> 5d ago</span>
+                        </div>
+                        <div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1rem;">
+                            <span class="badge badge-green">Full Time</span>
+                            <span class="badge badge-orange">Python</span>
+                        </div>
+                        <div class="job-card-footer">
+                            <div class="job-salary">$160K–$220K <span>/ year</span></div>
+                            <a href="apply-job" class="apply-btn">Apply</a>
+                        </div>
+                    </article>
+
+                    <!-- card 4 -->
+                    <article class="job-card">
+                        <div class="job-card-header">
+                            <div style="flex:1"><h3 class="job-title">DevOps Engineer</h3><div class="company-name">Shopify</div></div>
+                            <div class="company-logo-wrap">🛒</div>
+                        </div>
+                        <div class="job-meta">
+                            <span class="meta-item"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z" /></svg> Toronto, Canada</span>
+                            <span class="meta-item"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></svg> 3d ago</span>
+                        </div>
+                        <div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1rem;">
+                            <span class="badge badge-green">Full Time</span>
+                            <span class="badge badge-blue">AWS</span>
+                        </div>
+                        <div class="job-card-footer">
+                            <div class="job-salary">$115K–$145K <span>/ year</span></div>
+                            <a href="apply-job" class="apply-btn">Apply</a>
+                        </div>
+                    </article>
+
+                    <!-- card 5 -->
+                    <article class="job-card">
+                        <div class="job-card-header">
+                            <div style="flex:1"><h3 class="job-title">Marketing Manager</h3><div class="company-name">HubSpot</div></div>
+                            <div class="company-logo-wrap">🎯</div>
+                        </div>
+                        <div class="job-meta">
+                            <span class="meta-item"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z" /></svg> Boston, MA</span>
+                            <span class="meta-item"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></svg> Today</span>
+                        </div>
+                        <div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1rem;">
+                            <span class="badge badge-purple">Hybrid</span>
+                            <span class="badge badge-blue">SEO</span>
+                        </div>
+                        <div class="job-card-footer">
+                            <div class="job-salary">$90K–$115K <span>/ year</span></div>
+                            <a href="apply-job" class="apply-btn">Apply</a>
+                        </div>
+                    </article>
+
+                    <!-- card 6 -->
+                    <article class="job-card">
+                        <div class="job-card-header">
+                            <div style="flex:1"><h3 class="job-title">Backend Engineer (Go)</h3><div class="company-name">Notion</div></div>
+                            <div class="company-logo-wrap">📝</div>
+                        </div>
+                        <div class="job-meta">
+                            <span class="meta-item"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z" /></svg> New York, NY</span>
+                            <span class="meta-item"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></svg> 4d ago</span>
+                        </div>
+                        <div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1rem;">
+                            <span class="badge badge-green">Full Time</span>
+                            <span class="badge badge-orange">Go</span>
+                        </div>
+                        <div class="job-card-footer">
+                            <div class="job-salary">$130K–$170K <span>/ year</span></div>
+                            <a href="apply-job" class="apply-btn">Apply</a>
+                        </div>
+                    </article>
+                </div>
+
+                <!-- Pagination -->
+                <div class="pagination">
+                    <span class="page-item active">1</span>
+                    <span class="page-item">2</span>
+                    <span class="page-item">3</span>
+                    <span class="page-item">4</span>
+                    <span class="page-item">5</span>
+                    <span class="page-item">...</span>
+                    <span class="page-item">12</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<script>
+    (function () {
+        // Init AOS
+        AOS.init({ duration: 680, easing: 'ease-out-cubic', once: true, offset: 60 });
+
+        // Preloader
+        window.addEventListener('load', function () {
+            const preloader = document.getElementById('preloader');
+            setTimeout(function () {
+                preloader.classList.add('hidden');
+                setTimeout(function () { preloader.remove(); }, 700);
+            }, 900);
+        });
+
+        // Sticky header
+        const header = document.getElementById('header');
+        window.addEventListener('scroll', function () {
+            header.classList.toggle('scrolled', window.scrollY > 40);
+        }, { passive: true });
+
+        // Mobile menu
+        const hamburger = document.getElementById('hamburger');
+        const mobileNav = document.getElementById('mobile-nav');
+        hamburger.addEventListener('click', function () {
+            const isOpen = mobileNav.classList.toggle('open');
+            hamburger.classList.toggle('open', isOpen);
+            hamburger.setAttribute('aria-expanded', isOpen);
+            document.body.style.overflow = isOpen ? 'hidden' : '';
+        });
+        mobileNav.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', function () {
+                mobileNav.classList.remove('open');
+                hamburger.classList.remove('open');
+                hamburger.setAttribute('aria-expanded', 'false');
+                document.body.style.overflow = '';
+            });
+        });
+        document.addEventListener('click', function (e) {
+            if (!header.contains(e.target) && mobileNav.classList.contains('open')) {
+                mobileNav.classList.remove('open');
+                hamburger.classList.remove('open');
+                hamburger.setAttribute('aria-expanded', 'false');
+                document.body.style.overflow = '';
+            }
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const target = document.querySelector(this.getAttribute('href'));
+                if (!target) return;
+                e.preventDefault();
+                const navHeight = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--nav-height'));
+                const offsetTop = target.getBoundingClientRect().top + window.pageYOffset - navHeight;
+                window.scrollTo({ top: offsetTop, behavior: 'smooth' });
+            });
+        });
+
+        // Scroll top button
+        const scrollTopBtn = document.getElementById('scroll-top');
+        window.addEventListener('scroll', function () {
+            scrollTopBtn.classList.toggle('visible', window.scrollY > 400);
+        }, { passive: true });
+        scrollTopBtn.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Simple filter UI simulation (just toggles active filters)
+        const checkboxes = document.querySelectorAll('.filter-check');
+        const clearBtn = document.getElementById('clearFilters');
+        const activeFiltersDiv = document.getElementById('activeFilters');
+        const applyBtn = document.getElementById('applyFilters');
+
+        function updateActiveFilters() {
+            const checked = Array.from(checkboxes).filter(cb => cb.checked);
+            if (checked.length > 0) {
+                activeFiltersDiv.style.display = 'flex';
+                activeFiltersDiv.innerHTML = '';
+                checked.forEach(cb => {
+                    const value = cb.closest('.filter-checkbox')?.querySelector('span')?.innerText.split('(')[0].trim() || cb.value;
+                    const tag = document.createElement('span');
+                    tag.className = 'filter-tag';
+                    tag.innerHTML = `${value} <button data-filter="remove" data-value="${cb.value}">✕</button>`;
+                    activeFiltersDiv.appendChild(tag);
+                });
+                // add remove listeners
+                activeFiltersDiv.querySelectorAll('button').forEach(btn => {
+                    btn.addEventListener('click', function (e) {
+                        const value = this.dataset.value;
+                        const targetCb = Array.from(checkboxes).find(cb => cb.value === value);
+                        if (targetCb) targetCb.checked = false;
+                        updateActiveFilters();
+                    });
+                });
+            } else {
+                activeFiltersDiv.style.display = 'none';
+            }
+        }
+
+        checkboxes.forEach(cb => cb.addEventListener('change', updateActiveFilters));
+        clearBtn.addEventListener('click', function () {
+            checkboxes.forEach(cb => cb.checked = false);
+            updateActiveFilters();
+        });
+        applyBtn.addEventListener('click', function () {
+            // just simulate, could show a toast or simply update UI
+            alert('Filters applied (demo) – job list would update.');
+        });
+
+        // Salary range clear (dummy)
+        document.getElementById('salaryMin').addEventListener('change', updateActiveFilters);
+        document.getElementById('salaryMax').addEventListener('change', updateActiveFilters);
+    })();
+</script>
