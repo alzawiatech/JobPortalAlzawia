@@ -1,0 +1,691 @@
+﻿@model DubaiJobs.ViewModels.JobApplicationViewModel
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    ViewData["Title"] = Model.IsSubmitted
+        ? "Application Submitted"
+        : "Apply for Job";
+}
+
+<style>
+    /* Validation summary */
+    .validation-summary-valid {
+        display: none;
+    }
+
+    .validation-summary-errors {
+        color: #b42318;
+        background: #fef3f2;
+        border: 1px solid #fecdca;
+        border-radius: 8px;
+        padding: 14px 18px;
+        margin-bottom: 22px;
+        font-size: 14px;
+        display: block;
+    }
+
+        .validation-summary-errors ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+
+        .validation-summary-errors li {
+            margin-bottom: 5px;
+        }
+
+            .validation-summary-errors li:last-child {
+                margin-bottom: 0;
+            }
+
+    .field-validation-error {
+        display: block;
+        color: #b42318;
+        font-size: 13px;
+        margin-top: 5px;
+    }
+
+    .input-validation-error {
+        border-color: #d92d20 !important;
+    }
+
+    /* Resume upload */
+    .file-input-wrapper {
+        position: relative;
+        width: 100%;
+    }
+
+        .file-input-wrapper input[type="file"] {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            opacity: 0;
+            overflow: hidden;
+        }
+
+    .file-input-label {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        padding: 18px;
+        border: 2px dashed #cbd5e1;
+        border-radius: 10px;
+        cursor: pointer;
+        text-align: center;
+        transition: 0.2s ease;
+        color: #475569;
+        min-height: 65px;
+    }
+
+        .file-input-label:hover {
+            border-color: #2563eb;
+            background: #f8fafc;
+        }
+
+        .file-input-label svg {
+            width: 25px;
+            height: 25px;
+            flex-shrink: 0;
+        }
+
+    .form-hint {
+        font-size: 12px;
+        color: #64748b;
+        margin-top: 7px;
+    }
+
+    /* Application success panel */
+    .application-success-panel {
+        background: #ffffff;
+        border: 1px solid #d1fae5;
+        border-radius: 14px;
+        padding: 35px 25px;
+        text-align: center;
+        box-shadow: 0 4px 18px rgba(0, 0, 0, 0.05);
+    }
+
+    .success-icon {
+        width: 70px;
+        height: 70px;
+        margin: 0 auto 20px;
+        border-radius: 50%;
+        background: #dcfce7;
+        color: #15803d;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 35px;
+        font-weight: bold;
+    }
+
+    .application-success-panel h2 {
+        color: #166534;
+        margin-bottom: 12px;
+        font-size: 1.5rem;
+    }
+
+    .application-success-panel p {
+        color: #64748b;
+        line-height: 1.7;
+        margin-bottom: 15px;
+    }
+
+    .success-reference {
+        background: #f8fafc;
+        border-radius: 8px;
+        padding: 14px;
+        margin: 20px 0;
+        color: #334155;
+    }
+
+    .success-actions {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        margin-top: 25px;
+    }
+
+        .success-actions a {
+            text-decoration: none;
+        }
+
+    /* Mobile improvements */
+    @@media (max-width: 576px) {
+        .application-success-panel {
+            padding: 25px 15px;
+        }
+
+        .success-actions {
+            gap: 10px;
+        }
+    }
+</style>
+
+<section id="apply-section">
+
+    <div class="container">
+
+        <!-- Page Heading -->
+        <div class="section-header" data-aos="fade-up">
+
+            @if (Model.IsSubmitted)
+            {
+                <div class="section-label">
+                    Application completed
+                </div>
+
+                <h1 class="section-title">
+                    Thank you for applying!
+                </h1>
+
+                <p class="section-subtitle">
+                    Your application has been successfully submitted.
+                </p>
+            }
+            else
+            {
+                <div class="section-label">
+                    Start your application
+                </div>
+
+                <h1 class="section-title">
+                    Apply for this job
+                </h1>
+
+                <p class="section-subtitle">
+                    Fill out the form below. The company will get back to you
+                    within a few days.
+                </p>
+            }
+
+        </div>
+
+        <!-- Two Column Layout -->
+        <div class="apply-grid">
+
+            <!-- LEFT: Job Summary -->
+            <div class="job-summary-card" data-aos="fade-right">
+
+                @if (Model.Job != null)
+                {
+                    <div class="summary-header">
+
+                        <div class="summary-logo">
+                            💼
+                        </div>
+
+                        <div>
+
+                            <div class="summary-title">
+                                @Model.Job.JobTitle
+                            </div>
+
+                            <div class="summary-company">
+                                @Model.Job.CompanyName
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="summary-detail">
+                        <span>📍</span>
+                        <span>@Model.Job.Location</span>
+                    </div>
+
+                    <div class="summary-detail">
+
+                        <span>💼</span>
+
+                        <span>
+                            @Model.Job.EmploymentType
+
+                            @if (!string.IsNullOrWhiteSpace(Model.Job.Workplace))
+                            {
+                                <text> · @Model.Job.Workplace</text>
+                            }
+                        </span>
+
+                    </div>
+
+                    <div class="summary-detail">
+
+                        <span>💰</span>
+
+                        <span>
+                            AED @Model.Job.SalaryMin.ToString("N0")
+                            –
+                            AED @Model.Job.SalaryMax.ToString("N0")
+                        </span>
+
+                    </div>
+
+                    <div class="summary-divider"></div>
+
+                    <h4 style="margin-bottom: var(--sp-3); font-size: 1rem;">
+                        Required skills
+                    </h4>
+
+                    <div class="summary-badge-list">
+
+                        @if (!string.IsNullOrWhiteSpace(Model.Job.Skills))
+                        {
+                            <span class="badge badge-blue">
+                                @Model.Job.Skills
+                            </span>
+                        }
+
+                        <span class="badge badge-green">
+                            @Model.Job.EmploymentType
+                        </span>
+
+                    </div>
+
+                    <div class="summary-divider"></div>
+
+                    <p style="color: var(--text-muted); font-size: 0.9rem;">
+
+                        <strong>About this position</strong>
+
+                        <br />
+
+                        @Model.Job.Description
+
+                    </p>
+                }
+                else
+                {
+                    <p>
+                        Job details are not available.
+                    </p>
+                }
+
+            </div>
+
+            <!-- RIGHT COLUMN -->
+            <div class="apply-form-card" data-aos="fade-left">
+
+                @if (Model.IsSubmitted)
+                {
+                    <!-- SUCCESS PANEL -->
+
+                    <div class="application-success-panel">
+
+                        <div class="success-icon">
+                            ✓
+                        </div>
+
+                        <h2>
+                            Application Submitted!
+                        </h2>
+
+                        <p>
+                            Congratulations! Your job application has been
+                            successfully submitted.
+                        </p>
+
+                        <p>
+                            Your application for
+
+                            <strong>
+                                @Model.Job?.JobTitle
+                            </strong>
+
+                            at
+
+                            <strong>
+                                @Model.Job?.CompanyName
+                            </strong>
+
+                            has been received.
+                        </p>
+
+                        @if (Model.SubmittedApplicationId.HasValue)
+                        {
+                            <div class="success-reference">
+
+                                Application Reference:
+
+                                <strong>
+                                    #@Model.SubmittedApplicationId.Value
+                                </strong>
+
+                            </div>
+                        }
+
+                        <p>
+                            The employer will review your application.
+                            You can check your application status from
+                            your dashboard.
+                        </p>
+
+                        <div class="success-actions">
+
+                            <a asp-controller="ApplyJob"
+                               asp-action="MyApplications"
+                               class="btn btn-primary"
+                               style="justify-content:center; padding:1rem;">
+
+                                View My Applications
+
+                            </a>
+
+                            <a asp-controller="Home"
+                               asp-action="BrowsJobs"
+                               class="btn btn-outline"
+                               style="justify-content:center; padding:1rem;">
+
+                                Browse More Jobs
+
+                            </a>
+
+                        </div>
+
+                    </div>
+                }
+                else
+                {
+                    <!-- APPLICATION FORM -->
+
+                    <form asp-controller="ApplyJob"
+                          asp-action="Apply"
+                          method="post"
+                          enctype="multipart/form-data">
+
+                        @Html.AntiForgeryToken()
+
+                        <!-- Job ID -->
+                        <input type="hidden" asp-for="JobId" />
+
+                        <!-- Validation Summary -->
+                        <div asp-validation-summary="All"
+                             class="validation-summary-errors"
+                             role="alert">
+                        </div>
+
+                        <h3 style="margin-bottom: var(--sp-6); font-size: 1.2rem;">
+                            Your information
+                        </h3>
+
+                        <!-- First Name and Last Name -->
+                        <div class="form-row">
+
+                            <div class="form-group">
+
+                                <label asp-for="FirstName">
+                                    First name *
+                                </label>
+
+                                <input asp-for="FirstName"
+                                       type="text"
+                                       placeholder="Enter your first name"
+                                       required />
+
+                                <span asp-validation-for="FirstName"
+                                      class="field-validation-error">
+                                </span>
+
+                            </div>
+
+                            <div class="form-group">
+
+                                <label asp-for="LastName">
+                                    Last name *
+                                </label>
+
+                                <input asp-for="LastName"
+                                       type="text"
+                                       placeholder="Enter your last name"
+                                       required />
+
+                                <span asp-validation-for="LastName"
+                                      class="field-validation-error">
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                        <!-- Email -->
+                        <div class="form-group">
+
+                            <label asp-for="Email">
+                                Email address *
+                            </label>
+
+                            <input asp-for="Email"
+                                   type="email"
+                                   placeholder="Enter your email address"
+                                   required />
+
+                            <span asp-validation-for="Email"
+                                  class="field-validation-error">
+                            </span>
+
+                        </div>
+
+                        <!-- Phone -->
+                        <div class="form-group">
+
+                            <label asp-for="Phone">
+                                Phone number (optional)
+                            </label>
+
+                            <input asp-for="Phone"
+                                   type="tel"
+                                   placeholder="Enter your phone number" />
+
+                            <span asp-validation-for="Phone"
+                                  class="field-validation-error">
+                            </span>
+
+                        </div>
+
+                        <!-- Resume Upload -->
+                        <div class="form-group">
+
+                            <label asp-for="Resume">
+                                Resume / CV *
+                            </label>
+
+                            <div class="file-input-wrapper">
+
+                                <input asp-for="Resume"
+                                       id="resume"
+                                       type="file"
+                                       accept=".pdf,.doc,.docx"
+                                       required />
+
+                                <label for="resume"
+                                       class="file-input-label">
+
+                                    <svg fill="none"
+                                         stroke="currentColor"
+                                         viewBox="0 0 24 24"
+                                         stroke-width="1.8">
+
+                                        <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z" />
+
+                                        <polyline points="13 2 13 9 20 9" />
+
+                                    </svg>
+
+                                    <span id="resumeFileName">
+                                        Choose file (PDF, DOC, DOCX) – max 5MB
+                                    </span>
+
+                                </label>
+
+                            </div>
+
+                            <div class="form-hint">
+                                Accepted formats: .pdf, .doc, .docx.
+                                Maximum size: 5 MB.
+                            </div>
+
+                            <span asp-validation-for="Resume"
+                                  class="field-validation-error">
+                            </span>
+
+                        </div>
+
+                        <!-- Cover Letter -->
+                        <div class="form-group">
+
+                            <label asp-for="CoverLetter">
+                                Cover letter / message *
+                            </label>
+
+                            <textarea asp-for="CoverLetter"
+                                      rows="5"
+                                      placeholder="Tell the employer why you're a great fit for this role..."
+                                      required></textarea>
+
+                            <span asp-validation-for="CoverLetter"
+                                  class="field-validation-error">
+                            </span>
+
+                        </div>
+
+                        <!-- Application Source -->
+                        <div class="form-group">
+
+                            <label asp-for="Source">
+                                How did you hear about this job? (optional)
+                            </label>
+
+                            <select asp-for="Source">
+
+                                <option value="">
+                                    Select option
+                                </option>
+
+                                <option value="LinkedIn">
+                                    LinkedIn
+                                </option>
+
+                                <option value="Indeed">
+                                    Indeed
+                                </option>
+
+                                <option value="Company Website">
+                                    Company website
+                                </option>
+
+                                <option value="Friend Referral">
+                                    Friend referral
+                                </option>
+
+                                <option value="Other">
+                                    Other
+                                </option>
+
+                            </select>
+
+                        </div>
+
+                        <!-- Submit Button -->
+                        <button type="submit"
+                                class="btn btn-primary"
+                                style="width:100%; justify-content:center; padding:1rem; margin-top:var(--sp-4);">
+
+                            Submit application
+
+                        </button>
+
+                        <p style="text-align:center; margin-top:var(--sp-4); font-size:0.8rem; color:var(--text-muted);">
+
+                            Your application will be securely submitted
+                            to the employer.
+
+                        </p>
+
+                        <a asp-controller="Home"
+                           asp-action="BrowsJobs"
+                           style="display:block; text-align:center; margin-top:15px;">
+
+                            Cancel and browse jobs
+
+                        </a>
+
+                    </form>
+                }
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+@section Scripts {
+
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+
+            const resumeInput = document.getElementById("resume");
+
+            const resumeFileName =
+                document.getElementById("resumeFileName");
+
+            if (resumeInput && resumeFileName) {
+
+                resumeInput.addEventListener("change", function () {
+
+                    if (this.files && this.files.length > 0) {
+
+                        const file = this.files[0];
+
+                        const maxSize = 5 * 1024 * 1024;
+
+                        const allowedExtensions = [
+                            ".pdf",
+                            ".doc",
+                            ".docx"
+                        ];
+
+                        const extension = file.name
+                            .substring(file.name.lastIndexOf("."))
+                            .toLowerCase();
+
+                        if (!allowedExtensions.includes(extension)) {
+
+                            resumeFileName.textContent =
+                                "Invalid file type. Choose PDF, DOC or DOCX.";
+
+                            this.value = "";
+
+                            return;
+                        }
+
+                        if (file.size > maxSize) {
+
+                            resumeFileName.textContent =
+                                "File is too large. Maximum size is 5 MB.";
+
+                            this.value = "";
+
+                            return;
+                        }
+
+                        resumeFileName.textContent = file.name;
+
+                    }
+                    else {
+
+                        resumeFileName.textContent =
+                            "Choose file (PDF, DOC, DOCX) – max 5MB";
+
+                    }
+
+                });
+
+            }
+
+        });
+    </script>
+}

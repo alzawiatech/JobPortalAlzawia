@@ -40,6 +40,11 @@ namespace DubaiJobs.Controllers
             return View();
         }
 
+        public IActionResult ApplyJob()
+        {
+            return View();
+        }
+
         // Browse Jobs - Public access
         [AllowAnonymous]
         public async Task<IActionResult> BrowsJobs()

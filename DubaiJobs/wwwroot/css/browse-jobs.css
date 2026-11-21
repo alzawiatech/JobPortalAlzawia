@@ -712,7 +712,7 @@
     padding: 0;
     border: 0;
     background: transparent;
-    color: var(--bj-accent);
+    color: var(--bj-primary);
     font-size: 12px;
     font-weight: 700;
     text-decoration: none;
