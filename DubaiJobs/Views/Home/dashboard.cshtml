@@ -3,7 +3,9 @@
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
 @Html.AntiForgeryToken()
+
 <style>
     /* Employer dashboard additions – scoped to this page */
     #employer-dashboard {
@@ -128,7 +130,9 @@
             background: var(--off-white);
         }
 
-        .ed-tab:focus-visible, .ed-btn:focus-visible, .ed-tab-action:focus-visible {
+        .ed-tab:focus-visible,
+        .ed-btn:focus-visible,
+        .ed-tab-action:focus-visible {
             outline: 3px solid rgba(249,115,22,.35);
             outline-offset: 2px;
         }
@@ -146,12 +150,12 @@
     @@keyframes edFade {
         from {
             opacity: 0;
-            transform: translateY(5px)
+            transform: translateY(5px);
         }
 
         to {
             opacity: 1;
-            transform: translateY(0)
+            transform: translateY(0);
         }
     }
 
@@ -346,7 +350,9 @@
             min-width: 0;
         }
 
-        .ed-form-card input, .ed-form-card select, .ed-form-card textarea {
+        .ed-form-card input,
+        .ed-form-card select,
+        .ed-form-card textarea {
             max-width: 100%;
         }
 
@@ -460,124 +466,7 @@
             width: 100%;
         }
 
-    @@media (max-width:900px) {
-        .ed-stats {
-            grid-template-columns: repeat(2,minmax(0,1fr));
-        }
-
-        .ed-form-layout {
-            grid-template-columns: minmax(0,1fr);
-        }
-
-        .ed-form-sidebar {
-            display: grid;
-            grid-template-columns: repeat(2,minmax(0,1fr));
-            gap: 1rem;
-        }
-
-        .ed-side-card + .ed-side-card {
-            margin-top: 0;
-        }
-    }
-
-    @@media (max-width:640px) {
-        #employer-dashboard {
-            padding-top: calc(var(--nav-height) + var(--sp-6));
-        }
-
-        .ed-heading {
-            align-items: stretch;
-        }
-
-            .ed-heading > .btn {
-                width: 100%;
-            }
-
-        .ed-stats {
-            gap: .65rem;
-        }
-
-        .ed-stat {
-            padding: .9rem;
-        }
-
-            .ed-stat strong {
-                font-size: 1.45rem;
-            }
-
-        .ed-stat-top {
-            font-size: .75rem;
-        }
-
-        .ed-stat-icon {
-            width: 32px;
-            height: 32px;
-        }
-
-        .ed-tabs {
-            margin: 0;
-        }
-
-        .ed-tab {
-            padding: .7rem .8rem;
-            font-size: .82rem;
-        }
-
-        .ed-view {
-            padding: 1rem;
-        }
-
-        .ed-job {
-            align-items: flex-start;
-            flex-direction: column;
-        }
-
-        .ed-job-main {
-            width: 100%;
-        }
-
-        .ed-job-meta {
-            width: 100%;
-            justify-content: flex-start;
-            gap: 1rem;
-        }
-
-        .ed-actions {
-            width: 100%;
-        }
-
-            .ed-actions .ed-btn {
-                flex: 1;
-            }
-
-        .ed-form-sidebar {
-            grid-template-columns: minmax(0,1fr);
-        }
-
-        .ed-form-actions button {
-            width: 100%;
-        }
-
-        .ed-view-head {
-            align-items: stretch;
-        }
-
-        .ed-search {
-            max-width: none;
-        }
-    }
-
-    @@media (prefers-reduced-motion:reduce) {
-        .ed-view.active {
-            animation: none;
-        }
-
-        * {
-            scroll-behavior: auto !important;
-        }
-    }
-
-    /* Visual refresh: crisp white surfaces, stronger navigation and clear actions */
+    /* Visual refresh */
     :root {
         --ed-orange: #f97316;
         --ed-orange-dark: #ea580c;
@@ -609,7 +498,10 @@
         margin-bottom: 2rem;
     }
 
-        .ed-heading > .btn, .ed-primary-btn, .ed-form-actions .btn-primary, .ed-btn.primary {
+        .ed-heading > .btn,
+        .ed-primary-btn,
+        .ed-form-actions .btn-primary,
+        .ed-btn.primary {
             background: var(--ed-orange) !important;
             border: 1px solid var(--ed-orange) !important;
             color: #fff !important;
@@ -618,7 +510,10 @@
             transition: transform .18s ease,box-shadow .18s ease,background .18s ease;
         }
 
-            .ed-heading > .btn:hover, .ed-primary-btn:hover, .ed-form-actions .btn-primary:hover, .ed-btn.primary:hover {
+            .ed-heading > .btn:hover,
+            .ed-primary-btn:hover,
+            .ed-form-actions .btn-primary:hover,
+            .ed-btn.primary:hover {
                 background: var(--ed-orange-dark) !important;
                 border-color: var(--ed-orange-dark) !important;
                 color: #fff !important;
@@ -803,7 +698,9 @@
             font-weight: 700;
         }
 
-        .ed-form-card input, .ed-form-card select, .ed-form-card textarea {
+        .ed-form-card input,
+        .ed-form-card select,
+        .ed-form-card textarea {
             background: #fff !important;
             color: #172033 !important;
             border: 1px solid #d8e0e9 !important;
@@ -811,12 +708,15 @@
             box-shadow: none !important;
         }
 
-            .ed-form-card input:focus, .ed-form-card select:focus, .ed-form-card textarea:focus {
+            .ed-form-card input:focus,
+            .ed-form-card select:focus,
+            .ed-form-card textarea:focus {
                 border-color: var(--ed-orange) !important;
                 outline: 3px solid rgba(249,115,22,.13);
             }
 
-            .ed-form-card input::placeholder, .ed-form-card textarea::placeholder {
+            .ed-form-card input::placeholder,
+            .ed-form-card textarea::placeholder {
                 color: #a0aaba !important;
             }
 
@@ -878,32 +778,7 @@
         border: 1px solid #fecdca;
     }
 
-    @@media (max-width:640px) {
-        .ed-tabs {
-            background: #fff;
-            padding: .65rem .7rem;
-        }
-
-        .ed-tab.active::after {
-            bottom: -.62rem;
-        }
-
-        .ed-stat {
-            box-shadow: 0 3px 14px rgba(15,23,42,.04);
-        }
-
-        .ed-job {
-            box-shadow: none;
-        }
-
-        .ed-job-meta {
-            border-top: 1px solid #f0f2f5;
-            padding-top: .75rem;
-        }
-    }
-
-
-    /* Responsive layout hardening: phones, tablets, laptops and wide desktops */
+    /* Responsive layout */
     #employer-dashboard,
     #employer-dashboard * {
         box-sizing: border-box;
@@ -966,15 +841,9 @@
             min-height: 140px;
         }
 
-        #employer-dashboard .ed-job {
-            min-width: 0;
-        }
-
+        #employer-dashboard .ed-job,
         #employer-dashboard .ed-job-main,
-        #employer-dashboard .ed-job-copy {
-            min-width: 0;
-        }
-
+        #employer-dashboard .ed-job-copy,
         #employer-dashboard .ed-job-meta,
         #employer-dashboard .ed-actions {
             min-width: 0;
@@ -1280,6 +1149,28 @@
             #employer-dashboard .ed-preview {
                 padding: .85rem;
             }
+
+        .ed-tabs {
+            background: #fff;
+            padding: .65rem .7rem;
+        }
+
+        .ed-tab.active::after {
+            bottom: -.62rem;
+        }
+
+        .ed-stat {
+            box-shadow: 0 3px 14px rgba(15,23,42,.04);
+        }
+
+        .ed-job {
+            box-shadow: none;
+        }
+
+        .ed-job-meta {
+            border-top: 1px solid #f0f2f5;
+            padding-top: .75rem;
+        }
     }
 
     @@media (max-width: 380px) {
@@ -1326,873 +1217,1320 @@
         }
     }
 
+    @@media (prefers-reduced-motion:reduce) {
+        .ed-view.active {
+            animation: none;
+        }
+
+        * {
+            scroll-behavior: auto !important;
+        }
+    }
 </style>
-
-
 
 <main>
     <section id="employer-dashboard">
         <div class="container ed-wrap">
+
             <div class="ed-heading" data-aos="fade-up">
                 <div class="section-header">
                     <div class="section-label">Employer workspace</div>
                     <h1 class="section-title">Manage your jobs</h1>
-                    <p class="section-subtitle">Post openings, track applicants, and manage all your listings in one place.</p>
+                    <p class="section-subtitle">
+                        Post openings, track applicants, and manage all your listings in one place.
+                    </p>
                 </div>
-                <button type="button" class="btn btn-primary ed-primary-btn" data-open-view="post">＋ Post a new job</button>
+
+                <button type="button"
+                        class="btn btn-primary ed-primary-btn"
+                        data-open-view="post">
+                    ＋ Post a new job
+                </button>
             </div>
 
-            <div class="ed-stats" data-aos="fade-up" data-aos-delay="60" aria-label="Dashboard statistics">
-                <article class="ed-stat"><div class="ed-stat-top"><span>Active jobs</span><span class="ed-stat-icon">💼</span></div><strong id="statActive">0</strong><small>Currently accepting applications</small></article>
-                <article class="ed-stat"><div class="ed-stat-top"><span>Total applicants</span><span class="ed-stat-icon">👥</span></div><strong id="statApplicants">0</strong><small>Across your job listings</small></article>
-                <article class="ed-stat"><div class="ed-stat-top"><span>Closed jobs</span><span class="ed-stat-icon">📁</span></div><strong id="statClosed">0</strong><small>Listings no longer active</small></article>
-                <article class="ed-stat"><div class="ed-stat-top"><span>Applications sent</span><span class="ed-stat-icon">📨</span></div><strong>3</strong><small>Your candidate activity</small></article>
+            <div class="ed-stats"
+                 data-aos="fade-up"
+                 data-aos-delay="60"
+                 aria-label="Dashboard statistics">
+
+                <article class="ed-stat">
+                    <div class="ed-stat-top">
+                        <span>Active jobs</span>
+                        <span class="ed-stat-icon">💼</span>
+                    </div>
+                    <strong id="statActive">0</strong>
+                    <small>Currently accepting applications</small>
+                </article>
+
+                <article class="ed-stat">
+                    <div class="ed-stat-top">
+                        <span>Total applicants</span>
+                        <span class="ed-stat-icon">👥</span>
+                    </div>
+                    <strong id="statApplicants">0</strong>
+                    <small>Across your job listings</small>
+                </article>
+
+                <article class="ed-stat">
+                    <div class="ed-stat-top">
+                        <span>Closed jobs</span>
+                        <span class="ed-stat-icon">📁</span>
+                    </div>
+                    <strong id="statClosed">0</strong>
+                    <small>Listings no longer active</small>
+                </article>
+
+                <article class="ed-stat">
+                    <div class="ed-stat-top">
+                        <span>Applied Jobs</span>
+                        <span class="ed-stat-icon">📨</span>
+                    </div>
+                    <strong id="statApplicationsSent">0</strong>
+                    <small>Your candidate activity</small>
+                </article>
             </div>
 
             <div class="ed-panel" data-aos="fade-up" data-aos-delay="100">
+
                 <div class="ed-tabs" role="tablist" aria-label="Dashboard sections">
-                    <button type="button" class="ed-tab active" id="tab-overview" role="tab" aria-selected="true" aria-controls="view-overview" data-view="overview">Overview</button>
-                    <button type="button" class="ed-tab" id="tab-posted" role="tab" aria-selected="false" aria-controls="view-posted" data-view="posted">My Posted Jobs</button>
-                    <button type="button" class="ed-tab" id="tab-applied" role="tab" aria-selected="false" aria-controls="view-applied" data-view="applied">Applied Jobs</button>
-                    <button type="button" class="ed-tab" id="tab-post" role="tab" aria-selected="false" aria-controls="view-post" data-view="post">Post a Job <span aria-hidden="true">＋</span></button>
+
+                    <button type="button"
+                            class="ed-tab active"
+                            id="tab-overview"
+                            role="tab"
+                            aria-selected="true"
+                            aria-controls="view-overview"
+                            data-view="overview">
+                        Overview
+                    </button>
+
+                    <button type="button"
+                            class="ed-tab"
+                            id="tab-posted"
+                            role="tab"
+                            aria-selected="false"
+                            aria-controls="view-posted"
+                            data-view="posted">
+                        Jobs i posted
+                    </button>
+
+                    <button type="button"
+                            class="ed-tab"
+                            id="tab-applied"
+                            role="tab"
+                            aria-selected="false"
+                            aria-controls="view-applied"
+                            data-view="applied">
+                        Applied Jobs
+                    </button>
+
+                    <button type="button"
+                            class="ed-tab"
+                            id="tab-post"
+                            role="tab"
+                            aria-selected="false"
+                            aria-controls="view-post"
+                            data-view="post">
+                        Post a Job <span aria-hidden="true">＋</span>
+                    </button>
                 </div>
 
-                <section class="ed-view active" id="view-overview" role="tabpanel" aria-labelledby="tab-overview">
-                    <div class="ed-view-head"><div><h2>Welcome to your workspace</h2><p>Here’s a quick look at your recruitment activity.</p></div><button class="ed-btn primary" type="button" data-open-view="post">Create a job</button></div>
-                    <div class="ed-view-head"><div><h2>Recently posted jobs</h2><p>Keep track of your latest openings.</p></div><button class="ed-btn" type="button" data-open-view="posted">View all jobs →</button></div>
-                    <div class="ed-job-list" id="recentJobs"></div>
-                </section>
+                <!-- OVERVIEW -->
+                <section class="ed-view active"
+                         id="view-overview"
+                         role="tabpanel"
+                         aria-labelledby="tab-overview">
 
-                <section class="ed-view" id="view-posted" role="tabpanel" aria-labelledby="tab-posted" hidden>
                     <div class="ed-view-head">
-                        <div><h2>My posted jobs</h2><p>Edit listings, change their status, or remove old jobs.</p></div>
-                        <div class="ed-search"><input type="search" id="jobSearch" placeholder="Search your jobs…" aria-label="Search posted jobs"></div>
+                        <div>
+                            <h2>Welcome to your workspace</h2>
+                            <p>Here’s a quick look at your recruitment activity.</p>
+                        </div>
+
+                        <button class="ed-btn primary"
+                                type="button"
+                                data-open-view="post">
+                            Create a job
+                        </button>
                     </div>
-                    <div class="ed-job-list" id="postedJobs"></div>
+
+                    <div class="ed-view-head">
+                        <div>
+                            <h2>Recently posted jobs</h2>
+                            <p>Keep track of your latest openings.</p>
+                        </div>
+
+                        <button class="ed-btn"
+                                type="button"
+                                data-open-view="posted">
+                            View all jobs →
+                        </button>
+                    </div>
+
+                    <div class="ed-job-list" id="recentJobs">
+                        <div class="ed-empty">Loading your jobs...</div>
+                    </div>
                 </section>
 
-                <section class="ed-view" id="view-applied" role="tabpanel" aria-labelledby="tab-applied" hidden>
-                    <div class="ed-view-head"><div><h2>Jobs you’ve applied to</h2><p>Track the status of your applications.</p></div></div>
-                    <div class="ed-job-list">
-                        <article class="ed-job"><div class="ed-job-main"><div class="ed-job-icon">💳</div><div class="ed-job-copy"><h3>Senior Frontend Engineer</h3><p>Stripe</p></div></div><div class="ed-job-meta"><div class="ed-meta"><span>Applied</span><strong>2 days ago</strong></div><div class="ed-meta"><span>Status</span><strong class="ed-status pending">Under review</strong></div></div></article>
-                        <article class="ed-job"><div class="ed-job-main"><div class="ed-job-icon">🏠</div><div class="ed-job-copy"><h3>Product Designer</h3><p>Airbnb</p></div></div><div class="ed-job-meta"><div class="ed-meta"><span>Applied</span><strong>5 days ago</strong></div><div class="ed-meta"><span>Status</span><strong class="ed-status">Interview</strong></div></div></article>
-                        <article class="ed-job"><div class="ed-job-main"><div class="ed-job-icon">📝</div><div class="ed-job-copy"><h3>Backend Engineer (Go)</h3><p>Notion</p></div></div><div class="ed-job-meta"><div class="ed-meta"><span>Applied</span><strong>1 week ago</strong></div><div class="ed-meta"><span>Status</span><strong class="ed-status closed">Rejected</strong></div></div></article>
+                <!-- MY POSTED JOBS -->
+                <section class="ed-view"
+                         id="view-posted"
+                         role="tabpanel"
+                         aria-labelledby="tab-posted"
+                         hidden>
+
+                    <div class="ed-view-head">
+                        <div>
+                            <h2>My posted jobs</h2>
+                            <p>Edit listings, change their status, or remove old jobs.</p>
+                        </div>
+
+                        <div class="ed-search">
+                            <input type="search"
+                                   id="jobSearch"
+                                   placeholder="Search your jobs…"
+                                   aria-label="Search posted jobs">
+                        </div>
+                    </div>
+
+                    <div class="ed-job-list" id="postedJobs">
+                        <div class="ed-empty">Loading your jobs...</div>
                     </div>
                 </section>
 
-                <section class="ed-view" id="view-post" role="tabpanel" aria-labelledby="tab-post" hidden>
-                    <div class="ed-view-head"><div><h2 id="formHeading">Post a new job</h2><p>Fill in the details below. You can edit your listing later.</p></div></div>
-                    <div class="ed-message" id="formMessage" role="status" aria-live="polite"></div>
+                <!-- APPLIED JOBS: DATABASE DATA -->
+                <section class="ed-view"
+                         id="view-applied"
+                         role="tabpanel"
+                         aria-labelledby="tab-applied"
+                         hidden>
+
+                    <div class="ed-view-head">
+                        <div>
+                            <h2>Jobs you’ve applied to</h2>
+                            <p>Track the status of your applications.</p>
+                        </div>
+                    </div>
+
+                    <div class="ed-job-list" id="appliedJobs">
+                        <div class="ed-empty">
+                            Loading your applications...
+                        </div>
+                    </div>
+                </section>
+
+                <!-- POST A JOB -->
+                <section class="ed-view"
+                         id="view-post"
+                         role="tabpanel"
+                         aria-labelledby="tab-post"
+                         hidden>
+
+                    <div class="ed-view-head">
+                        <div>
+                            <h2 id="formHeading">Post a new job</h2>
+                            <p>Fill in the details below. You can edit your listing later.</p>
+                        </div>
+                    </div>
+
+                    <div class="ed-message"
+                         id="formMessage"
+                         role="status"
+                         aria-live="polite"></div>
+
                     <div class="ed-form-layout">
+
                         <div class="ed-form-card">
+
                             <form id="postJobForm">
+
                                 <input type="hidden" id="editingJobId" />
+
                                 <h3>Job information</h3>
+
                                 <div class="form-row">
-                                    <div class="form-group"><label for="jobTitle">Job title *</label><input type="text" id="jobTitle" placeholder="e.g. Senior Frontend Engineer" required /></div>
-                                    <div class="form-group"><label for="department">Department</label><input type="text" id="department" placeholder="e.g. Engineering, Marketing" /></div>
+                                    <div class="form-group">
+                                        <label for="jobTitle">Job title *</label>
+                                        <input type="text"
+                                               id="jobTitle"
+                                               placeholder="e.g. Senior Frontend Engineer"
+                                               required />
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="department">Department</label>
+                                        <input type="text"
+                                               id="department"
+                                               placeholder="e.g. Engineering, Marketing" />
+                                    </div>
                                 </div>
+
                                 <div class="form-row">
-                                    <div class="form-group"><label for="employmentType">Employment type *</label><select id="employmentType" required><option value="">Select type</option><option>Full-time</option><option>Part-time</option><option>Contract</option><option>Internship</option><option>Temporary</option></select></div>
-                                    <div class="form-group"><label for="workplace">Workplace *</label><select id="workplace" required><option value="">Select</option><option>On-site</option><option>Remote</option><option>Hybrid</option></select></div>
+                                    <div class="form-group">
+                                        <label for="employmentType">Employment type *</label>
+                                        <select id="employmentType" required>
+                                            <option value="">Select type</option>
+                                            <option>Full-time</option>
+                                            <option>Part-time</option>
+                                            <option>Contract</option>
+                                            <option>Internship</option>
+                                            <option>Temporary</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="workplace">Workplace *</label>
+                                        <select id="workplace" required>
+                                            <option value="">Select</option>
+                                            <option>On-site</option>
+                                            <option>Remote</option>
+                                            <option>Hybrid</option>
+                                        </select>
+                                    </div>
                                 </div>
-                                <div class="form-group"><label for="location">Location *</label><input type="text" id="location" placeholder="e.g. New York, NY / Remote" required /></div>
+
+                                <div class="form-group">
+                                    <label for="location">Location *</label>
+                                    <input type="text"
+                                           id="location"
+                                           placeholder="e.g. New York, NY / Remote"
+                                           required />
+                                </div>
+
                                 <div class="form-row">
-                                    <div class="form-group"><label for="salaryMin">Salary min *</label><input type="number" id="salaryMin" min="0" step="any" placeholder="80000" required /></div>
-                                    <div class="form-group"><label for="salaryMax">Salary max *</label><input type="number" id="salaryMax" min="0" step="any" placeholder="120000" required /></div>
+                                    <div class="form-group">
+                                        <label for="salaryMin">Salary min *</label>
+                                        <input type="number"
+                                               id="salaryMin"
+                                               min="0"
+                                               step="any"
+                                               placeholder="80000"
+                                               required />
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="salaryMax">Salary max *</label>
+                                        <input type="number"
+                                               id="salaryMax"
+                                               min="0"
+                                               step="any"
+                                               placeholder="120000"
+                                               required />
+                                    </div>
                                 </div>
-                                <div class="form-group"><label for="description">Job description *</label><textarea id="description" rows="7" minlength="100" placeholder="Describe the role, responsibilities, requirements, and benefits…" required></textarea><div class="form-hint">Minimum 100 characters. Include key skills and qualifications.</div></div>
+
+                                <div class="form-group">
+                                    <label for="description">Job description *</label>
+                                    <textarea id="description"
+                                              rows="7"
+                                              minlength="100"
+                                              placeholder="Describe the role, responsibilities, requirements, and benefits…"
+                                              required></textarea>
+                                    <div class="form-hint">
+                                        Minimum 100 characters. Include key skills and qualifications.
+                                    </div>
+                                </div>
+
                                 <div class="divider"></div>
+
                                 <h3>Company information</h3>
+
                                 <div class="form-row">
-                                    <div class="form-group"><label for="companyName">Company name *</label><input type="text" id="companyName" placeholder="e.g. Your Company" required /></div>
-                                    <div class="form-group"><label for="companyLogo">Logo URL</label><input type="url" id="companyLogo" placeholder="https://…" /></div>
+                                    <div class="form-group">
+                                        <label for="companyName">Company name *</label>
+                                        <input type="text"
+                                               id="companyName"
+                                               placeholder="e.g. Your Company"
+                                               required />
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="companyLogo">Logo URL</label>
+                                        <input type="url"
+                                               id="companyLogo"
+                                               placeholder="https://…" />
+                                    </div>
                                 </div>
-                                <div class="form-group"><label for="companyWebsite">Company website</label><input type="url" id="companyWebsite" placeholder="https://company.com" /></div>
-                                <div class="form-group"><label for="contactEmail">Recruitment contact email *</label><input type="email" id="contactEmail" placeholder="hr@company.com" required /><div class="form-hint">Candidates will use this contact email to apply.</div></div>
+
+                                <div class="form-group">
+                                    <label for="companyWebsite">Company website</label>
+                                    <input type="url"
+                                           id="companyWebsite"
+                                           placeholder="https://company.com" />
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="contactEmail">Recruitment contact email *</label>
+                                    <input type="email"
+                                           id="contactEmail"
+                                           placeholder="hr@company.com"
+                                           required />
+                                    <div class="form-hint">
+                                        Candidates will use this contact email to apply.
+                                    </div>
+                                </div>
+
                                 <div class="form-row">
-                                    <div class="form-group"><label for="expiry">Job expiry date</label><input type="date" id="expiry" /></div>
-                                    <div class="form-group"><label for="category">Job category *</label><select id="category" required><option value="">Select category</option><option>Technology</option><option>Design & Creative</option><option>Marketing</option><option>Finance</option><option>Healthcare</option><option>Education</option><option>Engineering</option><option>Sales</option></select></div>
+                                    <div class="form-group">
+                                        <label for="expiry">Job expiry date</label>
+                                        <input type="date" id="expiry" />
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="category">Job category *</label>
+                                        <select id="category" required>
+                                            <option value="">Select category</option>
+                                            <option>Technology</option>
+                                            <option>Design & Creative</option>
+                                            <option>Marketing</option>
+                                            <option>Finance</option>
+                                            <option>Healthcare</option>
+                                            <option>Education</option>
+                                            <option>Engineering</option>
+                                            <option>Sales</option>
+                                        </select>
+                                    </div>
                                 </div>
-                                <div class="form-group"><label for="skills">Required skills (comma separated)</label><input type="text" id="skills" placeholder="e.g. React, TypeScript, Node.js" /></div>
-                                <div class="ed-form-actions"><button type="submit" class="btn btn-primary" id="publishBtn">Publish job</button><button type="button" class="btn btn-outline" id="resetFormBtn">Reset form</button><button type="button" class="ed-btn" id="cancelEditBtn" hidden>Cancel editing</button></div>
+
+                                <div class="form-group">
+                                    <label for="skills">Required skills (comma separated)</label>
+                                    <input type="text"
+                                           id="skills"
+                                           placeholder="e.g. React, TypeScript, Node.js" />
+                                </div>
+
+                                <div class="ed-form-actions">
+                                    <button type="submit"
+                                            class="btn btn-primary"
+                                            id="publishBtn">
+                                        Publish job
+                                    </button>
+
+                                    <button type="button"
+                                            class="btn btn-outline"
+                                            id="resetFormBtn">
+                                        Reset form
+                                    </button>
+
+                                    <button type="button"
+                                            class="ed-btn"
+                                            id="cancelEditBtn"
+                                            hidden>
+                                        Cancel editing
+                                    </button>
+                                </div>
+
                             </form>
                         </div>
+
                         <aside class="ed-form-sidebar">
-                            <div class="ed-side-card"><span class="pricing-badge">✨ Employer tools</span><h3>Reach the right talent</h3><p>Create a clear, detailed listing to help qualified candidates understand the role and apply.</p><ul class="feature-list"><li>Manage all listings in one place</li><li>Update job details anytime</li><li>Track applicant totals</li><li>Close or reopen listings</li><li>Preview your job before publishing</li></ul></div>
-                            <div class="ed-side-card"><h3>Live job preview</h3><div class="ed-preview"><div class="ed-preview-title" id="previewTitle">Your job title</div><div class="ed-preview-company" id="previewCompany">Your company name · Location</div><div class="ed-preview-tags"><span class="ed-preview-tag" id="previewType">Employment type</span><span class="ed-preview-tag" id="previewWorkplace">Workplace</span><span class="ed-preview-tag" id="previewCategory">Category</span></div><div class="ed-preview-pay" id="previewSalary">Salary range will appear here</div></div><p style="margin-top:.8rem;margin-bottom:0;font-size:.78rem;">Preview updates as you complete the form.</p></div>
+
+                            <div class="ed-side-card">
+                                <span class="pricing-badge">✨ Employer tools</span>
+                                <h3>Reach the right talent</h3>
+                                <p>
+                                    Create a clear, detailed listing to help qualified
+                                    candidates understand the role and apply.
+                                </p>
+
+                                <ul class="feature-list">
+                                    <li>Manage all listings in one place</li>
+                                    <li>Update job details anytime</li>
+                                    <li>Track applicant totals</li>
+                                    <li>Close or reopen listings</li>
+                                    <li>Preview your job before publishing</li>
+                                </ul>
+                            </div>
+
+                            <div class="ed-side-card">
+                                <h3>Live job preview</h3>
+
+                                <div class="ed-preview">
+                                    <div class="ed-preview-title" id="previewTitle">
+                                        Your job title
+                                    </div>
+
+                                    <div class="ed-preview-company" id="previewCompany">
+                                        Your company name · Location
+                                    </div>
+
+                                    <div class="ed-preview-tags">
+                                        <span class="ed-preview-tag" id="previewType">Employment type</span>
+                                        <span class="ed-preview-tag" id="previewWorkplace">Workplace</span>
+                                        <span class="ed-preview-tag" id="previewCategory">Category</span>
+                                    </div>
+
+                                    <div class="ed-preview-pay" id="previewSalary">
+                                        Salary range will appear here
+                                    </div>
+                                </div>
+
+                                <p style="margin-top:.8rem;margin-bottom:0;font-size:.78rem;">
+                                    Preview updates as you complete the form.
+                                </p>
+                            </div>
+
                         </aside>
                     </div>
                 </section>
+
             </div>
         </div>
     </section>
 </main>
 
-
-
-
-                            <script>
-
-                            (function () {
-                            'use strict';
-
-                            const API = {
-                            myJobs: '/PostJob/MyJobs',
-                            create: '/PostJob/Create',
-                            edit: id => `/PostJob/Edit/${id}`,
-                            changeStatus: id => `/PostJob/ChangeStatus/${id}`,
-                            delete: id => `/PostJob/Delete/${id}`
-                            };
-
-                            const $ = id => document.getElementById(id);
-
-                            const form = $('postJobForm');
-
-                            const fields = [
-                            'jobTitle',
-                            'department',
-                            'employmentType',
-                            'workplace',
-                            'location',
-                            'salaryMin',
-                            'salaryMax',
-                            'description',
-                            'companyName',
-                            'companyLogo',
-                            'companyWebsite',
-                            'contactEmail',
-                            'expiry',
-                            'category',
-                            'skills'
-                            ];
-
-                            let jobs = [];
-                            let isSaving = false;
-
-                            // Anti-forgery token rendered by ASP.NET Core
-                            function getToken() {
-                            const token = document.querySelector(
-                            'input[name="__RequestVerificationToken"]'
-                            );
-
-                            return token ? token.value : '';
-                            }
-
-                            // Common headers for database requests
-                            function getHeaders(json = true) {
-                            const headers = {
-                            'RequestVerificationToken': getToken()
-                            };
-
-                            if (json) {
-                            headers['Content-Type'] = 'application/json';
-                            }
-
-                            return headers;
-                            }
-
-                            // Common API request handler
-                            async function apiRequest(url, method = 'GET', data = null) {
-
-                            const options = {
-                            method: method,
-                            credentials: 'same-origin',
-                            headers: getHeaders(data !== null)
-                            };
-
-                            if (data !== null) {
-                            options.body = JSON.stringify(data);
-                            }
-
-                            const response = await fetch(url, options);
-
-                            const contentType = response.headers.get('content-type') || '';
-
-                            let result = null;
-
-                            if (contentType.includes('application/json')) {
-                            result = await response.json();
-                            } else {
-                            result = await response.text();
-                            }
-
-                            if (!response.ok) {
-
-                            let message = 'Something went wrong. Please try again.';
-
-                            if (result && typeof result === 'object') {
-                            message = result.message || result.title || message;
-                            } else if (typeof result === 'string' && result.trim()) {
-                            message = result;
-                            }
-
-                            if (response.status === 401 || response.status === 403) {
-                            message = 'Your session may have expired. Please sign in again.';
-                            }
-
-                            throw new Error(message);
-                            }
-
-                            return result;
-                            }
-
-                            // Prevent HTML injection in job details
-                            function escapeHTML(value) {
-                            return String(value ?? '').replace(/[&<>"']/g, ch => ({
-                            '&': '&amp;',
-                            '<': '&lt;',
-                            '>': '&gt;',
-                            '"': '&quot;',
-                            "'": '&#39;'
-                            }[ch]));
-                            }
-
-                            // Format salary
-                            function money(value) {
-                            if (value === '' || value === null || value === undefined) {
-                            return 'Not specified';
-                            }
-
-                            return new Intl.NumberFormat(undefined, {
-                            maximumFractionDigits: 0
-                            }).format(Number(value));
-                            }
-
-                            // Format posted date received from the database
-                            function dateLabel(value) {
-
-                            if (!value) return 'Date unavailable';
-
-                            const postedDate = new Date(value);
-
-                            if (Number.isNaN(postedDate.getTime())) {
-                            return 'Date unavailable';
-                            }
-
-                            const days = Math.max(
-                            0,
-                            Math.floor(
-                            (Date.now() - postedDate.getTime()) / 86400000
-                            )
-                            );
-
-                            if (days === 0) return 'Today';
-                            if (days === 1) return '1 day ago';
-
-                            if (days < 7) {
-                                   return days + ' days ago';
-                                   }
-
-                                   if (days < 30) {
-                                   const weeks = Math.floor(days / 7);
-
-                                   return weeks + (weeks === 1 ? ' week ago' : ' weeks ago');
-                            }
-
-                            const months = Math.floor(days / 30);
-
-                                   return months + (months === 1 ? ' month ago' : ' months ago');
-                            }
-
-                            // Display messages
-                                   function showMessage(message, type) {
-
-                                   const box = $('formMessage');
-
-                                   box.textContent = message;
-                                   box.className = 'ed-message show ' + type;
-
-                                   box.scrollIntoView({
-                                   behavior: 'smooth',
-                                   block: 'nearest'
-                                   });
-                                   }
-
-                                   function hideMessage() {
-                                   $('formMessage').className = 'ed-message';
-                                   $('formMessage').textContent = '';
-                                   }
-
-                            // Switch dashboard tabs
-                                   function setView(name) {
-
-                                   document.querySelectorAll('.ed-tab').forEach(tab => {
-
-                            const active = tab.dataset.view === name;
-
-                            tab.classList.toggle('active', active);
-
-                            tab.setAttribute(
-                            'aria-selected',
-                            String(active)
-                            );
-
-                            tab.tabIndex = active ? 0 : -1;
-                            });
-
-                            document.querySelectorAll('.ed-view').forEach(view => {
-
-                            const active = view.id === 'view-' + name;
-
-                            view.classList.toggle('active', active);
-                            view.hidden = !active;
-                            });
-
-                            if (name === 'posted' || name === 'overview') {
-                            renderJobs();
-                            }
-
-                            if (name === 'post') {
-                            $('jobTitle').focus({ preventScroll: true });
-                            }
-                            }
-
-                            // Tab click events
-                            document.querySelectorAll('.ed-tab').forEach(tab => {
-
-                            tab.addEventListener('click', () => {
-                            setView(tab.dataset.view);
-                            });
-                            });
-
-                            // Open dashboard views
-                            document.querySelectorAll('[data-open-view]').forEach(button => {
-
-                            button.addEventListener('click', () => {
-
-                            if (button.dataset.openView === 'post') {
-                            resetForm();
-                            }
-
-                            setView(button.dataset.openView);
-                            });
-                            });
-
-                            // Build a job card using database data
-                            function jobCard(job) {
-
-                            const closed = job.status === 'Closed';
-
-                            return `
-                            <article class="ed-job">
-
-                                <div class="ed-job-main">
-                                    <div class="ed-job-icon">💼</div>
-
-                                    <div class="ed-job-copy">
-                                        <h3>${escapeHTML(job.jobTitle)}</h3>
-
-                                        <p>
-                                            ${escapeHTML(job.companyName)}
-                                            ·
-                                            ${escapeHTML(job.location || 'Location not specified')}
-                                        </p>
-                                    </div>
-                                </div>
-
-                                <div class="ed-job-meta">
-
-                                    <div class="ed-meta">
-                                        <span>Posted</span>
-                                        <strong>${dateLabel(job.postedAt)}</strong>
-                                    </div>
-
-                                    <div class="ed-meta">
-                                        <span>Applicants</span>
-                                        <strong>${Number(job.applicants) || 0}</strong>
-                                    </div>
-
-                                    <div class="ed-meta">
-                                        <span>Status</span>
-
-                                        <strong class="ed-status ${closed ? 'closed' : ''}">
-                                            ${closed ? 'Closed' : 'Active'}
-                                        </strong>
-                                    </div>
-
-                                </div>
-
-                                <div class="ed-actions">
-
-                                    <button class="ed-btn"
-                                            type="button"
-                                            data-action="edit"
-                                            data-id="${job.id}">
-                                        Edit
-                                    </button>
-
-                                    <button class="ed-btn"
-                                            type="button"
-                                            data-action="toggle"
-                                            data-id="${job.id}">
-                                        ${closed ? 'Reopen' : 'Close'}
-                                    </button>
-
-                                    <button class="ed-btn danger"
-                                            type="button"
-                                            data-action="delete"
-                                            data-id="${job.id}">
-                                        Delete
-                                    </button>
-
-                                </div>
-
-                            </article>
-                            `;
-                            }
-
-                            // Render jobs and statistics
-                            function renderJobs() {
-
-                            const query = ($('jobSearch')?.value || '')
-                            .trim()
-                            .toLowerCase();
-
-                            const filtered = jobs.filter(job => {
-
-                            const searchable = [
-                            job.jobTitle,
-                            job.companyName,
-                            job.location,
-                            job.category,
-                            job.department
-                            ].join(' ').toLowerCase();
-
-                            return searchable.includes(query);
-                            });
-
-                            // All posted jobs
-                            $('postedJobs').innerHTML = filtered.length
-                            ? filtered.map(jobCard).join('')
-                            : `
-                            <div class="ed-empty">
-                                <strong>No jobs found</strong>
-                                Try another search or post a new opening.
-                            </div>
-                            `;
-
-                            // Latest three jobs
-                            const recent = [...jobs]
-                            .sort((a, b) =>
-                            new Date(b.postedAt).getTime() -
-                            new Date(a.postedAt).getTime()
-                            )
-                            .slice(0, 3);
-
-                            $('recentJobs').innerHTML = recent.length
-                            ? recent.map(jobCard).join('')
-                            : `
-                            <div class="ed-empty">
-                                <strong>No jobs posted yet</strong>
-                                Create your first job listing to get started.
-                            </div>
-                            `;
-
-                            // Dashboard statistics
-                            const activeJobs = jobs.filter(
-                            job => job.status === 'Active'
-                            ).length;
-
-                            const closedJobs = jobs.filter(
-                            job => job.status === 'Closed'
-                            ).length;
-
-                            const applicants = jobs.reduce(
-                            (total, job) => total + (Number(job.applicants) || 0),
-                            0
-                            );
-
-                            $('statActive').textContent = activeJobs;
-                            $('statClosed').textContent = closedJobs;
-                            $('statApplicants').textContent = applicants;
-                            }
-
-                            // Load jobs directly from MySQL through the controller
-                            async function loadJobs() {
-
-                            $('postedJobs').innerHTML = `
-                            <div class="ed-empty">Loading your jobs...</div>
-                            `;
-
-                            $('recentJobs').innerHTML = `
-                            <div class="ed-empty">Loading your jobs...</div>
-                            `;
-
-                            try {
-
-                            const result = await apiRequest(API.myJobs);
-
-                            jobs = Array.isArray(result) ? result : [];
-
-                            renderJobs();
-
-                            } catch (error) {
-
-                            console.error('Loading jobs failed:', error);
-
-                            $('postedJobs').innerHTML = `
-                            <div class="ed-empty">
-                                <strong>Unable to load jobs</strong>
-                                ${escapeHTML(error.message)}
-                            </div>
-                            `;
-
-                            $('recentJobs').innerHTML = `
-                            <div class="ed-empty">
-                                <strong>Unable to load recent jobs</strong>
-                            </div>
-                            `;
-                            }
-                            }
-
-                            // Reset the job form
-                            function resetForm() {
-
-                            form.reset();
-
-                            $('editingJobId').value = '';
-
-                            $('formHeading').textContent = 'Post a new job';
-
-                            $('publishBtn').textContent = 'Publish job';
-
-                            $('cancelEditBtn').hidden = true;
-
-                            $('publishBtn').disabled = false;
-
-                            hideMessage();
-
-                            updatePreview();
-                            }
-
-                            $('resetFormBtn').addEventListener('click', resetForm);
-
-                            $('cancelEditBtn').addEventListener('click', () => {
-
-                            resetForm();
-
-                            setView('posted');
-                            });
-
-                            // Fill the form with database data for editing
-                            function editJob(id) {
-
-                            const job = jobs.find(
-                            item => String(item.id) === String(id)
-                            );
-
-                            if (!job) return;
-
-                            $('jobTitle').value = job.jobTitle || '';
-                            $('department').value = job.department || '';
-                            $('employmentType').value = job.employmentType || '';
-                            $('workplace').value = job.workplace || '';
-                            $('location').value = job.location || '';
-
-                            $('salaryMin').value = job.salaryMin ?? '';
-                            $('salaryMax').value = job.salaryMax ?? '';
-
-                            $('description').value = job.description || '';
-
-                            $('companyName').value = job.companyName || '';
-                            $('companyLogo').value = job.companyLogo || '';
-                            $('companyWebsite').value = job.companyWebsite || '';
-                            $('contactEmail').value = job.contactEmail || '';
-
-                            $('expiry').value = job.expiry
-                            ? new Date(job.expiry).toISOString().slice(0, 10)
-                            : '';
-
-                            $('category').value = job.category || '';
-                            $('skills').value = job.skills || '';
-
-                            $('editingJobId').value = job.id;
-
-                            $('formHeading').textContent = 'Edit job listing';
-
-                            $('publishBtn').textContent = 'Save changes';
-
-                            $('cancelEditBtn').hidden = false;
-
-                            hideMessage();
-
-                            updatePreview();
-
-                            setView('post');
-
-                            $('formHeading').scrollIntoView({
-                            behavior: 'smooth',
-                            block: 'start'
-                            });
-                            }
-
-                            // Close or reopen a job in the database
-                            async function changeJobStatus(job) {
-
-                            const newStatus = job.status === 'Closed'
-                            ? 'Active'
-                            : 'Closed';
-
-                            try {
-
-                            await apiRequest(
-                            API.changeStatus(job.id),
-                            'POST',
-                            { status: newStatus }
-                            );
-
-                            await loadJobs();
-
-                            } catch (error) {
-
-                            alert(error.message);
-                            }
-                            }
-
-                            // Delete a job from the database
-                            async function deleteJob(job) {
-
-                            const confirmed = confirm(
-                            'Delete "' + job.jobTitle + '"? This cannot be undone.'
-                            );
-
-                            if (!confirmed) return;
-
-                            try {
-
-                            await apiRequest(
-                            API.delete(job.id),
-                            'DELETE'
-                            );
-
-                            await loadJobs();
-
-                            showMessage(
-                            'Job deleted successfully.',
-                            'success'
-                            );
-
-                            } catch (error) {
-
-                            alert(error.message);
-                            }
-                            }
-
-                            // Handle Edit, Close, Reopen and Delete buttons
-                            document.addEventListener('click', async event => {
-
-                            const button = event.target.closest('[data-action]');
-
-                            if (!button) return;
-
-                            const id = button.dataset.id;
-
-                            const job = jobs.find(
-                            item => String(item.id) === String(id)
-                            );
-
-                            if (!job) return;
-
-                            const action = button.dataset.action;
-
-                            if (action === 'edit') {
-                            editJob(id);
-                            }
-
-                            if (action === 'toggle') {
-                            await changeJobStatus(job);
-                            }
-
-                            if (action === 'delete') {
-                            await deleteJob(job);
-                            }
-                            });
-
-                            // Search jobs
-                            $('jobSearch').addEventListener('input', renderJobs);
-
-                            // Live job preview
-                            function updatePreview() {
-
-                            $('previewTitle').textContent =
-                            $('jobTitle').value.trim() || 'Your job title';
-
-                            const company =
-                            $('companyName').value.trim() || 'Your company name';
-
-                            const location =
-                            $('location').value.trim() || 'Location';
-
-                            $('previewCompany').textContent =
-                            company + ' · ' + location;
-
-                            $('previewType').textContent =
-                            $('employmentType').value || 'Employment type';
-
-                            $('previewWorkplace').textContent =
-                            $('workplace').value || 'Workplace';
-
-                            $('previewCategory').textContent =
-                            $('category').value || 'Category';
-
-                            const min = $('salaryMin').value;
-                            const max = $('salaryMax').value;
-
-                            $('previewSalary').textContent =
-                            min || max
-                            ? (min ? money(min) : '—') +
-                            ' – ' +
-                            (max ? money(max) : '—')
-                            : 'Salary range will appear here';
-                            }
-
-                            fields.forEach(id => {
-
-                            const element = $(id);
-
-                            if (element) {
-                            element.addEventListener('input', updatePreview);
-                            element.addEventListener('change', updatePreview);
-                            }
-                            });
-
-                            // Collect form values for the controller
-                            function collectFormData() {
-
-                            return {
-                            jobTitle: $('jobTitle').value.trim(),
-                            department: $('department').value.trim(),
-                            employmentType: $('employmentType').value,
-                            workplace: $('workplace').value,
-                            location: $('location').value.trim(),
-
-                            salaryMin: Number($('salaryMin').value),
-                            salaryMax: Number($('salaryMax').value),
-
-                            description: $('description').value.trim(),
-
-                            companyName: $('companyName').value.trim(),
-                            companyLogo: $('companyLogo').value.trim(),
-                            companyWebsite: $('companyWebsite').value.trim(),
-                            contactEmail: $('contactEmail').value.trim(),
-
-                            expiry: $('expiry').value || null,
-
-                            category: $('category').value,
-                            skills: $('skills').value.trim()
-                            };
-                            }
-
-                            // Publish new job or update existing job
-                            form.addEventListener('submit', async event => {
-
-                            event.preventDefault();
-
-                            if (isSaving) return;
-
-                            if (!form.reportValidity()) return;
-
-                            const min = Number($('salaryMin').value);
-                            const max = Number($('salaryMax').value);
-
-                            if (min < 0 || max < min) {
-
-                                             showMessage(
-                                             'Maximum salary must be greater than or equal to minimum salary.',
-                                             'error'
-                                             );
-
-                                             $('salaryMax').focus();
-
-                                             return;
-                                             }
-
-                                             if ($('description').value.trim().length < 100) {
-
-                                                                   showMessage(
-                                                                   'Please add at least 100 characters to the job description.',
-                                                                   'error'
-                                                                   );
-
-                                                                   $('description').focus();
-
-                                                                   return;
-                                                                   }
-
-                                                                   const data = collectFormData();
-
-                                                                   const editingId = $('editingJobId').value;
-
-                                                                   isSaving = true;
-
-                                                                   $('publishBtn').disabled = true;
-
-                                                                   $('publishBtn').textContent = 'Saving...';
-
-                                                                   try {
-
-                                                                   if (editingId) {
-
-                            // Update existing database record
-                                                                   await apiRequest(
-                                                                   API.edit(editingId),
-                                                                   'PUT',
-                                                                   data
-                                                                   );
-
-                                                                   } else {
-
-                            // Insert new database record
-                                                                   await apiRequest(
-                                                                   API.create,
-                                                                   'POST',
-                                                                   data
-                                                                   );
-                                                                   }
-
-                            // Reload latest records from MySQL
-                                                                   await loadJobs();
-
-                                                                   resetForm();
-
-                                                                   setView('posted');
-
-                                                                   showMessage(
-                                                                   editingId
-                                                                   ? 'Your job listing has been updated successfully.'
-                                                                   : 'Your job has been published successfully.',
-                                                                   'success'
-                                                                   );
-
-                                                                   $('view-posted').scrollIntoView({
-                                                                   behavior: 'smooth',
-                                                                   block: 'start'
-                                                                   });
-
-                                                                   } catch (error) {
-
-                                                                   console.error('Saving job failed:', error);
-
-                                                                   showMessage(error.message, 'error');
-
-                                                                   } finally {
-
-                                                                   isSaving = false;
-
-                                                                   $('publishBtn').disabled = false;
-
-                                                                   $('publishBtn').textContent =
-                                                                   $('editingJobId').value
-                                                                   ? 'Save changes'
-                                                                   : 'Publish job';
-                                                                   }
-                                                                   });
-
-                            // Initialize dashboard from database
-                                                                   updatePreview();
-
-                                                                   loadJobs();
-
-                                                                   })();
-                            </script>
+<script>
+    (function () {
+        'use strict';
+
+        const API = {
+            myJobs: '/PostJob/MyJobs',
+            myApplications: '/ApplyJob/MyApplicationsJson',
+            create: '/PostJob/Create',
+            edit: id => `/PostJob/Edit/${id}`,
+            changeStatus: id => `/PostJob/ChangeStatus/${id}`,
+            delete: id => `/PostJob/Delete/${id}`
+        };
+
+        const $ = id => document.getElementById(id);
+
+        const form = $('postJobForm');
+
+        const fields = [
+            'jobTitle',
+            'department',
+            'employmentType',
+            'workplace',
+            'location',
+            'salaryMin',
+            'salaryMax',
+            'description',
+            'companyName',
+            'companyLogo',
+            'companyWebsite',
+            'contactEmail',
+            'expiry',
+            'category',
+            'skills'
+        ];
+
+        let jobs = [];
+        let isSaving = false;
+        let applications = [];
+        let applicationsLoaded = false;
+
+        // Anti-forgery token
+        function getToken() {
+            const token = document.querySelector(
+                'input[name="__RequestVerificationToken"]'
+            );
+
+            return token ? token.value : '';
+        }
+
+        // Common request headers
+        function getHeaders(json = true) {
+            const headers = {
+                'RequestVerificationToken': getToken()
+            };
+
+            if (json) {
+                headers['Content-Type'] = 'application/json';
+            }
+
+            return headers;
+        }
+
+        // Common API request handler
+        async function apiRequest(url, method = 'GET', data = null) {
+            const options = {
+                method: method,
+                credentials: 'same-origin',
+                headers: getHeaders(data !== null)
+            };
+
+            if (data !== null) {
+                options.body = JSON.stringify(data);
+            }
+
+            const response = await fetch(url, options);
+
+            const contentType = response.headers.get('content-type') || '';
+
+            let result = null;
+
+            if (contentType.includes('application/json')) {
+                result = await response.json();
+            } else {
+                result = await response.text();
+            }
+
+            if (!response.ok) {
+                let message = 'Something went wrong. Please try again.';
+
+                if (result && typeof result === 'object') {
+                    message = result.message || result.title || message;
+                } else if (typeof result === 'string' && result.trim()) {
+                    message = result;
+                }
+
+                if (response.status === 401 || response.status === 403) {
+                    message = 'Your session may have expired. Please sign in again.';
+                }
+
+                throw new Error(message);
+            }
+
+            return result;
+        }
+
+        // Prevent HTML injection
+        function escapeHTML(value) {
+            return String(value ?? '').replace(/[&<>"']/g, ch => ({
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#39;'
+            }[ch]));
+        }
+
+        // Format salary
+        function money(value) {
+            if (value === '' || value === null || value === undefined) {
+                return 'Not specified';
+            }
+
+            return new Intl.NumberFormat(undefined, {
+                maximumFractionDigits: 0
+            }).format(Number(value));
+        }
+
+        // Format relative date
+        function dateLabel(value) {
+            if (!value) return 'Date unavailable';
+
+            const postedDate = new Date(value);
+
+            if (Number.isNaN(postedDate.getTime())) {
+                return 'Date unavailable';
+            }
+
+            const days = Math.max(
+                0,
+                Math.floor((Date.now() - postedDate.getTime()) / 86400000)
+            );
+
+            if (days === 0) return 'Today';
+            if (days === 1) return '1 day ago';
+
+            if (days < 7) return days + ' days ago';
+
+            if (days < 30) {
+                const weeks = Math.floor(days / 7);
+                return weeks + (weeks === 1 ? ' week ago' : ' weeks ago');
+            }
+
+            const months = Math.floor(days / 30);
+            return months + (months === 1 ? ' month ago' : ' months ago');
+        }
+
+        // Format application date
+        function applicationDateLabel(value) {
+            if (!value) return 'Date unavailable';
+
+            const date = new Date(value);
+
+            if (Number.isNaN(date.getTime())) {
+                return 'Date unavailable';
+            }
+
+            return date.toLocaleDateString(undefined, {
+                day: 'numeric',
+                month: 'short',
+                year: 'numeric'
+            });
+        }
+
+        // Display messages
+        function showMessage(message, type) {
+            const box = $('formMessage');
+
+            box.textContent = message;
+            box.className = 'ed-message show ' + type;
+
+            box.scrollIntoView({
+                behavior: 'smooth',
+                block: 'nearest'
+            });
+        }
+
+        function hideMessage() {
+            $('formMessage').className = 'ed-message';
+            $('formMessage').textContent = '';
+        }
+
+        // Switch dashboard tabs
+        function setView(name) {
+            document.querySelectorAll('.ed-tab').forEach(tab => {
+                const active = tab.dataset.view === name;
+
+                tab.classList.toggle('active', active);
+                tab.setAttribute('aria-selected', String(active));
+                tab.tabIndex = active ? 0 : -1;
+            });
+
+            document.querySelectorAll('.ed-view').forEach(view => {
+                const active = view.id === 'view-' + name;
+
+                view.classList.toggle('active', active);
+                view.hidden = !active;
+            });
+
+            if (name === 'posted' || name === 'overview') {
+                renderJobs();
+            }
+
+            // Load real applications from database
+            if (name === 'applied') {
+                loadAppliedJobs();
+            }
+
+            if (name === 'post') {
+                $('jobTitle').focus({ preventScroll: true });
+            }
+        }
+
+        // Tab click events
+        document.querySelectorAll('.ed-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                setView(tab.dataset.view);
+            });
+        });
+
+        // Open dashboard views
+        document.querySelectorAll('[data-open-view]').forEach(button => {
+            button.addEventListener('click', () => {
+                if (button.dataset.openView === 'post') {
+                    resetForm();
+                }
+
+                setView(button.dataset.openView);
+            });
+        });
+
+        // Build posted job card
+        function jobCard(job) {
+            const closed = job.status === 'Closed';
+
+            return `
+                <article class="ed-job">
+
+                    <div class="ed-job-main">
+                        <div class="ed-job-icon">💼</div>
+
+                        <div class="ed-job-copy">
+                            <h3>${escapeHTML(job.jobTitle)}</h3>
+                            <p>
+                                ${escapeHTML(job.companyName)}
+                                ·
+                                ${escapeHTML(job.location || 'Location not specified')}
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="ed-job-meta">
+
+                        <div class="ed-meta">
+                            <span>Posted</span>
+                            <strong>${dateLabel(job.postedAt)}</strong>
+                        </div>
+
+                        <div class="ed-meta">
+                            <span>Applicants</span>
+                            <strong>${Number(job.applicants) || 0}</strong>
+                        </div>
+
+                        <div class="ed-meta">
+                            <span>Status</span>
+                            <strong class="ed-status ${closed ? 'closed' : ''}">
+                                ${closed ? 'Closed' : 'Active'}
+                            </strong>
+                        </div>
+
+                    </div>
+
+                    <div class="ed-actions">
+
+                        <button class="ed-btn"
+                                type="button"
+                                data-action="edit"
+                                data-id="${escapeHTML(job.id)}">
+                            Edit
+                        </button>
+
+                        <button class="ed-btn"
+                                type="button"
+                                data-action="toggle"
+                                data-id="${escapeHTML(job.id)}">
+                            ${closed ? 'Reopen' : 'Close'}
+                        </button>
+
+                        <button class="ed-btn danger"
+                                type="button"
+                                data-action="delete"
+                                data-id="${escapeHTML(job.id)}">
+                            Delete
+                        </button>
+
+                    </div>
+                </article>
+            `;
+        }
+
+        // Render jobs and statistics
+        function renderJobs() {
+            const query = ($('jobSearch')?.value || '')
+                .trim()
+                .toLowerCase();
+
+            const filtered = jobs.filter(job => {
+                const searchable = [
+                    job.jobTitle,
+                    job.companyName,
+                    job.location,
+                    job.category,
+                    job.department
+                ].join(' ').toLowerCase();
+
+                return searchable.includes(query);
+            });
+
+            $('postedJobs').innerHTML = filtered.length
+                ? filtered.map(jobCard).join('')
+                : `
+                    <div class="ed-empty">
+                        <strong>No jobs found</strong>
+                        Try another search or post a new opening.
+                    </div>
+                `;
+
+            const recent = [...jobs]
+                .sort((a, b) =>
+                    new Date(b.postedAt).getTime() -
+                    new Date(a.postedAt).getTime()
+                )
+                .slice(0, 3);
+
+            $('recentJobs').innerHTML = recent.length
+                ? recent.map(jobCard).join('')
+                : `
+                    <div class="ed-empty">
+                        <strong>No jobs posted yet</strong>
+                        Create your first job listing to get started.
+                    </div>
+                `;
+
+            const activeJobs = jobs.filter(
+                job => job.status === 'Active'
+            ).length;
+
+            const closedJobs = jobs.filter(
+                job => job.status === 'Closed'
+            ).length;
+
+            const applicants = jobs.reduce(
+                (total, job) => total + (Number(job.applicants) || 0),
+                0
+            );
+
+            $('statActive').textContent = activeJobs;
+            $('statClosed').textContent = closedJobs;
+            $('statApplicants').textContent = applicants;
+        }
+
+        // Load posted jobs from database
+        async function loadJobs() {
+            $('postedJobs').innerHTML = `
+                <div class="ed-empty">Loading your jobs...</div>
+            `;
+
+            $('recentJobs').innerHTML = `
+                <div class="ed-empty">Loading your jobs...</div>
+            `;
+
+            try {
+                const result = await apiRequest(API.myJobs);
+
+                jobs = Array.isArray(result) ? result : [];
+
+                renderJobs();
+            } catch (error) {
+                console.error('Loading jobs failed:', error);
+
+                $('postedJobs').innerHTML = `
+                    <div class="ed-empty">
+                        <strong>Unable to load jobs</strong>
+                        ${escapeHTML(error.message)}
+                    </div>
+                `;
+
+                $('recentJobs').innerHTML = `
+                    <div class="ed-empty">
+                        <strong>Unable to load recent jobs</strong>
+                    </div>
+                `;
+            }
+        }
+
+        // Determine application status style
+        function getApplicationStatusClass(status) {
+            const value = (status || '').toLowerCase();
+
+            if (
+                value.includes('reject') ||
+                value.includes('withdraw') ||
+                value.includes('closed')
+            ) {
+                return 'closed';
+            }
+
+            if (
+                value.includes('review') ||
+                value.includes('pending')
+            ) {
+                return 'pending';
+            }
+
+            return '';
+        }
+
+        // Build application card
+        function applicationCard(application) {
+            const status = application.status || 'Under Review';
+            const statusClass = getApplicationStatusClass(status);
+
+            return `
+                <article class="ed-job">
+
+                    <div class="ed-job-main">
+                        <div class="ed-job-icon">💼</div>
+
+                        <div class="ed-job-copy">
+                            <h3>${escapeHTML(application.jobTitle || 'Untitled Job')}</h3>
+
+                            <p>
+                                ${escapeHTML(application.companyName || 'Company not available')}
+                                ·
+                                ${escapeHTML(application.location || 'Location not specified')}
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="ed-job-meta">
+
+                        <div class="ed-meta">
+                            <span>Employment</span>
+                            <strong>
+                                ${escapeHTML(application.employmentType || 'Not specified')}
+                            </strong>
+                        </div>
+
+                        <div class="ed-meta">
+                            <span>Workplace</span>
+                            <strong>
+                                ${escapeHTML(application.workplace || 'Not specified')}
+                            </strong>
+                        </div>
+
+                        <div class="ed-meta">
+                            <span>Applied on</span>
+                            <strong>
+                                ${escapeHTML(applicationDateLabel(application.appliedAt))}
+                            </strong>
+                        </div>
+
+                        <div class="ed-meta">
+                            <span>Status</span>
+                            <strong class="ed-status ${statusClass}">
+                                ${escapeHTML(status)}
+                            </strong>
+                        </div>
+
+                    </div>
+
+                </article>
+            `;
+        }
+
+        // Load applications belonging to the logged-in user
+        async function loadAppliedJobs() {
+            const container = $('appliedJobs');
+
+            if (!container) return;
+
+            container.innerHTML = `
+                <div class="ed-empty">Loading your applications...</div>
+            `;
+
+            try {
+                const result = await apiRequest(API.myApplications);
+
+                applications = Array.isArray(result) ? result : [];
+                applicationsLoaded = true;
+
+                // Update applications sent statistic
+                $('statApplicationsSent').textContent = applications.length;
+
+                if (applications.length === 0) {
+                    container.innerHTML = `
+                        <div class="ed-empty">
+                            <strong>No applications found</strong>
+                            You have not applied for any jobs yet.
+                            Jobs you apply for will appear here.
+                        </div>
+                    `;
+                    return;
+                }
+
+                // Display all applications from database
+                container.innerHTML = applications
+                    .map(applicationCard)
+                    .join('');
+
+            } catch (error) {
+                applicationsLoaded = false;
+
+                console.error('Loading applications failed:', error);
+
+                container.innerHTML = `
+                    <div class="ed-empty">
+                        <strong>Unable to load applications</strong>
+                        ${escapeHTML(error.message)}
+                        <br><br>
+                        <button type="button"
+                                class="ed-btn primary"
+                                id="retryApplicationsBtn">
+                            Try again
+                        </button>
+                    </div>
+                `;
+            }
+        }
+
+        // Retry loading applications
+        document.addEventListener('click', event => {
+            if (event.target.closest('#retryApplicationsBtn')) {
+                loadAppliedJobs();
+            }
+        });
+
+        // Reset job form
+        function resetForm() {
+            form.reset();
+
+            $('editingJobId').value = '';
+
+            $('formHeading').textContent = 'Post a new job';
+            $('publishBtn').textContent = 'Publish job';
+
+            $('cancelEditBtn').hidden = true;
+            $('publishBtn').disabled = false;
+
+            hideMessage();
+            updatePreview();
+        }
+
+        $('resetFormBtn').addEventListener('click', resetForm);
+
+        $('cancelEditBtn').addEventListener('click', () => {
+            resetForm();
+            setView('posted');
+        });
+
+        // Edit existing job
+        function editJob(id) {
+            const job = jobs.find(
+                item => String(item.id) === String(id)
+            );
+
+            if (!job) return;
+
+            $('jobTitle').value = job.jobTitle || '';
+            $('department').value = job.department || '';
+            $('employmentType').value = job.employmentType || '';
+            $('workplace').value = job.workplace || '';
+            $('location').value = job.location || '';
+
+            $('salaryMin').value = job.salaryMin ?? '';
+            $('salaryMax').value = job.salaryMax ?? '';
+
+            $('description').value = job.description || '';
+
+            $('companyName').value = job.companyName || '';
+            $('companyLogo').value = job.companyLogo || '';
+            $('companyWebsite').value = job.companyWebsite || '';
+            $('contactEmail').value = job.contactEmail || '';
+
+            $('expiry').value = job.expiry
+                ? new Date(job.expiry).toISOString().slice(0, 10)
+                : '';
+
+            $('category').value = job.category || '';
+            $('skills').value = job.skills || '';
+
+            $('editingJobId').value = job.id;
+
+            $('formHeading').textContent = 'Edit job listing';
+            $('publishBtn').textContent = 'Save changes';
+            $('cancelEditBtn').hidden = false;
+
+            hideMessage();
+            updatePreview();
+
+            setView('post');
+
+            $('formHeading').scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+
+        // Close or reopen job
+        async function changeJobStatus(job) {
+            const newStatus = job.status === 'Closed'
+                ? 'Active'
+                : 'Closed';
+
+            try {
+                await apiRequest(
+                    API.changeStatus(job.id),
+                    'POST',
+                    { status: newStatus }
+                );
+
+                await loadJobs();
+            } catch (error) {
+                alert(error.message);
+            }
+        }
+
+        // Delete job
+        async function deleteJob(job) {
+            const confirmed = confirm(
+                'Delete "' + job.jobTitle + '"? This cannot be undone.'
+            );
+
+            if (!confirmed) return;
+
+            try {
+                await apiRequest(
+                    API.delete(job.id),
+                    'DELETE'
+                );
+
+                await loadJobs();
+
+                showMessage(
+                    'Job deleted successfully.',
+                    'success'
+                );
+            } catch (error) {
+                alert(error.message);
+            }
+        }
+
+        // Handle job actions
+        document.addEventListener('click', async event => {
+            const button = event.target.closest('[data-action]');
+
+            if (!button) return;
+
+            const id = button.dataset.id;
+
+            const job = jobs.find(
+                item => String(item.id) === String(id)
+            );
+
+            if (!job) return;
+
+            const action = button.dataset.action;
+
+            if (action === 'edit') {
+                editJob(id);
+            }
+
+            if (action === 'toggle') {
+                await changeJobStatus(job);
+            }
+
+            if (action === 'delete') {
+                await deleteJob(job);
+            }
+        });
+
+        // Search posted jobs
+        $('jobSearch').addEventListener('input', renderJobs);
+
+        // Live preview
+        function updatePreview() {
+            $('previewTitle').textContent =
+                $('jobTitle').value.trim() || 'Your job title';
+
+            const company =
+                $('companyName').value.trim() || 'Your company name';
+
+            const location =
+                $('location').value.trim() || 'Location';
+
+            $('previewCompany').textContent =
+                company + ' · ' + location;
+
+            $('previewType').textContent =
+                $('employmentType').value || 'Employment type';
+
+            $('previewWorkplace').textContent =
+                $('workplace').value || 'Workplace';
+
+            $('previewCategory').textContent =
+                $('category').value || 'Category';
+
+            const min = $('salaryMin').value;
+            const max = $('salaryMax').value;
+
+            $('previewSalary').textContent =
+                min || max
+                    ? (min ? money(min) : '—') +
+                    ' – ' +
+                    (max ? money(max) : '—')
+                    : 'Salary range will appear here';
+        }
+
+        fields.forEach(id => {
+            const element = $(id);
+
+            if (element) {
+                element.addEventListener('input', updatePreview);
+                element.addEventListener('change', updatePreview);
+            }
+        });
+
+        // Collect form values
+        function collectFormData() {
+            return {
+                jobTitle: $('jobTitle').value.trim(),
+                department: $('department').value.trim(),
+                employmentType: $('employmentType').value,
+                workplace: $('workplace').value,
+                location: $('location').value.trim(),
+
+                salaryMin: Number($('salaryMin').value),
+                salaryMax: Number($('salaryMax').value),
+
+                description: $('description').value.trim(),
+
+                companyName: $('companyName').value.trim(),
+                companyLogo: $('companyLogo').value.trim(),
+                companyWebsite: $('companyWebsite').value.trim(),
+                contactEmail: $('contactEmail').value.trim(),
+
+                expiry: $('expiry').value || null,
+
+                category: $('category').value,
+                skills: $('skills').value.trim()
+            };
+        }
+
+        // Publish or update job
+        form.addEventListener('submit', async event => {
+            event.preventDefault();
+
+            if (isSaving) return;
+            if (!form.reportValidity()) return;
+
+            const min = Number($('salaryMin').value);
+            const max = Number($('salaryMax').value);
+
+            if (min < 0 || max < min) {
+                showMessage(
+                    'Maximum salary must be greater than or equal to minimum salary.',
+                    'error'
+                );
+
+                $('salaryMax').focus();
+                return;
+            }
+
+            if ($('description').value.trim().length < 100) {
+                showMessage(
+                    'Please add at least 100 characters to the job description.',
+                    'error'
+                );
+
+                $('description').focus();
+                return;
+            }
+
+            const data = collectFormData();
+            const editingId = $('editingJobId').value;
+
+            isSaving = true;
+            $('publishBtn').disabled = true;
+            $('publishBtn').textContent = 'Saving...';
+
+            try {
+                if (editingId) {
+                    await apiRequest(
+                        API.edit(editingId),
+                        'PUT',
+                        data
+                    );
+                } else {
+                    await apiRequest(
+                        API.create,
+                        'POST',
+                        data
+                    );
+                }
+
+                await loadJobs();
+
+                resetForm();
+                setView('posted');
+
+                showMessage(
+                    editingId
+                        ? 'Your job listing has been updated successfully.'
+                        : 'Your job has been published successfully.',
+                    'success'
+                );
+
+                $('view-posted').scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+
+            } catch (error) {
+                console.error('Saving job failed:', error);
+                showMessage(error.message, 'error');
+
+            } finally {
+                isSaving = false;
+                $('publishBtn').disabled = false;
+
+                $('publishBtn').textContent =
+                    $('editingJobId').value
+                        ? 'Save changes'
+                        : 'Publish job';
+            }
+        });
+
+        // Initialize dashboard
+        updatePreview();
+        loadJobs();
+
+        // Load application count from database on initial page load
+        loadAppliedJobs();
+
+    })();
+</script>

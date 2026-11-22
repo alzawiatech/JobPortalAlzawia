@@ -313,5 +313,42 @@ namespace DubaiJobs.Controllers
 
             return View(ApplicationsView, applications);
         }
+
+
+        // GET: /ApplyJob/MyApplicationsJson
+        [HttpGet]
+        public async Task<IActionResult> MyApplicationsJson()
+        {
+            var userId = _userManager.GetUserId(User);
+
+            if (string.IsNullOrEmpty(userId))
+            {
+                return Unauthorized();
+            }
+
+            var applications = await _context.JobApplications
+                .AsNoTracking()
+                .Where(a => a.ApplicantId == userId)
+                .OrderByDescending(a => a.AppliedAt)
+                .Select(a => new
+                {
+                    applicationId = a.Id,
+                    jobId = a.JobId,
+
+                    jobTitle = a.Job.JobTitle,
+                    companyName = a.Job.CompanyName,
+                    location = a.Job.Location,
+
+                    employmentType = a.Job.EmploymentType,
+                    workplace = a.Job.Workplace,
+
+                    appliedAt = a.AppliedAt,
+                    status = a.Status
+                })
+                .ToListAsync();
+
+            return Json(applications);
+        }
+
     }
 }

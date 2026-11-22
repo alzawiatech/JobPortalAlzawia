@@ -107,7 +107,9 @@ namespace DubaiJobs.Migrations
                         .HasColumnType("varchar(255)");
 
                     b.Property<DateTime>("AppliedAt")
-                        .HasColumnType("datetime(6)");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime(6)")
+                        .HasDefaultValueSql("GETUTCDATE()");
 
                     b.Property<string>("CoverLetter")
                         .IsRequired()
@@ -144,7 +146,9 @@ namespace DubaiJobs.Migrations
 
                     b.Property<string>("Status")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("longtext")
+                        .HasDefaultValue("Under Review");
 
                     b.HasKey("Id");
 
@@ -165,7 +169,9 @@ namespace DubaiJobs.Migrations
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("Applicants")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
 
                     b.Property<string>("Category")
                         .IsRequired()
@@ -229,7 +235,9 @@ namespace DubaiJobs.Migrations
 
                     b.Property<string>("Status")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("longtext")
+                        .HasDefaultValue("Active");
 
                     b.Property<string>("Workplace")
                         .IsRequired()
