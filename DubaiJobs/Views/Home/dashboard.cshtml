@@ -570,6 +570,38 @@
         gap: .45rem;
     }
 
+    /* Links navigate to separate pages; they are not dashboard tabs. */
+    .ed-tabs-separator {
+        flex: 0 0 1px;
+        height: 30px;
+        margin: 0 .8rem 0 1rem;
+        background: #e5e7eb;
+    }
+
+    .ed-tab-link {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        flex: 0 0 auto;
+        white-space: nowrap;
+        text-decoration: none;
+        color: #64748b;
+        border-radius: 10px;
+        padding: .82rem 1.05rem;
+        font: 700 .92rem 'DM Sans',sans-serif;
+        transition: color .18s ease, background .18s ease;
+    }
+
+        .ed-tab-link:hover {
+            color: #ea580c;
+            background: #fff7f1;
+        }
+
+        .ed-tab-link:focus-visible {
+            outline: 3px solid rgba(249,115,22,.35);
+            outline-offset: 2px;
+        }
+
     .ed-tab {
         position: relative;
         color: #64748b !important;
@@ -999,6 +1031,17 @@
                 overflow-y: hidden;
             }
 
+            #employer-dashboard .ed-tabs-separator {
+                margin-inline: .45rem;
+                height: 24px;
+            }
+
+            #employer-dashboard .ed-tab-link {
+                min-height: 42px;
+                padding: .65rem .8rem;
+                font-size: .8rem;
+            }
+
             #employer-dashboard .ed-tab {
                 min-height: 42px;
                 padding: .65rem .8rem !important;
@@ -1326,17 +1369,7 @@
                             aria-selected="true"
                             aria-controls="view-overview"
                             data-view="overview">
-                        Overview
-                    </button>
-
-                    <button type="button"
-                            class="ed-tab"
-                            id="tab-posted"
-                            role="tab"
-                            aria-selected="false"
-                            aria-controls="view-posted"
-                            data-view="posted">
-                        Posted Jobs
+                        <span aria-hidden="true">🏠</span> Overview
                     </button>
 
                     <button type="button"
@@ -1346,7 +1379,17 @@
                             aria-selected="false"
                             aria-controls="view-applied"
                             data-view="applied">
-                        Applied Jobs
+                        <span aria-hidden="true">📨</span> Applied Jobs
+                    </button>
+
+                    <button type="button"
+                            class="ed-tab"
+                            id="tab-posted"
+                            role="tab"
+                            aria-selected="false"
+                            aria-controls="view-posted"
+                            data-view="posted">
+                        <span aria-hidden="true">💼</span> Posted Jobs
                     </button>
 
                     <button type="button"
@@ -1356,7 +1399,23 @@
                             aria-selected="false"
                             aria-controls="view-post"
                             data-view="post">
-                        Post a Job <span aria-hidden="true">＋</span>
+                        <span aria-hidden="true">＋</span> Post a Job
+                    </button>
+
+                    <span class="ed-tabs-separator" aria-hidden="true"></span>
+
+                    <a href="/Account/Profile" class="ed-tab-link">
+                        👤 My Profile &amp; CV
+                    </a>
+
+                    <button type="button"
+                            class="ed-tab"
+                            id="tab-company"
+                            role="tab"
+                            aria-selected="false"
+                            aria-controls="view-company"
+                            data-view="company">
+                        <span aria-hidden="true">🏢</span> Company Information
                     </button>
                 </div>
 
@@ -1698,7 +1757,70 @@
                         </aside>
                     </div>
                 </section>
-                
+
+                <!-- COMPANY INFORMATION -->
+                <section class="ed-view"
+                         id="view-company"
+                         role="tabpanel"
+                         aria-labelledby="tab-company"
+                         hidden>
+
+                    <div class="ed-view-head">
+                        <div>
+                            <h2>Company information</h2>
+                            <p>Save these details once. They will be filled into future job postings automatically.</p>
+                        </div>
+                    </div>
+
+                    <div class="ed-message" id="companyMessage" role="status" aria-live="polite"></div>
+
+                    <div class="ed-form-layout">
+                        <div class="ed-form-card">
+                            <form id="companyInformationForm">
+                                <h3>Your company details</h3>
+
+                                <div class="form-group">
+                                    <label for="savedCompanyName">Company name *</label>
+                                    <input type="text" id="savedCompanyName" maxlength="200"
+                                           placeholder="e.g. Your Company" required />
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="savedCompanyLogo">Logo URL</label>
+                                    <input type="url" id="savedCompanyLogo"
+                                           placeholder="https://example.com/logo.png" />
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="savedCompanyWebsite">Company website</label>
+                                    <input type="url" id="savedCompanyWebsite"
+                                           placeholder="https://company.com" />
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="savedContactEmail">Recruitment contact email *</label>
+                                    <input type="email" id="savedContactEmail" maxlength="254"
+                                           placeholder="hr@company.com" required />
+                                </div>
+
+                                <div class="ed-form-actions">
+                                    <button type="submit" class="btn btn-primary" id="saveCompanyBtn">
+                                        Save company information
+                                    </button>
+                                    <button type="button" class="btn btn-outline" id="editCompanyBtn" hidden>
+                                        Update information
+                                    </button>
+                                </div>
+                                <p class="form-hint">You can update these details at any time. Company information is optional until you publish a job.</p>
+                            </form>
+                        </div>
+
+                        <aside class="ed-side-card">
+                            <h3>Use your details on every job</h3>
+                            <p>Once saved, your company name, logo, website and recruitment email are automatically added to the company section of new job postings. If you skip this page, the first job you publish will be used to save your company details.</p>
+                        </aside>
+                    </div>
+                </section>
 
             </div>
         </div>
@@ -1722,6 +1844,81 @@
         const $ = id => document.getElementById(id);
 
         const form = $('postJobForm');
+        const companyForm = $('companyInformationForm');
+        const COMPANY_STORAGE_KEY = 'employerCompanyInformation';
+
+        let companyInformation = {
+            companyName: '',
+            companyLogo: '',
+            companyWebsite: '',
+            contactEmail: ''
+        };
+
+        function readCompanyInformation() {
+            try {
+                const saved = localStorage.getItem(COMPANY_STORAGE_KEY);
+                if (saved) {
+                    const parsed = JSON.parse(saved);
+                    companyInformation = {
+                        companyName: parsed.companyName || '',
+                        companyLogo: parsed.companyLogo || '',
+                        companyWebsite: parsed.companyWebsite || '',
+                        contactEmail: parsed.contactEmail || ''
+                    };
+                }
+            } catch (error) {
+                console.warn('Could not read saved company information.', error);
+            }
+
+            return companyInformation;
+        }
+
+        function saveCompanyInformation(data, showFeedback = false) {
+            companyInformation = {
+                companyName: (data.companyName || '').trim(),
+                companyLogo: (data.companyLogo || '').trim(),
+                companyWebsite: (data.companyWebsite || '').trim(),
+                contactEmail: (data.contactEmail || '').trim()
+            };
+
+            try {
+                localStorage.setItem(COMPANY_STORAGE_KEY, JSON.stringify(companyInformation));
+                fillCompanyInformationForm();
+
+                if (showFeedback) {
+                    showCompanyMessage('Company information saved. It will be used for future job postings.', 'success');
+                }
+                return true;
+            } catch (error) {
+                console.error('Saving company information failed:', error);
+                if (showFeedback) {
+                    showCompanyMessage('Could not save company information in this browser. Check browser storage settings.', 'error');
+                }
+                return false;
+            }
+        }
+
+        function fillCompanyInformationForm() {
+            if (!$('savedCompanyName')) return;
+            $('savedCompanyName').value = companyInformation.companyName;
+            $('savedCompanyLogo').value = companyInformation.companyLogo;
+            $('savedCompanyWebsite').value = companyInformation.companyWebsite;
+            $('savedContactEmail').value = companyInformation.contactEmail;
+
+            $('companyName').value = companyInformation.companyName;
+            $('companyLogo').value = companyInformation.companyLogo;
+            $('companyWebsite').value = companyInformation.companyWebsite;
+            $('contactEmail').value = companyInformation.contactEmail;
+
+            if (typeof updatePreview === 'function') updatePreview();
+        }
+
+        function showCompanyMessage(message, type) {
+            const box = $('companyMessage');
+            if (!box) return;
+            box.textContent = message;
+            box.className = 'ed-message show ' + type;
+        }
 
         const fields = [
             'jobTitle',
@@ -1918,7 +2115,7 @@
 
         // Switch dashboard tabs
         function setView(name) {
-            document.querySelectorAll('.ed-tab').forEach(tab => {
+            document.querySelectorAll('.ed-tab[data-view]').forEach(tab => {
                 const active = tab.dataset.view === name;
 
                 tab.classList.toggle('active', active);
@@ -1942,12 +2139,18 @@
             }
 
             if (name === 'post') {
+                fillCompanyInformationForm();
                 $('jobTitle').focus({ preventScroll: true });
+            }
+
+            if (name === 'company') {
+                readCompanyInformation();
+                fillCompanyInformationForm();
             }
         }
 
         // Tab click events
-        document.querySelectorAll('.ed-tab').forEach(tab => {
+        document.querySelectorAll('.ed-tab[data-view]').forEach(tab => {
             tab.addEventListener('click', () => {
                 setView(tab.dataset.view);
             });
@@ -1964,6 +2167,37 @@
             });
         });
 
+        // Load stored company information and support save/update.
+        readCompanyInformation();
+
+        companyForm.addEventListener('submit', event => {
+            event.preventDefault();
+
+            const data = {
+                companyName: $('savedCompanyName').value.trim(),
+                companyLogo: $('savedCompanyLogo').value.trim(),
+                companyWebsite: $('savedCompanyWebsite').value.trim(),
+                contactEmail: $('savedContactEmail').value.trim()
+            };
+
+            if (!data.companyName || !data.contactEmail) {
+                showCompanyMessage('Company name and recruitment contact email are required.', 'error');
+                return;
+            }
+
+            if (saveCompanyInformation(data, true)) {
+                $('companyName').value = data.companyName;
+                $('companyLogo').value = data.companyLogo;
+                $('companyWebsite').value = data.companyWebsite;
+                $('contactEmail').value = data.contactEmail;
+                updatePreview();
+            }
+        });
+
+        $('editCompanyBtn').addEventListener('click', () => {
+            $('savedCompanyName').focus();
+        });
+
         // ==========================================
         // JOB CARD
         // ==========================================
@@ -1972,75 +2206,75 @@
             const closed = job.status === 'Closed';
 
             return `
-                    <article class="ed-job">
+                            <article class="ed-job">
 
-                        <div class="ed-job-main">
-                            <div class="ed-job-icon">💼</div>
+                                <div class="ed-job-main">
+                                    <div class="ed-job-icon">💼</div>
 
-                            <div class="ed-job-copy">
-                                <h3>${escapeHTML(job.jobTitle)}</h3>
-                                <p>
-                                    ${escapeHTML(job.companyName)}
-                                    ·
-                                    ${escapeHTML(job.location || 'Location not specified')}
-                                </p>
-                            </div>
-                        </div>
+                                    <div class="ed-job-copy">
+                                        <h3>${escapeHTML(job.jobTitle)}</h3>
+                                        <p>
+                                            ${escapeHTML(job.companyName)}
+                                            ·
+                                            ${escapeHTML(job.location || 'Location not specified')}
+                                        </p>
+                                    </div>
+                                </div>
 
-                        <div class="ed-job-meta">
+                                <div class="ed-job-meta">
 
-                            <div class="ed-meta">
-                                <span>Posted</span>
-                                <strong>${dateLabel(job.postedAt)}</strong>
-                            </div>
+                                    <div class="ed-meta">
+                                        <span>Posted</span>
+                                        <strong>${dateLabel(job.postedAt)}</strong>
+                                    </div>
 
-                            <div class="ed-meta">
-                                <span>Applicants</span>
-                                <strong>${Number(job.applicants) || 0}</strong>
-                            </div>
+                                    <div class="ed-meta">
+                                        <span>Applicants</span>
+                                        <strong>${Number(job.applicants) || 0}</strong>
+                                    </div>
 
-                            <div class="ed-meta">
-                                <span>Status</span>
-                                <strong class="ed-status ${closed ? 'closed' : ''}">
-                                    ${closed ? 'Closed' : 'Active'}
-                                </strong>
-                            </div>
+                                    <div class="ed-meta">
+                                        <span>Status</span>
+                                        <strong class="ed-status ${closed ? 'closed' : ''}">
+                                            ${closed ? 'Closed' : 'Active'}
+                                        </strong>
+                                    </div>
 
-                        </div>
+                                </div>
 
-                        <div class="ed-actions">
+                                <div class="ed-actions">
 
-                            <button class="btn"
-                                    type="button"
-                                    data-action="applicants"
-                                    data-id="${escapeHTML(job.id)}">
-                                View All Applicants
-                            </button>
+                                    <button class="btn"
+                                            type="button"
+                                            data-action="applicants"
+                                            data-id="${escapeHTML(job.id)}">
+                                        View All Applicants
+                                    </button>
 
-                            <button class="ed-btn"
-                                    type="button"
-                                    data-action="edit"
-                                    data-id="${escapeHTML(job.id)}">
-                                Edit
-                            </button>
+                                    <button class="ed-btn"
+                                            type="button"
+                                            data-action="edit"
+                                            data-id="${escapeHTML(job.id)}">
+                                        Edit
+                                    </button>
 
-                            <button class="ed-btn"
-                                    type="button"
-                                    data-action="toggle"
-                                    data-id="${escapeHTML(job.id)}">
-                                ${closed ? 'Reopen' : 'Close'}
-                            </button>
+                                    <button class="ed-btn"
+                                            type="button"
+                                            data-action="toggle"
+                                            data-id="${escapeHTML(job.id)}">
+                                        ${closed ? 'Reopen' : 'Close'}
+                                    </button>
 
-                            <button class="ed-btn danger"
-                                    type="button"
-                                    data-action="delete"
-                                    data-id="${escapeHTML(job.id)}">
-                                Delete
-                            </button>
+                                    <button class="ed-btn danger"
+                                            type="button"
+                                            data-action="delete"
+                                            data-id="${escapeHTML(job.id)}">
+                                        Delete
+                                    </button>
 
-                        </div>
-                    </article>
-                `;
+                                </div>
+                            </article>
+                        `;
         }
 
         // Render jobs and statistics
@@ -2064,11 +2298,11 @@
             $('postedJobs').innerHTML = filtered.length
                 ? filtered.map(jobCard).join('')
                 : `
-                        <div class="ed-empty">
-                            <strong>No jobs found</strong>
-                            Try another search or post a new job.
-                        </div>
-                    `;
+                                <div class="ed-empty">
+                                    <strong>No jobs found</strong>
+                                    Try another search or post a new job.
+                                </div>
+                            `;
 
             const recent = [...jobs]
                 .sort((a, b) =>
@@ -2080,11 +2314,11 @@
             $('recentJobs').innerHTML = recent.length
                 ? recent.map(jobCard).join('')
                 : `
-                        <div class="ed-empty">
-                            <strong>No jobs posted yet</strong>
-                            Create your first job listing to get started.
-                        </div>
-                    `;
+                                <div class="ed-empty">
+                                    <strong>No jobs posted yet</strong>
+                                    Create your first job listing to get started.
+                                </div>
+                            `;
 
             const activeJobs = jobs.filter(
                 job => job.status === 'Active'
@@ -2107,12 +2341,12 @@
         // Load posted jobs from database
         async function loadJobs() {
             $('postedJobs').innerHTML = `
-                    <div class="ed-empty">Loading your jobs...</div>
-                `;
+                            <div class="ed-empty">Loading your jobs...</div>
+                        `;
 
             $('recentJobs').innerHTML = `
-                    <div class="ed-empty">Loading your jobs...</div>
-                `;
+                            <div class="ed-empty">Loading your jobs...</div>
+                        `;
 
             try {
                 const result = await apiRequest(API.myJobs);
@@ -2124,17 +2358,17 @@
                 console.error('Loading jobs failed:', error);
 
                 $('postedJobs').innerHTML = `
-                        <div class="ed-empty">
-                            <strong>Unable to load jobs</strong>
-                            ${escapeHTML(error.message)}
-                        </div>
-                    `;
+                                <div class="ed-empty">
+                                    <strong>Unable to load jobs</strong>
+                                    ${escapeHTML(error.message)}
+                                </div>
+                            `;
 
                 $('recentJobs').innerHTML = `
-                        <div class="ed-empty">
-                            <strong>Unable to load recent jobs</strong>
-                        </div>
-                    `;
+                                <div class="ed-empty">
+                                    <strong>Unable to load recent jobs</strong>
+                                </div>
+                            `;
             }
         }
 
@@ -2169,56 +2403,56 @@
             const statusClass = getApplicationStatusClass(status);
 
             return `
-                    <article class="ed-job">
+                            <article class="ed-job">
 
-                        <div class="ed-job-main">
-                            <div class="ed-job-icon">💼</div>
+                                <div class="ed-job-main">
+                                    <div class="ed-job-icon">💼</div>
 
-                            <div class="ed-job-copy">
-                                <h3>${escapeHTML(application.jobTitle || 'Untitled Job')}</h3>
+                                    <div class="ed-job-copy">
+                                        <h3>${escapeHTML(application.jobTitle || 'Untitled Job')}</h3>
 
-                                <p>
-                                    ${escapeHTML(application.companyName || 'Company not available')}
-                                    ·
-                                    ${escapeHTML(application.location || 'Location not specified')}
-                                </p>
-                            </div>
-                        </div>
+                                        <p>
+                                            ${escapeHTML(application.companyName || 'Company not available')}
+                                            ·
+                                            ${escapeHTML(application.location || 'Location not specified')}
+                                        </p>
+                                    </div>
+                                </div>
 
-                        <div class="ed-job-meta">
+                                <div class="ed-job-meta">
 
-                            <div class="ed-meta">
-                                <span>Employment</span>
-                                <strong>
-                                    ${escapeHTML(application.employmentType || 'Not specified')}
-                                </strong>
-                            </div>
+                                    <div class="ed-meta">
+                                        <span>Employment</span>
+                                        <strong>
+                                            ${escapeHTML(application.employmentType || 'Not specified')}
+                                        </strong>
+                                    </div>
 
-                            <div class="ed-meta">
-                                <span>Workplace</span>
-                                <strong>
-                                    ${escapeHTML(application.workplace || 'Not specified')}
-                                </strong>
-                            </div>
+                                    <div class="ed-meta">
+                                        <span>Workplace</span>
+                                        <strong>
+                                            ${escapeHTML(application.workplace || 'Not specified')}
+                                        </strong>
+                                    </div>
 
-                            <div class="ed-meta">
-                                <span>Applied on</span>
-                                <strong>
-                                    ${escapeHTML(applicationDateLabel(application.appliedAt))}
-                                </strong>
-                            </div>
+                                    <div class="ed-meta">
+                                        <span>Applied on</span>
+                                        <strong>
+                                            ${escapeHTML(applicationDateLabel(application.appliedAt))}
+                                        </strong>
+                                    </div>
 
-                            <div class="ed-meta">
-                                <span>Status</span>
-                                <strong class="ed-status ${statusClass}">
-                                    ${escapeHTML(status)}
-                                </strong>
-                            </div>
+                                    <div class="ed-meta">
+                                        <span>Status</span>
+                                        <strong class="ed-status ${statusClass}">
+                                            ${escapeHTML(status)}
+                                        </strong>
+                                    </div>
 
-                        </div>
+                                </div>
 
-                    </article>
-                `;
+                            </article>
+                        `;
         }
 
         // Load applications belonging to the logged-in user
@@ -2228,8 +2462,8 @@
             if (!container) return;
 
             container.innerHTML = `
-                    <div class="ed-empty">Loading your applications...</div>
-                `;
+                            <div class="ed-empty">Loading your applications...</div>
+                        `;
 
             try {
                 const result = await apiRequest(API.myApplications);
@@ -2241,12 +2475,12 @@
 
                 if (applications.length === 0) {
                     container.innerHTML = `
-                            <div class="ed-empty">
-                                <strong>No applications found</strong>
-                                You have not applied for any jobs yet.
-                                Jobs you apply for will appear here.
-                            </div>
-                        `;
+                                    <div class="ed-empty">
+                                        <strong>No applications found</strong>
+                                        You have not applied for any jobs yet.
+                                        Jobs you apply for will appear here.
+                                    </div>
+                                `;
                     return;
                 }
 
@@ -2260,17 +2494,17 @@
                 console.error('Loading applications failed:', error);
 
                 container.innerHTML = `
-                        <div class="ed-empty">
-                            <strong>Unable to load applications</strong>
-                            ${escapeHTML(error.message)}
-                            <br><br>
-                            <button type="button"
-                                    class="ed-btn primary"
-                                    id="retryApplicationsBtn">
-                                Try again
-                            </button>
-                        </div>
-                    `;
+                                <div class="ed-empty">
+                                    <strong>Unable to load applications</strong>
+                                    ${escapeHTML(error.message)}
+                                    <br><br>
+                                    <button type="button"
+                                            class="ed-btn primary"
+                                            id="retryApplicationsBtn">
+                                        Try again
+                                    </button>
+                                </div>
+                            `;
             }
         }
 
@@ -2287,6 +2521,8 @@
 
         function resetForm() {
             form.reset();
+            readCompanyInformation();
+            fillCompanyInformationForm();
 
             $('editingJobId').value = '';
 
@@ -2330,6 +2566,13 @@
             $('companyLogo').value = job.companyLogo || '';
             $('companyWebsite').value = job.companyWebsite || '';
             $('contactEmail').value = job.contactEmail || '';
+
+            saveCompanyInformation({
+                companyName: job.companyName || '',
+                companyLogo: job.companyLogo || '',
+                companyWebsite: job.companyWebsite || '',
+                contactEmail: job.contactEmail || ''
+            });
 
             $('expiry').value = job.expiry
                 ? new Date(job.expiry).toISOString().slice(0, 10)
@@ -2553,6 +2796,10 @@
             const data = collectFormData();
             const editingId = $('editingJobId').value;
 
+            // Automatically remember company details when the first job is published.
+            // Also refresh saved defaults whenever a job is updated or published.
+            saveCompanyInformation(data, false);
+
             isSaving = true;
             $('publishBtn').disabled = true;
             $('publishBtn').textContent = 'Saving...';
@@ -2608,6 +2855,8 @@
         // INITIALIZE DASHBOARD
         // ==========================================
 
+        readCompanyInformation();
+        fillCompanyInformationForm();
         updatePreview();
 
         loadJobs();
