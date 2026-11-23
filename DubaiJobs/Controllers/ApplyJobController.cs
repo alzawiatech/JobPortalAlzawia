@@ -350,5 +350,180 @@ namespace DubaiJobs.Controllers
             return Json(applications);
         }
 
+
+        // GET: /ApplyJob/ApplicantsJson?jobId=1
+        [HttpGet]
+        public async Task<IActionResult> ApplicantsJson(int jobId)
+        {
+            var employerId = _userManager.GetUserId(User);
+
+            if (string.IsNullOrEmpty(employerId))
+            {
+                return Unauthorized();
+            }
+
+            // Make sure this job belongs to the logged-in employer.
+            var job = await _context.PostJobs
+                .AsNoTracking()
+                .FirstOrDefaultAsync(j =>
+                    j.Id == jobId &&
+                    j.EmployerId == employerId);
+
+            if (job == null)
+            {
+                return NotFound(new
+                {
+                    message = "Job not found or you do not have permission to view its applicants."
+                });
+            }
+
+            var applicants = await _context.JobApplications
+                .AsNoTracking()
+                .Where(a => a.JobId == jobId)
+                .OrderByDescending(a => a.AppliedAt)
+                .Select(a => new
+                {
+                    id = a.Id,
+                    name = a.FirstName + " " + a.LastName,
+                    email = a.Email,
+                    phone = a.Phone,
+                    coverLetter = a.CoverLetter,
+                    source = a.Source,
+                    appliedAt = a.AppliedAt,
+                    status = a.Status
+                })
+                .ToListAsync();
+
+            return Json(applicants);
+        }
+
+        // POST: /ApplyJob/UpdateApplicantStatus
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> UpdateApplicantStatus(
+            int applicationId,
+            string status)
+        {
+            var employerId = _userManager.GetUserId(User);
+
+            if (string.IsNullOrEmpty(employerId))
+            {
+                return Unauthorized();
+            }
+
+            if (status != "Shortlisted" && status != "Rejected")
+            {
+                return BadRequest(new
+                {
+                    message = "Invalid applicant status."
+                });
+            }
+
+            // Only allow an employer to update applications
+            // belonging to one of their own jobs.
+            var application = await _context.JobApplications
+                .Include(a => a.Job)
+                .FirstOrDefaultAsync(a =>
+                    a.Id == applicationId &&
+                    a.Job.EmployerId == employerId);
+
+            if (application == null)
+            {
+                return NotFound(new
+                {
+                    message = "Application not found or access denied."
+                });
+            }
+
+            application.Status = status;
+
+            await _context.SaveChangesAsync();
+
+            return Json(new
+            {
+                success = true,
+                applicationId = application.Id,
+                status = application.Status
+            });
+        }
+
+
+        // GET: /ApplyJob/Resume?applicationId=1
+        [HttpGet]
+        public async Task<IActionResult> Resume(
+            int applicationId,
+            bool download = false)
+        {
+            var employerId = _userManager.GetUserId(User);
+
+            if (string.IsNullOrEmpty(employerId))
+            {
+                return Unauthorized();
+            }
+
+            var application = await _context.JobApplications
+                .AsNoTracking()
+                .Include(a => a.Job)
+                .FirstOrDefaultAsync(a =>
+                    a.Id == applicationId &&
+                    a.Job.EmployerId == employerId);
+
+            if (application == null)
+            {
+                return NotFound(
+                    "Application not found or access denied.");
+            }
+
+            var fileName = application.ResumePath;
+
+            if (string.IsNullOrWhiteSpace(fileName) ||
+                fileName != Path.GetFileName(fileName))
+            {
+                return NotFound("Resume not found.");
+            }
+
+            var extension = Path.GetExtension(fileName)
+                .ToLowerInvariant();
+
+            var contentType = extension switch
+            {
+                ".pdf" => "application/pdf",
+                ".doc" => "application/msword",
+                ".docx" => "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+                _ => null
+            };
+
+            if (contentType == null)
+            {
+                return BadRequest("Unsupported resume file type.");
+            }
+
+            var filePath = Path.Combine(
+                _environment.ContentRootPath,
+                "PrivateUploads",
+                "Resumes",
+                fileName);
+
+            if (!System.IO.File.Exists(filePath))
+            {
+                return NotFound("Resume file does not exist.");
+            }
+
+            if (download)
+            {
+                return PhysicalFile(
+                    filePath,
+                    contentType,
+                    fileName);
+            }
+
+            Response.Headers["Content-Disposition"] =
+                $"inline; filename=\"{fileName}\"";
+
+            return PhysicalFile(filePath, contentType);
+        }
+
+
+
     }
 }

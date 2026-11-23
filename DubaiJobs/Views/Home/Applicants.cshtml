@@ -1,0 +1,1079 @@
+﻿@using System.Text.Json
+@{
+    ViewData["Title"] = "Manage Applicants";
+    var jobId = ViewBag.JobId;
+}
+
+@section Styles {
+    <style>
+        .applicants-page {
+            --brand-orange: #ff6b1a;
+            --brand-orange-hover: #e85a0c;
+            --brand-orange-soft: #fff2ea;
+            --navy: #14243d;
+            --navy-mid: #1e3a66;
+            --navy-soft: #eef2f8;
+            --background: #f8fafc;
+            --surface: #ffffff;
+            --text-dark: #0f172a;
+            --text: #1e293b;
+            --muted: #64748b;
+            --border: #e5e7eb;
+            --border-light: #f1f5f9;
+            font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--background);
+            color: var(--text);
+            min-height: 100vh;
+            padding: 105px 0 70px;
+        }
+
+            .applicants-page *,
+            .applicants-page *::before,
+            .applicants-page *::after {
+                box-sizing: border-box;
+            }
+
+        .applicants-container {
+            max-width: 1220px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Top Workspace Header */
+        .applicants-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            gap: 20px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .applicants-badge {
+            display: inline-block;
+            background: var(--brand-orange-soft);
+            color: var(--brand-orange);
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 6px 14px;
+            border-radius: 999px;
+            margin-bottom: 12px;
+        }
+
+        .applicants-header h1 {
+            margin: 0 0 8px;
+            font-family: 'Sora', 'DM Sans', sans-serif;
+            font-size: 36px;
+            font-weight: 800;
+            letter-spacing: -0.025em;
+            color: var(--text-dark);
+            line-height: 1.15;
+        }
+
+        .applicants-subtitle {
+            margin: 0;
+            font-size: 15px;
+            color: var(--muted);
+            line-height: 1.5;
+        }
+
+        .applicants-back-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: var(--brand-orange);
+            color: #ffffff !important;
+            border: none;
+            border-radius: 999px;
+            padding: 12px 22px;
+            text-decoration: none;
+            font-size: 13.5px;
+            font-weight: 700;
+            white-space: nowrap;
+            box-shadow: 0 6px 16px rgba(255, 107, 26, 0.25);
+            transition: all 0.2s ease;
+        }
+
+            .applicants-back-btn:hover {
+                background: var(--brand-orange-hover);
+                color: #ffffff !important;
+                transform: translateY(-1px);
+                box-shadow: 0 8px 20px rgba(255, 107, 26, 0.32);
+            }
+
+        /* 3 Stat Cards matching Dashboard KPI Cards */
+        .applicants-stats {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 20px;
+            margin-bottom: 26px;
+        }
+
+        .applicants-stat-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 22px 24px;
+            box-shadow: 0 2px 10px rgba(15, 23, 42, 0.025);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+            .applicants-stat-card:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 8px 22px rgba(15, 23, 42, 0.05);
+            }
+
+        .stat-card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .applicants-stat-card p {
+            color: var(--muted);
+            font-size: 13.5px;
+            margin: 0;
+            font-weight: 500;
+        }
+
+        .applicants-stat-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+
+            .applicants-stat-icon.icon-purple {
+                background: #f3e8ff;
+                color: #6b21a8;
+            }
+
+            .applicants-stat-icon.icon-amber {
+                background: #fef3c7;
+                color: #b45309;
+            }
+
+            .applicants-stat-icon.icon-green {
+                background: #dcfce7;
+                color: #15803d;
+            }
+
+        .applicants-stat-card h3 {
+            margin: 0 0 8px;
+            font-family: 'Sora', 'DM Sans', sans-serif;
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--text-dark);
+            line-height: 1.1;
+        }
+
+        .stat-card-note {
+            display: block;
+            font-size: 12.5px;
+            color: var(--muted);
+        }
+
+        /* Main White Workspace Panel */
+        .applicants-panel {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 22px;
+            padding: 28px;
+            box-shadow: 0 6px 24px rgba(15, 23, 42, 0.035);
+        }
+
+        .applicants-panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            padding-bottom: 20px;
+            margin-bottom: 22px;
+            border-bottom: 1px solid var(--border-light);
+            flex-wrap: wrap;
+        }
+
+            .applicants-panel-header h2 {
+                margin: 0 0 4px;
+                font-family: 'Sora', 'DM Sans', sans-serif;
+                font-size: 20px;
+                font-weight: 700;
+                color: var(--text-dark);
+            }
+
+            .applicants-panel-header p {
+                margin: 0;
+                font-size: 13.5px;
+                color: var(--muted);
+            }
+
+        .applicants-count-pill {
+            background: var(--brand-orange-soft);
+            color: var(--brand-orange);
+            padding: 6px 14px;
+            border-radius: 999px;
+            font-size: 12.5px;
+            font-weight: 700;
+        }
+
+        /* Search & Filter Toolbar */
+        .applicants-toolbar {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .applicants-search-box {
+            flex: 1;
+            position: relative;
+        }
+
+            .applicants-search-box input {
+                width: 100%;
+                padding: 11px 16px 11px 40px;
+                border: 1px solid var(--border);
+                border-radius: 12px;
+                outline: none;
+                background: #f8fafc;
+                font-family: inherit;
+                font-size: 13.5px;
+                color: var(--text);
+                transition: all 0.2s ease;
+            }
+
+                .applicants-search-box input:focus,
+                .applicants-toolbar select:focus {
+                    background: #ffffff;
+                    border-color: var(--brand-orange);
+                    box-shadow: 0 0 0 3px rgba(255, 107, 26, 0.12);
+                }
+
+        .applicants-search-icon {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #94a3b8;
+            pointer-events: none;
+            font-size: 15px;
+        }
+
+        .applicants-toolbar select {
+            padding: 11px 16px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            background: #ffffff;
+            font-family: inherit;
+            font-size: 13.5px;
+            font-weight: 600;
+            color: var(--text);
+            outline: none;
+            min-width: 185px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        /* Table Container */
+        .applicants-table-wrapper {
+            background: #ffffff;
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow-x: auto;
+        }
+
+        .applicants-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 920px;
+        }
+
+            .applicants-table thead th {
+                background: #fafafa;
+                color: var(--muted);
+                font-size: 11.5px;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 0.05em;
+                text-align: left;
+                padding: 14px 18px;
+                border-bottom: 1px solid var(--border);
+                white-space: nowrap;
+            }
+
+            .applicants-table tbody td {
+                padding: 18px;
+                border-bottom: 1px solid var(--border-light);
+                vertical-align: top;
+                font-size: 13.5px;
+                color: var(--text);
+            }
+
+            .applicants-table tbody tr:last-child td {
+                border-bottom: none;
+            }
+
+            .applicants-table tbody tr:hover {
+                background: #fffaf7;
+            }
+
+        .applicant-profile {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+        }
+
+        .applicant-avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: var(--brand-orange-soft);
+            color: var(--brand-orange);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+
+        .applicant-name {
+            font-weight: 700;
+            font-size: 14.5px;
+            color: var(--text-dark);
+            margin-bottom: 3px;
+        }
+
+        .applicant-sub {
+            font-size: 12.5px;
+            color: var(--muted);
+            overflow-wrap: anywhere;
+            line-height: 1.45;
+        }
+
+        .applicant-status {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+            .applicant-status.Under-Review {
+                background: #fef3c7;
+                color: #b45309;
+            }
+
+            .applicant-status.Shortlisted {
+                background: #dcfce7;
+                color: #15803d;
+            }
+
+            .applicant-status.Rejected {
+                background: #fee2e2;
+                color: #b91c1c;
+            }
+
+        .cover-letter-cell {
+            max-width: 280px;
+        }
+
+        .cover-letter-text {
+            margin: 0;
+            font-size: 13px;
+            line-height: 1.55;
+            color: #475569;
+            white-space: pre-wrap;
+            overflow-wrap: anywhere;
+        }
+
+        .toggle-cover-btn {
+            margin-top: 6px;
+            padding: 0;
+            border: none;
+            background: none;
+            color: var(--brand-orange);
+            font-family: inherit;
+            font-size: 12.5px;
+            font-weight: 700;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+
+            .toggle-cover-btn:hover {
+                color: var(--brand-orange-hover);
+            }
+
+        /* Action Buttons */
+        .cv-highlight-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            min-width: 146px;
+        }
+
+        .cv-btn-view {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 8px 16px;
+            border-radius: 999px;
+            background: var(--navy-mid);
+            color: #ffffff !important;
+            border: 1px solid var(--navy-mid);
+            font-size: 12.5px;
+            font-weight: 700;
+            text-decoration: none;
+            white-space: nowrap;
+            box-shadow: 0 3px 8px rgba(30, 58, 102, 0.22);
+            transition: all 0.15s ease;
+        }
+
+            .cv-btn-view:hover {
+                background: var(--navy);
+                border-color: var(--navy);
+                color: #ffffff !important;
+                transform: translateY(-1px);
+                box-shadow: 0 5px 12px rgba(20, 36, 61, 0.28);
+            }
+
+        .cv-btn-download {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 8px 16px;
+            border-radius: 999px;
+            background: #ffffff;
+            color: var(--navy-mid);
+            border: 1.5px solid var(--navy-mid);
+            font-size: 12.5px;
+            font-weight: 700;
+            text-decoration: none;
+            white-space: nowrap;
+            transition: all 0.15s ease;
+        }
+
+            .cv-btn-download:hover {
+                background: var(--navy-soft);
+                color: var(--navy);
+                transform: translateY(-1px);
+            }
+
+        .decision-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            min-width: 118px;
+        }
+
+        .decision-btn {
+            border-radius: 999px;
+            padding: 8px 14px;
+            font-family: inherit;
+            font-size: 12.5px;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            white-space: nowrap;
+            transition: all 0.15s ease;
+        }
+
+        .shortlist-btn {
+            background: #16a34a;
+            color: #ffffff;
+            border: 1px solid #16a34a;
+        }
+
+            .shortlist-btn:hover:not(:disabled) {
+                background: #15803d;
+                transform: translateY(-1px);
+            }
+
+        .reject-btn {
+            background: #ffffff;
+            color: #dc2626;
+            border: 1px solid #fecaca;
+        }
+
+            .reject-btn:hover:not(:disabled) {
+                background: #fef2f2;
+                border-color: #fca5a5;
+                transform: translateY(-1px);
+            }
+
+        .decision-btn:disabled {
+            opacity: 0.45;
+            cursor: not-allowed;
+        }
+
+        .applicants-empty {
+            text-align: center;
+            background: #fafafa;
+            border: 1px dashed var(--border);
+            border-radius: 16px;
+            padding: 52px 20px;
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        .applicants-message {
+            padding: 14px 18px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            font-size: 13.5px;
+            font-weight: 600;
+            display: none;
+        }
+
+            .applicants-message.success-message {
+                display: block;
+                background: #dcfce7;
+                color: #15803d;
+                border: 1px solid #bbf7d0;
+            }
+
+            .applicants-message.error-message {
+                display: block;
+                background: #fee2e2;
+                color: #b91c1c;
+                border: 1px solid #fecaca;
+            }
+
+        .applicants-loading {
+            text-align: center;
+            padding: 40px;
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        /* Tablet & Mobile Responsive Layout */
+        @@media (max-width: 900px) {
+            .applicants-stats {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+                gap: 12px;
+            }
+
+            .applicants-stat-card {
+                padding: 16px 18px;
+            }
+
+                .applicants-stat-card h3 {
+                    font-size: 26px;
+                }
+            /* Convert table rows into clean mobile cards */
+            .applicants-table-wrapper {
+                border: none;
+                background: transparent;
+                overflow: visible;
+            }
+
+            .applicants-table,
+            .applicants-table tbody,
+            .applicants-table tr,
+            .applicants-table td {
+                display: block;
+                width: 100%;
+                min-width: 0;
+            }
+
+                .applicants-table thead {
+                    display: none;
+                }
+
+                .applicants-table tbody tr {
+                    background: #ffffff;
+                    border: 1px solid var(--border);
+                    border-radius: 16px;
+                    padding: 16px;
+                    margin-bottom: 14px;
+                    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.03);
+                }
+
+                .applicants-table tbody td {
+                    padding: 10px 0;
+                    border-bottom: 1px solid var(--border-light);
+                }
+
+                    .applicants-table tbody td:first-child {
+                        padding-top: 0;
+                    }
+
+                    .applicants-table tbody td:last-child {
+                        border-bottom: none;
+                        padding-bottom: 0;
+                    }
+
+                    .applicants-table tbody td::before {
+                        content: attr(data-label);
+                        display: block;
+                        font-size: 11px;
+                        font-weight: 700;
+                        text-transform: uppercase;
+                        letter-spacing: 0.05em;
+                        color: var(--muted);
+                        margin-bottom: 6px;
+                    }
+
+                    .applicants-table tbody td[data-label="Candidate"]::before {
+                        display: none;
+                    }
+
+            .cover-letter-cell {
+                max-width: 100%;
+            }
+
+            .cv-highlight-group,
+            .decision-group {
+                flex-direction: row;
+                flex-wrap: wrap;
+                width: 100%;
+            }
+
+                .cv-highlight-group a,
+                .decision-group button {
+                    flex: 1 1 130px;
+                }
+        }
+
+        @@media (max-width: 640px) {
+            .applicants-page {
+                padding: 85px 0 50px;
+            }
+
+            .applicants-container {
+                padding: 0 14px;
+            }
+
+            .applicants-header {
+                align-items: flex-start;
+                margin-bottom: 20px;
+            }
+
+                .applicants-header h1 {
+                    font-size: 26px;
+                }
+
+            .applicants-subtitle {
+                font-size: 14px;
+            }
+
+            .applicants-back-btn {
+                width: 100%;
+            }
+
+            .applicants-stats {
+                grid-template-columns: 1fr;
+                gap: 10px;
+                margin-bottom: 20px;
+            }
+
+            .applicants-panel {
+                padding: 16px;
+                border-radius: 16px;
+            }
+
+            .applicants-toolbar {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+                .applicants-toolbar select {
+                    width: 100%;
+                    min-width: 0;
+                }
+        }
+    </style>
+}
+
+<section class="applicants-page">
+    <div class="applicants-container">
+        <header class="applicants-header">
+            <div>
+                <span class="applicants-badge">EMPLOYER WORKSPACE</span>
+                <h1>Manage applicants</h1>
+                <p class="applicants-subtitle">Review candidates, inspect resumes, and shortlist top talent for this position.</p>
+            </div>
+
+            <a href="@Url.Action("dashboard", "Home")" class="applicants-back-btn">
+                ← Back to Dashboard
+            </a>
+        </header>
+
+        @Html.AntiForgeryToken()
+
+        <section class="applicants-stats">
+            <div class="applicants-stat-card">
+                <div class="stat-card-top">
+                    <p>Total applicants</p>
+                    <span class="applicants-stat-icon icon-purple">👥</span>
+                </div>
+                <h3 id="totalCount">0</h3>
+                <span class="stat-card-note">Across this job listing</span>
+            </div>
+
+            <div class="applicants-stat-card">
+                <div class="stat-card-top">
+                    <p>Under review</p>
+                    <span class="applicants-stat-icon icon-amber">⏳</span>
+                </div>
+                <h3 id="pendingCount">0</h3>
+                <span class="stat-card-note">Awaiting your decision</span>
+            </div>
+
+            <div class="applicants-stat-card">
+                <div class="stat-card-top">
+                    <p>Shortlisted</p>
+                    <span class="applicants-stat-icon icon-green">✓</span>
+                </div>
+                <h3 id="shortlistedCount">0</h3>
+                <span class="stat-card-note">Selected for next steps</span>
+            </div>
+        </section>
+
+        <div id="message" class="applicants-message"></div>
+
+        <div class="applicants-panel">
+            <div class="applicants-panel-header">
+                <div>
+                    <h2>Candidate applications</h2>
+                    <p>Search by candidate details or filter by hiring stage.</p>
+                </div>
+                <span id="resultCount" class="applicants-count-pill">0 candidates</span>
+            </div>
+
+            <div class="applicants-toolbar">
+                <div class="applicants-search-box">
+                    <span class="applicants-search-icon">⌕</span>
+                    <input type="text"
+                           id="searchInput"
+                           placeholder="Search applicants by name or email..." />
+                </div>
+
+                <select id="statusFilter">
+                    <option value="All">All Applicants</option>
+                    <option value="Under Review">Under Review</option>
+                    <option value="Shortlisted">Shortlisted</option>
+                    <option value="Rejected">Rejected</option>
+                </select>
+            </div>
+
+            <div id="applicantsList">
+                <div class="applicants-loading">Loading applicants...</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script>
+        const jobId = @Html.Raw(JsonSerializer.Serialize(jobId));
+        const applicantsApi = `/ApplyJob/ApplicantsJson?jobId=${encodeURIComponent(jobId)}`;
+        const updateApi = "/ApplyJob/UpdateApplicantStatus";
+        const resumeApi = "/ApplyJob/Resume";
+
+        const SUMMARY_LIMIT = 95;
+        let applicants = [];
+        const expandedCoverLetters = new Set();
+
+        function escapeHTML(value) {
+            return String(value ?? "").replace(/[&<>"']/g, character => ({
+                "&": "&amp;",
+                "<": "&lt;",
+                ">": "&gt;",
+                '"': "&quot;",
+                "'": "&#39;"
+            })[character]);
+        }
+
+        function getCoverLetterSummary(text) {
+            const clean = String(text ?? "").trim();
+            if (!clean) {
+                return { text: "No cover letter provided.", isTruncatable: false };
+            }
+            if (clean.length <= SUMMARY_LIMIT) {
+                return { text: clean, isTruncatable: false };
+            }
+
+            const slice = clean.slice(0, SUMMARY_LIMIT);
+            const lastSpace = slice.lastIndexOf(" ");
+            const summary = (lastSpace > 45 ? slice.slice(0, lastSpace) : slice).trimEnd() + "...";
+            return { text: summary, isTruncatable: true };
+        }
+
+        function updateStatistics() {
+            document.getElementById("totalCount").textContent = applicants.length;
+            document.getElementById("pendingCount").textContent = applicants.filter(
+                a => (a.status || "Under Review") === "Under Review"
+            ).length;
+            document.getElementById("shortlistedCount").textContent = applicants.filter(
+                a => a.status === "Shortlisted"
+            ).length;
+        }
+
+        function showMessage(message, type) {
+            const element = document.getElementById("message");
+            element.textContent = message;
+            element.className = "applicants-message " + type;
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+
+        async function loadApplicants() {
+            const list = document.getElementById("applicantsList");
+
+            if (jobId === null || jobId === undefined || jobId === "") {
+                list.innerHTML = '<div class="applicants-empty">Job ID is missing.</div>';
+                return;
+            }
+
+            try {
+                const response = await fetch(applicantsApi, {
+                    headers: { "Accept": "application/json" }
+                });
+
+                if (!response.ok) {
+                    let error = "Unable to load applicants.";
+                    try {
+                        const data = await response.json();
+                        error = data.message || error;
+                    } catch { }
+                    throw new Error(error);
+                }
+
+                applicants = await response.json();
+                updateStatistics();
+                renderApplicants();
+            } catch (error) {
+                list.innerHTML = `<div class="applicants-empty">${escapeHTML(error.message)}</div>`;
+            }
+        }
+
+        function renderApplicants() {
+            const list = document.getElementById("applicantsList");
+            const search = document.getElementById("searchInput").value.toLowerCase().trim();
+            const filter = document.getElementById("statusFilter").value;
+
+            const filtered = applicants.filter(applicant => {
+                const name = (applicant.name || "").toLowerCase();
+                const email = (applicant.email || "").toLowerCase();
+                const status = applicant.status || "Under Review";
+
+                return (
+                    (name.includes(search) || email.includes(search)) &&
+                    (filter === "All" || status === filter)
+                );
+            });
+
+            document.getElementById("resultCount").textContent =
+                `${filtered.length} candidate${filtered.length === 1 ? "" : "s"}`;
+
+            if (filtered.length === 0) {
+                list.innerHTML = `
+                                    <div class="applicants-empty">
+                                        <div style="font-size:30px;margin-bottom:10px;">♙</div>
+                                        <strong>No applicants found</strong>
+                                        <p>Try changing your search or filter.</p>
+                                    </div>`;
+                return;
+            }
+
+            const rowsHtml = filtered.map(applicant => {
+                const id = Number(applicant.id);
+                const status = applicant.status || "Under Review";
+                const statusClass = status.replace(/\s+/g, "-");
+                const name = applicant.name || "Unknown Applicant";
+                const initials = name.trim().split(/\s+/)
+                    .slice(0, 2)
+                    .map(part => part.charAt(0))
+                    .join("")
+                    .toUpperCase();
+
+                const appliedDate = applicant.appliedAt
+                    ? new Date(applicant.appliedAt).toLocaleDateString()
+                    : "Not available";
+
+                const fullCover = String(applicant.coverLetter || "No cover letter provided.").trim();
+                const summaryInfo = getCoverLetterSummary(applicant.coverLetter);
+                const isExpanded = expandedCoverLetters.has(id);
+                const displayedCover = (!summaryInfo.isTruncatable || isExpanded)
+                    ? fullCover
+                    : summaryInfo.text;
+
+                return `
+                                    <tr>
+                                        <td data-label="Candidate">
+                                            <div class="applicant-profile">
+                                                <div class="applicant-avatar">${escapeHTML(initials)}</div>
+                                                <div>
+                                                    <div class="applicant-name">${escapeHTML(name)}</div>
+                                                    <div class="applicant-sub">${escapeHTML(applicant.email || "No email provided")}</div>
+                                                </div>
+                                            </div>
+                                        </td>
+
+                                        <td data-label="Contact & Date">
+                                            <div class="applicant-sub"><strong>#${id}</strong></div>
+                                            <div class="applicant-sub">${escapeHTML(applicant.phone || "No phone")}</div>
+                                            <div class="applicant-sub">${escapeHTML(appliedDate)}</div>
+                                        </td>
+
+                                        <td data-label="Status">
+                                            <span class="applicant-status ${escapeHTML(statusClass)}">
+                                                ${escapeHTML(status)}
+                                            </span>
+                                        </td>
+
+                                        <td class="cover-letter-cell" data-label="Cover Letter">
+                                            <p class="cover-letter-text">${escapeHTML(displayedCover)}</p>
+                                            ${summaryInfo.isTruncatable ? `
+                                                <button type="button"
+                                                        class="toggle-cover-btn"
+                                                        data-toggle-cover="${id}">
+                                                    ${isExpanded ? "Show less" : "View more"}
+                                                </button>
+                                            ` : ""}
+                                        </td>
+
+                                        <td data-label="Resume / CV">
+                                            <div class="cv-highlight-group">
+                                                <a class="cv-btn-view"
+                                                   href="${resumeApi}?applicationId=${id}"
+                                                   target="_blank"
+                                                   rel="noopener noreferrer">
+                                                    ↗ View CV
+                                                </a>
+                                                <a class="cv-btn-download"
+                                                   href="${resumeApi}?applicationId=${id}&download=true">
+                                                    ↓ Download CV
+                                                </a>
+                                            </div>
+                                        </td>
+
+                                        <td data-label="Decision">
+                                            <div class="decision-group">
+                                                <button class="decision-btn shortlist-btn"
+                                                        type="button"
+                                                        data-id="${id}"
+                                                        data-status="Shortlisted"
+                                                        ${status === "Shortlisted" ? "disabled" : ""}>
+                                                    ✓ Shortlist
+                                                </button>
+
+                                                <button class="decision-btn reject-btn"
+                                                        type="button"
+                                                        data-id="${id}"
+                                                        data-status="Rejected"
+                                                        ${status === "Rejected" ? "disabled" : ""}>
+                                                    ✕ Reject
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>`;
+            }).join("");
+
+            list.innerHTML = `
+                                <div class="applicants-table-wrapper">
+                                    <table class="applicants-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Candidate</th>
+                                                <th>Contact &amp; Date</th>
+                                                <th>Status</th>
+                                                <th>Cover Letter</th>
+                                                <th>Resume / CV</th>
+                                                <th>Decision</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            ${rowsHtml}
+                                        </tbody>
+                                    </table>
+                                </div>`;
+        }
+
+        async function updateApplicantStatus(applicationId, status) {
+            const token = document.querySelector(
+                'input[name="__RequestVerificationToken"]'
+            ).value;
+
+            const formData = new URLSearchParams();
+            formData.append("applicationId", applicationId);
+            formData.append("status", status);
+
+            try {
+                const response = await fetch(updateApi, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/x-www-form-urlencoded",
+                        "RequestVerificationToken": token
+                    },
+                    body: formData.toString()
+                });
+
+                const result = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(result.message || "Unable to update applicant status.");
+                }
+
+                const applicant = applicants.find(a => Number(a.id) === Number(applicationId));
+                if (applicant) {
+                    applicant.status = result.status;
+                }
+
+                updateStatistics();
+                renderApplicants();
+
+                showMessage(
+                    `Applicant status updated to ${result.status}.`,
+                    "success-message"
+                );
+            } catch (error) {
+                showMessage(error.message, "error-message");
+            }
+        }
+
+        document.getElementById("searchInput")
+            .addEventListener("input", renderApplicants);
+
+        document.getElementById("statusFilter")
+            .addEventListener("change", renderApplicants);
+
+        document.getElementById("applicantsList")
+            .addEventListener("click", event => {
+                const toggleBtn = event.target.closest("button[data-toggle-cover]");
+                if (toggleBtn) {
+                    const id = Number(toggleBtn.dataset.toggleCover);
+                    if (expandedCoverLetters.has(id)) {
+                        expandedCoverLetters.delete(id);
+                    } else {
+                        expandedCoverLetters.add(id);
+                    }
+                    renderApplicants();
+                    return;
+                }
+
+                const decisionBtn = event.target.closest("button[data-id][data-status]");
+                if (!decisionBtn || decisionBtn.disabled) return;
+
+                updateApplicantStatus(
+                    decisionBtn.dataset.id,
+                    decisionBtn.dataset.status
+                );
+            });
+
+        loadApplicants();
+    </script>
+}

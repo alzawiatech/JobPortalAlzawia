@@ -1,6 +1,22 @@
-﻿@{
+﻿@using System.Security.Claims
+@{
     var isLoggedIn = User.Identity?.IsAuthenticated == true;
-    var currentUser = User.Identity?.Name;
+    var currentUser = User.Identity?.Name ?? "User";
+    var userEmail = User.FindFirst(ClaimTypes.Email)?.Value
+                    ?? User.FindFirst("email")?.Value
+                    ?? (currentUser.Contains("@") ? currentUser : "Signed in account");
+    var displayName = User.FindFirst("FullName")?.Value
+                      ?? User.FindFirst(ClaimTypes.GivenName)?.Value
+                      ?? (currentUser.Contains("@") ? currentUser.Split('@')[0] : currentUser);
+    var initials = string.Concat(
+        displayName.Split(' ', StringSplitOptions.RemoveEmptyEntries)
+                   .Take(2)
+                   .Select(part => char.ToUpperInvariant(part[0]))
+    );
+    if (string.IsNullOrWhiteSpace(initials))
+    {
+        initials = "U";
+    }
     var postJobReturnUrl = Url.Action("dashboard", "Home") ?? "/";
 }
 
@@ -28,28 +44,180 @@
     <style>
             /* Desktop authentication menu item */
             .nav-auth-item {
+                position: relative;
                 display: flex;
                 align-items: center;
-                gap: 8px;
             }
 
-                .nav-auth-item a {
-                    white-space: nowrap;
+            .nav-signin-link {
+                white-space: nowrap;
+                font-weight: 600;
+            }
+
+            /* Profile trigger button */
+            .profile-dropdown-wrapper {
+                position: relative;
+            }
+
+            .profile-trigger-btn {
+                display: inline-flex;
+                align-items: center;
+                gap: 10px;
+                background: #ffffff;
+                border: 1px solid #e5e7eb;
+                border-radius: 999px;
+                padding: 4px 12px 4px 5px;
+                cursor: pointer;
+                font-family: inherit;
+                color: #0f172a;
+                transition: all 0.18s ease;
+                box-shadow: 0 2px 6px rgba(15, 23, 42, 0.04);
+            }
+
+                .profile-trigger-btn:hover,
+                .profile-trigger-btn[aria-expanded="true"] {
+                    border-color: #cbd5e1;
+                    background: #f8fafc;
                 }
 
-            .nav-user-name {
-                font-weight: 600;
-                color: inherit;
-                max-width: 140px;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                white-space: nowrap;
+            .profile-avatar-icon {
+                width: 32px;
+                height: 32px;
+                border-radius: 50%;
+                background: #14243d;
+                color: #ffffff;
+                font-family: 'Sora', 'DM Sans', sans-serif;
+                font-size: 12px;
+                font-weight: 700;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                flex-shrink: 0;
             }
 
-            .nav-logout-form {
-                display: inline-flex;
-                margin: 0;
+            .profile-trigger-meta {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                text-align: left;
+                line-height: 1.15;
+                max-width: 155px;
             }
+
+            .profile-trigger-name {
+                font-size: 12.5px;
+                font-weight: 700;
+                color: #0f172a;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                max-width: 100%;
+            }
+
+            .profile-trigger-email {
+                font-size: 11px;
+                font-weight: 500;
+                color: #64748b;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                max-width: 100%;
+            }
+
+            .profile-chevron {
+                width: 14px;
+                height: 14px;
+                color: #64748b;
+                transition: transform 0.2s ease;
+                flex-shrink: 0;
+            }
+
+            .profile-trigger-btn[aria-expanded="true"] .profile-chevron {
+                transform: rotate(180deg);
+            }
+
+            /* Dropdown menu */
+            .profile-dropdown-menu {
+                display: none;
+                position: absolute;
+                top: calc(100% + 10px);
+                right: 0;
+                min-width: 255px;
+                background: #ffffff;
+                border: 1px solid #e5e7eb;
+                border-radius: 16px;
+                box-shadow: 0 14px 32px rgba(15, 23, 42, 0.12);
+                padding: 8px;
+                z-index: 1200;
+            }
+
+                .profile-dropdown-menu.open {
+                    display: block;
+                }
+
+            .profile-dropdown-header {
+                padding: 10px 12px;
+                border-bottom: 1px solid #f1f5f9;
+                margin-bottom: 6px;
+            }
+
+            .profile-dropdown-name {
+                font-size: 13.5px;
+                font-weight: 700;
+                color: #0f172a;
+                margin-bottom: 2px;
+                word-break: break-word;
+            }
+
+            .profile-dropdown-email {
+                font-size: 12px;
+                color: #64748b;
+                word-break: break-all;
+            }
+
+            .profile-dropdown-item {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                width: 100%;
+                padding: 9px 12px;
+                border-radius: 10px;
+                border: none;
+                background: transparent;
+                color: #1e293b;
+                font-family: inherit;
+                font-size: 13px;
+                font-weight: 600;
+                text-decoration: none;
+                text-align: left;
+                cursor: pointer;
+                transition: background-color 0.15s ease, color 0.15s ease;
+            }
+
+                .profile-dropdown-item:hover {
+                    background: #f8fafc;
+                    color: #0f172a;
+                }
+
+            .profile-dropdown-divider {
+                height: 1px;
+                background: #f1f5f9;
+                margin: 6px 0;
+            }
+
+            .profile-logout-form {
+                margin: 0;
+                width: 100%;
+            }
+
+            .profile-logout-btn {
+                color: #dc2626;
+            }
+
+                .profile-logout-btn:hover {
+                    background: #fef2f2;
+                    color: #b91c1c;
+                }
 
             .nav-logout-link {
                 border: none;
@@ -69,21 +237,45 @@
             .mobile-auth-section {
                 display: flex;
                 flex-direction: column;
-                gap: 12px;
-                padding: 12px 20px;
+                gap: 10px;
+                padding: 14px 20px;
+                border-top: 1px solid #f1f5f9;
             }
 
-                .mobile-auth-section a {
-                    display: block;
-                }
+            .mobile-profile-card {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                padding: 10px 12px;
+                background: #f8fafc;
+                border: 1px solid #e5e7eb;
+                border-radius: 12px;
+            }
 
             .mobile-user-name {
+                font-size: 13.5px;
                 font-weight: 700;
+                color: #0f172a;
                 overflow-wrap: anywhere;
             }
 
+            .mobile-user-email {
+                font-size: 12px;
+                color: #64748b;
+                overflow-wrap: anywhere;
+            }
+
+            .mobile-menu-link {
+                display: block;
+                padding: 8px 4px;
+                font-size: 14px;
+                font-weight: 600;
+                color: #1e293b;
+                text-decoration: none;
+            }
+
             .mobile-logout-form {
-                margin: 0;
+                margin: 4px 0 0;
                 width: 100%;
             }
 
@@ -94,10 +286,9 @@
             }
 
             /* Keep desktop navigation tidy on smaller screens */
-            @@media (max-width: 1100px) and (min-width: 769px) {
-                .nav-user-name {
-                    max-width: 90px;
-                    font-size: 13px;
+            @@media (max-width: 1180px) and (min-width: 769px) {
+                .profile-trigger-meta {
+                    max-width: 110px;
                 }
             }
 
@@ -181,31 +372,80 @@
                         </a>
                     </li>
 
-                    <!-- Login/Register OR Username/Logout -->
+                    <!-- Login/Register OR Profile Dropdown -->
                     <li class="nav-auth-item">
 
                         @if (isLoggedIn)
                         {
-                            <span class="nav-user-name" title="@currentUser">
-                                @currentUser
-                            </span>
-
-                            <form asp-area="Identity"
-                                  asp-page="/Account/Logout"
-                                  asp-route-returnUrl="/"
-                                  method="post"
-                                  class="nav-logout-form">
-
-                                <button type="submit" class="nav-logout-link">
-                                    Logout
+                            <div class="profile-dropdown-wrapper" id="profileDropdownWrapper">
+                                <button type="button"
+                                        class="profile-trigger-btn"
+                                        id="profileDropdownBtn"
+                                        aria-haspopup="true"
+                                        aria-expanded="false"
+                                        aria-controls="profileDropdownMenu">
+                                    <span class="profile-avatar-icon" aria-hidden="true">@initials</span>
+                                    <span class="profile-trigger-meta">
+                                        <span class="profile-trigger-name">@displayName</span>
+                                        <span class="profile-trigger-email">@userEmail</span>
+                                    </span>
+                                    <svg class="profile-chevron" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                        <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                                    </svg>
                                 </button>
 
-                            </form>
+                                <div class="profile-dropdown-menu" id="profileDropdownMenu" role="menu">
+                                    <div class="profile-dropdown-header">
+                                        <div class="profile-dropdown-name">@displayName</div>
+                                        <div class="profile-dropdown-email">@userEmail</div>
+                                    </div>
+
+                                    <a asp-controller="Home"
+                                       asp-action="dashboard"
+                                       class="profile-dropdown-item"
+                                       role="menuitem">
+                                        <span>📊</span>
+                                        <span>View Dashboard</span>
+                                    </a>
+
+                                    <a asp-area="Identity"
+                                       asp-page="/Account/Manage/Index"
+                                       class="profile-dropdown-item"
+                                       role="menuitem">
+                                        <span>👤</span>
+                                        <span>User Profiles</span>
+                                    </a>
+
+                                    <a asp-controller="Home"
+                                       asp-action="CompanySettings"
+                                       class="profile-dropdown-item"
+                                       role="menuitem">
+                                        <span>🏢</span>
+                                        <span>Company Settings</span>
+                                    </a>
+
+                                    <div class="profile-dropdown-divider"></div>
+
+                                    <form asp-area="Identity"
+                                          asp-page="/Account/Logout"
+                                          asp-route-returnUrl="/"
+                                          method="post"
+                                          class="profile-logout-form">
+                                        <button type="submit"
+                                                class="profile-dropdown-item profile-logout-btn"
+                                                role="menuitem">
+                                            <span>⎋</span>
+                                            <span>Logout</span>
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
                         }
                         else
                         {
                             <a asp-area="Identity"
-                               asp-page="/Account/Login">
+                               asp-page="/Account/Login"
+                               class="nav-signin-link">
                                 Sign In / Sign Up
                             </a>
                         }
@@ -262,7 +502,6 @@
         </div>
 
         <!-- Mobile Navigation -->
- 
         <nav class="mobile-nav"
              id="mobile-nav"
              aria-label="Mobile navigation">
@@ -283,27 +522,42 @@
                 Companies
             </a>
 
-            @* <a asp-controller="Home"
-               asp-action="Index"
-               asp-fragment="about">
-                About
-            </a> *@
-
-            <!-- Contact -->
             <a asp-controller="Home"
                asp-action="Index"
                asp-fragment="contact">
                 Contact
             </a>
 
-            <!-- Mobile Login/Register OR Username/Logout -->
+            <!-- Mobile Login/Register OR Profile Menu -->
             <div class="mobile-auth-section">
 
                 @if (isLoggedIn)
                 {
-                    <span class="mobile-user-name">
-                        Hello, @currentUser!
-                    </span>
+                    <div class="mobile-profile-card">
+                        <span class="profile-avatar-icon" aria-hidden="true">@initials</span>
+                        <div>
+                            <div class="mobile-user-name">@displayName</div>
+                            <div class="mobile-user-email">@userEmail</div>
+                        </div>
+                    </div>
+
+                    <a asp-controller="Home"
+                       asp-action="dashboard"
+                       class="mobile-menu-link">
+                        📊 Go to Dashboard / Post a Job
+                    </a>
+
+                    <a asp-area="Identity"
+                       asp-page="/Account/Manage/Index"
+                       class="mobile-menu-link">
+                        👤 User Profiles
+                    </a>
+
+                    <a asp-controller="Home"
+                       asp-action="CompanySettings"
+                       class="mobile-menu-link">
+                        🏢 Company Settings
+                    </a>
 
                     <form asp-area="Identity"
                           asp-page="/Account/Logout"
@@ -313,7 +567,7 @@
 
                         <button type="submit"
                                 class="btn btn-outline mobile-logout-button">
-                            Sign Out
+                            Logout
                         </button>
 
                     </form>
@@ -334,7 +588,6 @@
             </div>
 
         </nav>
-
 
     </header>
 
@@ -573,6 +826,39 @@
     <!-- ================= JAVASCRIPT ================= -->
 
     <script src="~/js/site.js" asp-append-version="true"></script>
+
+    <script>
+            (function () {
+                const triggerBtn = document.getElementById("profileDropdownBtn");
+                const dropdownMenu = document.getElementById("profileDropdownMenu");
+                const wrapper = document.getElementById("profileDropdownWrapper");
+
+                if (!triggerBtn || !dropdownMenu || !wrapper) return;
+
+                function closeDropdown() {
+                    dropdownMenu.classList.remove("open");
+                    triggerBtn.setAttribute("aria-expanded", "false");
+                }
+
+                triggerBtn.addEventListener("click", function (event) {
+                    event.stopPropagation();
+                    const isOpen = dropdownMenu.classList.toggle("open");
+                    triggerBtn.setAttribute("aria-expanded", String(isOpen));
+                });
+
+                document.addEventListener("click", function (event) {
+                    if (!wrapper.contains(event.target)) {
+                        closeDropdown();
+                    }
+                });
+
+                document.addEventListener("keydown", function (event) {
+                    if (event.key === "Escape") {
+                        closeDropdown();
+                    }
+                });
+            })();
+    </script>
 
     @await RenderSectionAsync("Scripts", required: false)
 

@@ -77,5 +77,15 @@ namespace DubaiJobs.Controllers
                             HttpContext.TraceIdentifier
             });
         }
+
+
+        [HttpGet]
+        public IActionResult Applicants(int id)
+        {
+            ViewBag.JobId = id;
+            return View("~/Views/Home/Applicants.cshtml");
+        }
+
+
     }
 }

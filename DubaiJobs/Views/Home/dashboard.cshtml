@@ -1226,6 +1226,31 @@
             scroll-behavior: auto !important;
         }
     }
+
+    .btn[data-action="applicants"] {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 8px 16px;
+        border-radius: 10px;
+        background: #fff2ea;
+        color: #ff6b1a;
+        border: 1px solid #ffd5bd;
+        font-family: inherit;
+        font-size: 13px;
+        font-weight: 700;
+        cursor: pointer;
+        white-space: nowrap;
+        transition: all 0.15s ease;
+    }
+
+        .btn[data-action="applicants"]:hover {
+            background: #ff6b1a;
+            color: #ffffff;
+            border-color: #ff6b1a;
+            transform: translateY(-1px);
+        }
+
 </style>
 
 <main>
@@ -1311,7 +1336,7 @@
                             aria-selected="false"
                             aria-controls="view-posted"
                             data-view="posted">
-                        Jobs i posted
+                        Posted Jobs
                     </button>
 
                     <button type="button"
@@ -1673,6 +1698,7 @@
                         </aside>
                     </div>
                 </section>
+                
 
             </div>
         </div>
@@ -1687,9 +1713,10 @@
             myJobs: '/PostJob/MyJobs',
             myApplications: '/ApplyJob/MyApplicationsJson',
             create: '/PostJob/Create',
-            edit: id => `/PostJob/Edit/${id}`,
-            changeStatus: id => `/PostJob/ChangeStatus/${id}`,
-            delete: id => `/PostJob/Delete/${id}`
+            edit: id => `/PostJob/Edit/${encodeURIComponent(id)}`,
+            changeStatus: id => `/PostJob/ChangeStatus/${encodeURIComponent(id)}`,
+            delete: id => `/PostJob/Delete/${encodeURIComponent(id)}`,
+            applicants: id => `/Home/Applicants/${encodeURIComponent(id)}`
         };
 
         const $ = id => document.getElementById(id);
@@ -1856,6 +1883,8 @@
         function showMessage(message, type) {
             const box = $('formMessage');
 
+            if (!box) return;
+
             box.textContent = message;
             box.className = 'ed-message show ' + type;
 
@@ -1866,8 +1895,25 @@
         }
 
         function hideMessage() {
-            $('formMessage').className = 'ed-message';
-            $('formMessage').textContent = '';
+            const box = $('formMessage');
+
+            if (!box) return;
+
+            box.className = 'ed-message';
+            box.textContent = '';
+        }
+
+        // ==========================================
+        // NAVIGATION TO APPLICANTS PAGE
+        // ==========================================
+
+        function openApplicantsPage(jobId) {
+            if (!jobId) {
+                alert('Unable to identify this job.');
+                return;
+            }
+
+            window.location.href = API.applicants(jobId);
         }
 
         // Switch dashboard tabs
@@ -1891,7 +1937,6 @@
                 renderJobs();
             }
 
-            // Load real applications from database
             if (name === 'applied') {
                 loadAppliedJobs();
             }
@@ -1919,73 +1964,83 @@
             });
         });
 
-        // Build posted job card
+        // ==========================================
+        // JOB CARD
+        // ==========================================
+
         function jobCard(job) {
             const closed = job.status === 'Closed';
 
             return `
-                <article class="ed-job">
+                    <article class="ed-job">
 
-                    <div class="ed-job-main">
-                        <div class="ed-job-icon">💼</div>
+                        <div class="ed-job-main">
+                            <div class="ed-job-icon">💼</div>
 
-                        <div class="ed-job-copy">
-                            <h3>${escapeHTML(job.jobTitle)}</h3>
-                            <p>
-                                ${escapeHTML(job.companyName)}
-                                ·
-                                ${escapeHTML(job.location || 'Location not specified')}
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="ed-job-meta">
-
-                        <div class="ed-meta">
-                            <span>Posted</span>
-                            <strong>${dateLabel(job.postedAt)}</strong>
+                            <div class="ed-job-copy">
+                                <h3>${escapeHTML(job.jobTitle)}</h3>
+                                <p>
+                                    ${escapeHTML(job.companyName)}
+                                    ·
+                                    ${escapeHTML(job.location || 'Location not specified')}
+                                </p>
+                            </div>
                         </div>
 
-                        <div class="ed-meta">
-                            <span>Applicants</span>
-                            <strong>${Number(job.applicants) || 0}</strong>
+                        <div class="ed-job-meta">
+
+                            <div class="ed-meta">
+                                <span>Posted</span>
+                                <strong>${dateLabel(job.postedAt)}</strong>
+                            </div>
+
+                            <div class="ed-meta">
+                                <span>Applicants</span>
+                                <strong>${Number(job.applicants) || 0}</strong>
+                            </div>
+
+                            <div class="ed-meta">
+                                <span>Status</span>
+                                <strong class="ed-status ${closed ? 'closed' : ''}">
+                                    ${closed ? 'Closed' : 'Active'}
+                                </strong>
+                            </div>
+
                         </div>
 
-                        <div class="ed-meta">
-                            <span>Status</span>
-                            <strong class="ed-status ${closed ? 'closed' : ''}">
-                                ${closed ? 'Closed' : 'Active'}
-                            </strong>
+                        <div class="ed-actions">
+
+                            <button class="btn"
+                                    type="button"
+                                    data-action="applicants"
+                                    data-id="${escapeHTML(job.id)}">
+                                View All Applicants
+                            </button>
+
+                            <button class="ed-btn"
+                                    type="button"
+                                    data-action="edit"
+                                    data-id="${escapeHTML(job.id)}">
+                                Edit
+                            </button>
+
+                            <button class="ed-btn"
+                                    type="button"
+                                    data-action="toggle"
+                                    data-id="${escapeHTML(job.id)}">
+                                ${closed ? 'Reopen' : 'Close'}
+                            </button>
+
+                            <button class="ed-btn danger"
+                                    type="button"
+                                    data-action="delete"
+                                    data-id="${escapeHTML(job.id)}">
+                                Delete
+                            </button>
+
                         </div>
-
-                    </div>
-
-                    <div class="ed-actions">
-
-                        <button class="ed-btn"
-                                type="button"
-                                data-action="edit"
-                                data-id="${escapeHTML(job.id)}">
-                            Edit
-                        </button>
-
-                        <button class="ed-btn"
-                                type="button"
-                                data-action="toggle"
-                                data-id="${escapeHTML(job.id)}">
-                            ${closed ? 'Reopen' : 'Close'}
-                        </button>
-
-                        <button class="ed-btn danger"
-                                type="button"
-                                data-action="delete"
-                                data-id="${escapeHTML(job.id)}">
-                            Delete
-                        </button>
-
-                    </div>
-                </article>
-            `;
+                    </article>
+                `;
         }
 
         // Render jobs and statistics
@@ -2009,11 +2064,11 @@
             $('postedJobs').innerHTML = filtered.length
                 ? filtered.map(jobCard).join('')
                 : `
-                    <div class="ed-empty">
-                        <strong>No jobs found</strong>
-                        Try another search or post a new opening.
-                    </div>
-                `;
+                        <div class="ed-empty">
+                            <strong>No jobs found</strong>
+                            Try another search or post a new job.
+                        </div>
+                    `;
 
             const recent = [...jobs]
                 .sort((a, b) =>
@@ -2025,11 +2080,11 @@
             $('recentJobs').innerHTML = recent.length
                 ? recent.map(jobCard).join('')
                 : `
-                    <div class="ed-empty">
-                        <strong>No jobs posted yet</strong>
-                        Create your first job listing to get started.
-                    </div>
-                `;
+                        <div class="ed-empty">
+                            <strong>No jobs posted yet</strong>
+                            Create your first job listing to get started.
+                        </div>
+                    `;
 
             const activeJobs = jobs.filter(
                 job => job.status === 'Active'
@@ -2039,25 +2094,25 @@
                 job => job.status === 'Closed'
             ).length;
 
-            const applicants = jobs.reduce(
+            const applicantsCount = jobs.reduce(
                 (total, job) => total + (Number(job.applicants) || 0),
                 0
             );
 
             $('statActive').textContent = activeJobs;
             $('statClosed').textContent = closedJobs;
-            $('statApplicants').textContent = applicants;
+            $('statApplicants').textContent = applicantsCount;
         }
 
         // Load posted jobs from database
         async function loadJobs() {
             $('postedJobs').innerHTML = `
-                <div class="ed-empty">Loading your jobs...</div>
-            `;
+                    <div class="ed-empty">Loading your jobs...</div>
+                `;
 
             $('recentJobs').innerHTML = `
-                <div class="ed-empty">Loading your jobs...</div>
-            `;
+                    <div class="ed-empty">Loading your jobs...</div>
+                `;
 
             try {
                 const result = await apiRequest(API.myJobs);
@@ -2069,21 +2124,24 @@
                 console.error('Loading jobs failed:', error);
 
                 $('postedJobs').innerHTML = `
-                    <div class="ed-empty">
-                        <strong>Unable to load jobs</strong>
-                        ${escapeHTML(error.message)}
-                    </div>
-                `;
+                        <div class="ed-empty">
+                            <strong>Unable to load jobs</strong>
+                            ${escapeHTML(error.message)}
+                        </div>
+                    `;
 
                 $('recentJobs').innerHTML = `
-                    <div class="ed-empty">
-                        <strong>Unable to load recent jobs</strong>
-                    </div>
-                `;
+                        <div class="ed-empty">
+                            <strong>Unable to load recent jobs</strong>
+                        </div>
+                    `;
             }
         }
 
-        // Determine application status style
+        // ==========================================
+        // MY APPLICATIONS
+        // ==========================================
+
         function getApplicationStatusClass(status) {
             const value = (status || '').toLowerCase();
 
@@ -2111,56 +2169,56 @@
             const statusClass = getApplicationStatusClass(status);
 
             return `
-                <article class="ed-job">
+                    <article class="ed-job">
 
-                    <div class="ed-job-main">
-                        <div class="ed-job-icon">💼</div>
+                        <div class="ed-job-main">
+                            <div class="ed-job-icon">💼</div>
 
-                        <div class="ed-job-copy">
-                            <h3>${escapeHTML(application.jobTitle || 'Untitled Job')}</h3>
+                            <div class="ed-job-copy">
+                                <h3>${escapeHTML(application.jobTitle || 'Untitled Job')}</h3>
 
-                            <p>
-                                ${escapeHTML(application.companyName || 'Company not available')}
-                                ·
-                                ${escapeHTML(application.location || 'Location not specified')}
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="ed-job-meta">
-
-                        <div class="ed-meta">
-                            <span>Employment</span>
-                            <strong>
-                                ${escapeHTML(application.employmentType || 'Not specified')}
-                            </strong>
+                                <p>
+                                    ${escapeHTML(application.companyName || 'Company not available')}
+                                    ·
+                                    ${escapeHTML(application.location || 'Location not specified')}
+                                </p>
+                            </div>
                         </div>
 
-                        <div class="ed-meta">
-                            <span>Workplace</span>
-                            <strong>
-                                ${escapeHTML(application.workplace || 'Not specified')}
-                            </strong>
+                        <div class="ed-job-meta">
+
+                            <div class="ed-meta">
+                                <span>Employment</span>
+                                <strong>
+                                    ${escapeHTML(application.employmentType || 'Not specified')}
+                                </strong>
+                            </div>
+
+                            <div class="ed-meta">
+                                <span>Workplace</span>
+                                <strong>
+                                    ${escapeHTML(application.workplace || 'Not specified')}
+                                </strong>
+                            </div>
+
+                            <div class="ed-meta">
+                                <span>Applied on</span>
+                                <strong>
+                                    ${escapeHTML(applicationDateLabel(application.appliedAt))}
+                                </strong>
+                            </div>
+
+                            <div class="ed-meta">
+                                <span>Status</span>
+                                <strong class="ed-status ${statusClass}">
+                                    ${escapeHTML(status)}
+                                </strong>
+                            </div>
+
                         </div>
 
-                        <div class="ed-meta">
-                            <span>Applied on</span>
-                            <strong>
-                                ${escapeHTML(applicationDateLabel(application.appliedAt))}
-                            </strong>
-                        </div>
-
-                        <div class="ed-meta">
-                            <span>Status</span>
-                            <strong class="ed-status ${statusClass}">
-                                ${escapeHTML(status)}
-                            </strong>
-                        </div>
-
-                    </div>
-
-                </article>
-            `;
+                    </article>
+                `;
         }
 
         // Load applications belonging to the logged-in user
@@ -2170,8 +2228,8 @@
             if (!container) return;
 
             container.innerHTML = `
-                <div class="ed-empty">Loading your applications...</div>
-            `;
+                    <div class="ed-empty">Loading your applications...</div>
+                `;
 
             try {
                 const result = await apiRequest(API.myApplications);
@@ -2179,21 +2237,19 @@
                 applications = Array.isArray(result) ? result : [];
                 applicationsLoaded = true;
 
-                // Update applications sent statistic
                 $('statApplicationsSent').textContent = applications.length;
 
                 if (applications.length === 0) {
                     container.innerHTML = `
-                        <div class="ed-empty">
-                            <strong>No applications found</strong>
-                            You have not applied for any jobs yet.
-                            Jobs you apply for will appear here.
-                        </div>
-                    `;
+                            <div class="ed-empty">
+                                <strong>No applications found</strong>
+                                You have not applied for any jobs yet.
+                                Jobs you apply for will appear here.
+                            </div>
+                        `;
                     return;
                 }
 
-                // Display all applications from database
                 container.innerHTML = applications
                     .map(applicationCard)
                     .join('');
@@ -2204,17 +2260,17 @@
                 console.error('Loading applications failed:', error);
 
                 container.innerHTML = `
-                    <div class="ed-empty">
-                        <strong>Unable to load applications</strong>
-                        ${escapeHTML(error.message)}
-                        <br><br>
-                        <button type="button"
-                                class="ed-btn primary"
-                                id="retryApplicationsBtn">
-                            Try again
-                        </button>
-                    </div>
-                `;
+                        <div class="ed-empty">
+                            <strong>Unable to load applications</strong>
+                            ${escapeHTML(error.message)}
+                            <br><br>
+                            <button type="button"
+                                    class="ed-btn primary"
+                                    id="retryApplicationsBtn">
+                                Try again
+                            </button>
+                        </div>
+                    `;
             }
         }
 
@@ -2225,7 +2281,10 @@
             }
         });
 
-        // Reset job form
+        // ==========================================
+        // RESET AND EDIT JOB FORM
+        // ==========================================
+
         function resetForm() {
             form.reset();
 
@@ -2340,13 +2399,23 @@
             }
         }
 
-        // Handle job actions
+        // ==========================================
+        // HANDLE ALL JOB CARD ACTIONS
+        // ==========================================
+
         document.addEventListener('click', async event => {
             const button = event.target.closest('[data-action]');
 
             if (!button) return;
 
+            const action = button.dataset.action;
             const id = button.dataset.id;
+
+            // View applicants: navigate to separate page
+            if (action === 'applicants') {
+                openApplicantsPage(id);
+                return;
+            }
 
             const job = jobs.find(
                 item => String(item.id) === String(id)
@@ -2354,25 +2423,29 @@
 
             if (!job) return;
 
-            const action = button.dataset.action;
-
             if (action === 'edit') {
                 editJob(id);
+                return;
             }
 
             if (action === 'toggle') {
                 await changeJobStatus(job);
+                return;
             }
 
             if (action === 'delete') {
                 await deleteJob(job);
+                return;
             }
         });
 
         // Search posted jobs
         $('jobSearch').addEventListener('input', renderJobs);
 
-        // Live preview
+        // ==========================================
+        // LIVE JOB PREVIEW
+        // ==========================================
+
         function updatePreview() {
             $('previewTitle').textContent =
                 $('jobTitle').value.trim() || 'Your job title';
@@ -2415,7 +2488,10 @@
             }
         });
 
-        // Collect form values
+        // ==========================================
+        // COLLECT FORM VALUES
+        // ==========================================
+
         function collectFormData() {
             return {
                 jobTitle: $('jobTitle').value.trim(),
@@ -2441,7 +2517,10 @@
             };
         }
 
-        // Publish or update job
+        // ==========================================
+        // PUBLISH OR UPDATE JOB
+        // ==========================================
+
         form.addEventListener('submit', async event => {
             event.preventDefault();
 
@@ -2525,11 +2604,15 @@
             }
         });
 
-        // Initialize dashboard
+        // ==========================================
+        // INITIALIZE DASHBOARD
+        // ==========================================
+
         updatePreview();
+
         loadJobs();
 
-        // Load application count from database on initial page load
+        // Load applications belonging to the logged-in candidate
         loadAppliedJobs();
 
     })();
